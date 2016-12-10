@@ -4,9 +4,9 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.response import Response
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
-from api.paginators import QuotesResultsSetPagination
+from apps.api.paginators import QuotesResultsSetPagination
 from . import serializers
-from quotes import models
+from apps.quotes import models
 
 
 @api_view()

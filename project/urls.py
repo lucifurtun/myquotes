@@ -4,8 +4,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', include('authentication.urls')),
-    # url(r'^accounts/', include('allauth.urls')),
-    url(r'^api/', include('api.urls')),
-    url(r'^', include('quotes.urls', namespace='quotes')),
+    url(r'', include('apps.authentication.urls')),
+    url(r'^api/', include('apps.api.urls')),
+    url(r'^', include('apps.quotes.urls', namespace='quotes')),
 ]

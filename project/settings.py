@@ -49,9 +49,9 @@ CONTRIB_APPS = [
 ]
 
 CUSTOM_APPS = [
-    'authentication',
-    'api',
-    'quotes',
+    'apps.authentication',
+    'apps.api',
+    'apps.quotes',
 ]
 
 INSTALLED_APPS = CORE_APPS + CONTRIB_APPS + CUSTOM_APPS
