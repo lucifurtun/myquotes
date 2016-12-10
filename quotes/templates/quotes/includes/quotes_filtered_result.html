@@ -1,0 +1,15 @@
+{% verbatim %}
+
+<div cg-busy="{promise:req.$promise, message:'Loading', minDuration:300}">
+    <div class="list-group" ng-repeat="quote in quotes">
+        <a href="" class="list-group-item">
+            <h4 class="list-group-item-heading">{{ quote.title }}</h4>
+            <p class="list-group-item-text" ng-bind-html="quote.text | unsafe"></p>
+        </a>
+    </div>
+    <div ng-if="quotes.length == 0" class="alert alert-warning" role="alert">
+        There are no quotes!
+    </div>
+</div>
+
+{% endverbatim %}

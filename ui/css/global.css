@@ -1,0 +1,7 @@
+#cke_id_text {
+    width: auto !important;
+}
+
+*:focus {
+    outline: none;
+}

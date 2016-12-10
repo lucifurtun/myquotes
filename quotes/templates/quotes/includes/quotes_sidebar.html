@@ -1,0 +1,29 @@
+{% verbatim %}
+<div class="panel panel-info">
+    <div class="panel-heading"><h3 class="panel-title">Categories</h3></div>
+    <div class="panel-body">
+        <a href="#" class="list-group-item" ng-repeat="item in categories" ng-click="updateParams($event, 'category', item.id)">
+        {{ item.name }}
+    </a>
+    </div>
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading"><h3 class="panel-title">Autors</h3></div>
+    <div class="panel-body">
+        <a href="#" class="list-group-item" ng-repeat="item in authors" ng-click="updateParams($event, 'author', item.id)">
+        {{ item.name }}
+    </a>
+    </div>
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading"><h3 class="panel-title">Tags</h3></div>
+    <div class="panel-body">
+        <a href="#" class="list-group-item" ng-repeat="item in tags" ng-click="updateParams($event, 'tags', item.id)">
+        {{ item.name }}
+    </a>
+    </div>
+</div>
+
+{% endverbatim %}

@@ -1,0 +1,52 @@
+{% extends "layouts/simple.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+{% load widget_tweaks %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+        <p>Please sign in with one
+            of your existing third party accounts. Or, <a href="{% url 'account_signup' %}">sign up</a>
+            for a MyQuotes account and sign in below:</p>
+
+        <div class="socialaccount_ballot">
+            <ul class="socialaccount_providers">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </ul>
+
+            <div class="login-or">{% trans 'or' %}</div>
+
+        </div>
+
+        {% include "socialaccount/snippets/login_extra.html" %}
+
+    {% else %}
+        <p>If you have not created an account yet, then please
+            <a href="{% url 'account_signup' %}">sign up</a> first.</p>
+    {% endif %}
+
+    <div class="text-danger small">{{ form.non_field_errors|striptags }}</div>
+
+    <form class="login" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.login|add_class:"form-control"|attr:"placeholder:E-mail" }}
+        </div>
+        <div class="form-group">
+            {{ form.password|add_class:"form-control"|attr:"placeholder:Password" }}
+        </div>
+        <div class="checkbox">
+            <label> {{ form.remember }}Remember Me</label>
+        </div>
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+        <button class="btn btn-lg btn-success btn-block" type="submit">{% trans "Sign In" %}</button>
+    </form>
+
+{% endblock %}
