@@ -3,3 +3,4 @@ django-allauth==0.29.0
 django-ckeditor==5.1.1
 djangorestframework==3.5.3
 django-widget-tweaks==1.4.1
+django-webpack-loader==0.4.1

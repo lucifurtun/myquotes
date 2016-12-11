@@ -45,7 +45,8 @@ CONTRIB_APPS = [
     'ckeditor',
     'rest_framework',
     'rest_framework_swagger',
-    'widget_tweaks'
+    'widget_tweaks',
+    'webpack_loader'
 ]
 
 CUSTOM_APPS = [
@@ -168,5 +169,12 @@ LOGIN_REDIRECT_URL = '/'
 CKEDITOR_CONFIGS = {
     "default": {
         "removePlugins": "flash, smiley, specialchar",
+    }
+}
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'js/bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
     }
 }

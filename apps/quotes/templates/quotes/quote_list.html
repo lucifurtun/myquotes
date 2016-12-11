@@ -1,9 +1,13 @@
 {% extends 'layouts/default.html' %}
 {% load static %}
+{% load render_bundle from webpack_loader %}
 
 {% block title %}Quotes{% endblock %}
 
 {% block content %}
+    <div id="container">KK</div>
+    {% render_bundle 'main' %}
+
     <div class="row" ng-controller="filterController">
         <div class="col-xs-6 col-md-3">
             {% include 'quotes/includes/quotes_sidebar.html' %}
