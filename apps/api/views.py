@@ -33,7 +33,7 @@ class QuoteViewSet(CurrentUserFilterMixin, viewsets.ModelViewSet):
         for field in dict(self.request.GET).keys():
             if hasattr(models.Quote, field):
                 values = self.request.GET.getlist(field)
-                params = {'{field}__in'.format(field=field): [int(value) for value in values]}
+                params = {'{field}__in'.format(field=field): [int(value) for value in values if int(value)]}
                 filters &= Q(**params)
 
         queryset = super().get_queryset()
