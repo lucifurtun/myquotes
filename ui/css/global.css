@@ -1,7 +1,6 @@
 #cke_id_text {
-    width: auto !important;
+  width: auto !important;
 }
-
 *:focus {
-    outline: none;
+  outline: none !important;
 }

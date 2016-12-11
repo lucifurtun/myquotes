@@ -47,6 +47,8 @@ class Quote(UserTimeStampedModel):
     title = models.CharField(max_length=400)
     author = models.ForeignKey('Author', null=True)
     category = models.ForeignKey('Category', null=True)
+    source = models.CharField(max_length=200, blank=True, null=True)
+    reference = models.CharField(max_length=100, blank=True, null=True)
     tags = models.ManyToManyField('Tag', blank=True)
     text = RichTextField()
 
