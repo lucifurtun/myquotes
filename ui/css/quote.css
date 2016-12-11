@@ -16,3 +16,19 @@
 #quote-form #id_tags + span {
   min-width: 300px;
 }
+#quote-list .list-group-item .visible-on-hover {
+  display: none;
+}
+#quote-list .list-group-item #edit-button {
+  position: absolute;
+  right: 35px;
+  color: green;
+}
+#quote-list .list-group-item #delete-button {
+  position: absolute;
+  right: 10px;
+  color: red;
+}
+#quote-list .list-group-item:hover .visible-on-hover {
+  display: block;
+}

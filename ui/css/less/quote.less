@@ -18,3 +18,28 @@
     min-width: 300px;
   }
 }
+
+#quote-list {
+  .list-group-item {
+    .visible-on-hover {
+      display: none;
+    }
+
+    #edit-button {
+      position: absolute;
+      right: 35px;
+      color: green;
+    }
+
+    #delete-button {
+      position: absolute;
+      right: 10px;
+      color: red;
+    }
+  }
+  .list-group-item:hover {
+    .visible-on-hover {
+      display: block;
+    }
+  }
+}
