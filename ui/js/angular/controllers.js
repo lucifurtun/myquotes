@@ -4,43 +4,36 @@ quotesApp.filter('unsafe', function ($sce) {
     };
 });
 
-quotesApp.controller('filterController', function ($rootScope, $scope, $route, $routeParams, $location, $resource) {
-    var filterResource, params = {};
+quotesApp.controller('filterController', function ($scope, $routeParams, $location, $resource) {
+    var filterResource;
+    $scope.filterParams = {};
 
-    $rootScope.$on('$routeChangeStart', function (next, current) {
-        var filter_params = {};
-
+    $scope.$on('$routeChangeStart', function (next, current) {
         for (var key in current.params) {
             var data = current.params[key].split(',');
-            if (data.length == 1) {
-                if (JSON.parse(data)) {
-                    filter_params[key] = current.params[key].split(',');
-                }
+
+            if (data.indexOf('false') >= 0) {
+                continue
             }
-            else {
-                filter_params[key] = current.params[key].split(',');
-            }
+            $scope.filterParams[key] = data;
         }
 
-        makeRequest('/api/quotes/', 'quotes', filter_params, true);
+        makeRequest('/api/quotes/', 'quotes', $scope.filterParams, true);
     });
 
-    $scope.updateParams = function ($event, type, id) {
-        $event.preventDefault();
+    $scope.updateParams = function (type, id) {
+        var is_defined = typeof $scope.filterParams[type] != 'undefined';
 
-        var element = angular.element($event.currentTarget);
-        if (element.hasClass('active')) {
-            element.removeClass('active');
-            var index = params[type].indexOf(id);
-            params[type].splice(index, 1);
+        if (is_defined && $scope.filterParams[type].indexOf(id.toString()) >= 0) {
+            var index = $scope.filterParams[type].indexOf(id.toString());
+            $scope.filterParams[type].splice(index, 1);
         }
         else {
-            element.addClass('active');
-            if (params[type] instanceof Array) {
-                params[type].push(id);
+            if ($scope.filterParams[type] instanceof Array) {
+                $scope.filterParams[type].push(id.toString());
             }
             else {
-                params[type] = [id];
+                $scope.filterParams[type] = [id.toString()];
             }
         }
 
@@ -50,10 +43,10 @@ quotesApp.controller('filterController', function ($rootScope, $scope, $route, $
             tags: $routeParams.tags || false,
         };
 
-        filters[type] = params[type].join(',') || false;
+        filters[type] = $scope.filterParams[type].join(',') || false;
 
         var path = '/author/' + filters.author + '/category/' + filters.category + '/tags/' + filters.tags + '/';
-
+        updateFilters(type);
         $location.path(path);
     };
 
@@ -70,8 +63,8 @@ quotesApp.controller('filterController', function ($rootScope, $scope, $route, $
         deleteResource.delete();
     };
 
-    makeRequest('/api/categories/', 'categories', {});
-    makeRequest('/api/authors/', 'authors', {});
+    makeRequest('/api/categories/', 'category', {});
+    makeRequest('/api/authors/', 'author', {});
     makeRequest('/api/tags/', 'tags', {});
     // makeRequest('/api/quotes/', 'quotes', {}, true);
 
@@ -88,7 +81,26 @@ quotesApp.controller('filterController', function ($rootScope, $scope, $route, $
         else {
             $scope.req = filterResource.query(params, function (data) {
                 $scope[field] = data;
+                updateFilters('author');
+                updateFilters('category');
+                updateFilters('tags');
             });
+        }
+    }
+
+    function updateFilters(field) {
+        for (var key in $scope[field]) {
+            if (isNaN(key)) {
+                continue;
+            }
+            console.log($scope[field][key], field);
+            var is_defined = typeof $scope.filterParams[field] != 'undefined';
+            if (is_defined && $scope.filterParams[field].indexOf($scope[field][key].id.toString()) >= 0) {
+                $scope[field][key].active = true;
+            }
+            else {
+                $scope[field][key].active = false;
+            }
         }
     }
 

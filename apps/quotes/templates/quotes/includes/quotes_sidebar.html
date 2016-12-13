@@ -2,8 +2,8 @@
 <div class="panel panel-info">
     <div class="panel-heading"><h3 class="panel-title">Categories</h3></div>
     <div class="panel-body">
-        <a href="#" class="list-group-item" ng-repeat="item in categories"
-           ng-click="updateParams($event, 'category', item.id)">
+        <a href="" class="list-group-item" ng-repeat="item in category"
+           ng-click="updateParams('category', item.id)" ng-class="{'active': item.active}">
         {{ item.name }}
     </a>
     </div>
@@ -12,8 +12,8 @@
 <div class=" panel panel-info">
         <div class="panel-heading"><h3 class="panel-title">Autors</h3></div>
         <div class="panel-body">
-            <a href="#" class="list-group-item" ng-repeat="item in authors"
-               ng-click="updateParams($event, 'author', item.id)">
+            <a href="" class="list-group-item" ng-repeat="item in author"
+               ng-click="updateParams('author', item.id)" ng-class="{'active': item.active}">
                 {{ item.name }}
             </a>
         </div>
@@ -22,8 +22,8 @@
     <div class="panel panel-info">
         <div class="panel-heading"><h3 class="panel-title">Tags</h3></div>
         <div class="panel-body">
-            <a href="#" class="list-group-item" ng-repeat="item in tags"
-               ng-click="updateParams($event, 'tags', item.id)">
+            <a href="" class="list-group-item" ng-repeat="item in tags"
+               ng-click="updateParams('tags', item.id)" ng-class="{'active': item.active}">
                 {{ item.name }}
             </a>
         </div>
