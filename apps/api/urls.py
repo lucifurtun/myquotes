@@ -12,4 +12,5 @@ router.register(r'tags', views.TagViewSet)
 urlpatterns = [
     url(r'^docs/', views.schema_view),
     url(r'^', include(router.urls)),
+    url(r'^templates/(?P<page>[-\w]+.html)/$', views.AngularTemplateView.as_view()),
 ]

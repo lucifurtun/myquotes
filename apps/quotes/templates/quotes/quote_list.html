@@ -4,11 +4,11 @@
 {% block title %}Quotes{% endblock %}
 
 {% block content %}
-    <div class="row" ng-controller="filterController">
-        <div class="col-xs-6 col-md-3">
+    <div id="quotes-list" class="row" ng-controller="filterController">
+        <div id="filters" class="col-xs-6 col-md-3">
             {% include 'quotes/includes/quotes_sidebar.html' %}
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-8" id="quote-list">
+        <div id="filtered-content" class="col-xs-12 col-sm-6 col-md-8">
             {% include 'quotes/includes/quotes_filtered_result.html' %}
         </div>
     </div>

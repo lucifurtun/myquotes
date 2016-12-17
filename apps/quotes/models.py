@@ -45,8 +45,8 @@ class Author(NameAsStrMixin, UserTimeStampedModel):
 
 class Quote(UserTimeStampedModel):
     title = models.CharField(max_length=400)
-    author = models.ForeignKey('Author', null=True)
-    category = models.ForeignKey('Category', null=True)
+    author = models.ForeignKey('Author', null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('Category', null=True, on_delete=models.SET_NULL)
     source = models.CharField(max_length=200, blank=True, null=True)
     reference = models.CharField(max_length=100, blank=True, null=True)
     tags = models.ManyToManyField('Tag', blank=True)

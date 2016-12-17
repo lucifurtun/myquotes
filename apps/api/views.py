@@ -1,12 +1,15 @@
+import os
+
 from django.db.models import Q, Count
-from rest_framework import generics, schemas, status, views, viewsets
+from django.views import generic
+from rest_framework import schemas, viewsets
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.response import Response
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
 from apps.api.paginators import QuotesResultsSetPagination
-from . import serializers
 from apps.quotes import models
+from . import serializers
 
 
 @api_view()
@@ -53,3 +56,13 @@ class CategoryViewSet(CurrentUserFilterMixin, viewsets.ModelViewSet):
 class TagViewSet(CurrentUserFilterMixin, viewsets.ModelViewSet):
     serializer_class = serializers.TagSerializer
     queryset = models.Tag.objects.all()
+
+
+class AngularTemplateView(generic.TemplateView):
+    template_name = ''
+
+    def get(self, request, *args, **kwargs):
+        html_file_name = kwargs.get('page')
+        self.template_name = os.path.join('angular', html_file_name)
+
+        return super().get(request, *args, **kwargs)

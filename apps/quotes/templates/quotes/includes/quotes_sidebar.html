@@ -1,32 +1,61 @@
 {% verbatim %}
 <div class="panel panel-info">
-    <div class="panel-heading"><h3 class="panel-title">Categories</h3></div>
+    <div class="panel-heading">
+        <h3 class="panel-title">Categories</h3>
+        <a href="" ng-click="setFilterType('categories')">
+            <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
+        </a>
+    </div>
     <div class="panel-body">
-        <a href="" class="list-group-item" ng-repeat="item in category"
-           ng-click="updateParams('category', item.id)" ng-class="{'active': item.active}">
-        {{ item.name }}
-    </a>
+        <filter items="category" type="category"></filter>
     </div>
 </div>
 
 <div class=" panel panel-info">
-        <div class="panel-heading"><h3 class="panel-title">Autors</h3></div>
-        <div class="panel-body">
-            <a href="" class="list-group-item" ng-repeat="item in author"
-               ng-click="updateParams('author', item.id)" ng-class="{'active': item.active}">
-                {{ item.name }}
-            </a>
+    <div class="panel-heading">
+        <h3 class="panel-title">Autors</h3>
+        <a href="" ng-click="setFilterType('authors')">
+            <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
+        </a>
+    </div>
+    <div class="panel-body">
+        <filter items="author" type="author"></filter>
+    </div>
+</div>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Tags</h3>
+        <a href="" ng-click="setFilterType('tags')">
+            <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
+        </a>
+    </div>
+    <div class="panel-body">
+        <filter items="tags" type="tags"></filter>
+    </div>
+</div>
+
+<div class="modal fade" id="addFilterModal" tabindex="-1" role="dialog" aria-labelledby="addFilterModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <form ng-submit="createFilter()">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="addFilterModalLabel">Add new <strong>{{ filterType }}</strong></h4>
+                </div>
+                <div class="modal-body">
+
+                    <input name="Name" class="form-control" placeholder="Name" ng-model="formData.name">
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Create</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <div class="panel panel-info">
-        <div class="panel-heading"><h3 class="panel-title">Tags</h3></div>
-        <div class="panel-body">
-            <a href="" class="list-group-item" ng-repeat="item in tags"
-               ng-click="updateParams('tags', item.id)" ng-class="{'active': item.active}">
-                {{ item.name }}
-            </a>
-        </div>
-    </div>
-
-    {% endverbatim %}
+{% endverbatim %}

@@ -1,0 +1,13 @@
+{% verbatim %}
+<span href="" class="list-group-item" ng-repeat="item in items">
+    <span ng-show="!item.edit" class="text" ng-dblclick="editFilter(item)">{{ item.name }}</span>
+    <input ng-show="item.edit" class="form-control sm-form-control"
+           sync-focus-with="item.edit" ng-model="item.name" ng-blur="finishEditFilter(item)"
+           ng-keypress="handleEnterKey($event, item)">
+    <div class="material-switch pull-right">
+        <input id="filterSwitch{{ type }}{{ item.id }}" type="checkbox"
+               ng-change="updateParams(type, item.id)" ng-model="filter" ng-checked="item.active"/>
+        <label for="filterSwitch{{ type }}{{ item.id }}" class="label-success"></label>
+    </div>
+</span>
+{% endverbatim %}

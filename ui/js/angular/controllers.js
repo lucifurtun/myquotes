@@ -4,9 +4,11 @@ quotesApp.filter('unsafe', function ($sce) {
     };
 });
 
-quotesApp.controller('filterController', function ($scope, $routeParams, $location, $resource) {
+quotesApp.controller('filterController', function ($scope, $route, $routeParams, $location, $resource) {
     var filterResource;
     $scope.filterParams = {};
+
+    $location.path('/author/false/category/false/tags/false/');
 
     $scope.$on('$routeChangeStart', function (next, current) {
         for (var key in current.params) {
@@ -50,17 +52,38 @@ quotesApp.controller('filterController', function ($scope, $routeParams, $locati
         $location.path(path);
     };
 
+    $scope.setFilterType = function (type) {
+        $scope.filterType = type;
+
+        $('#addFilterModal').modal();
+    };
+
+    $scope.createFilter = function () {
+        var createResource = $resource('/api/' + $scope.filterType + '/');
+
+        createResource.save($scope.formData, function () {
+
+        });
+
+        $('#addFilterModal').modal('hide');
+    };
+
     $scope.setDeleteItem = function (id, title) {
         $scope.deleteItem = {
             'id': id,
             'title': title
         };
-        $('#myModal').modal();
+
+        $('#deleteQuoteModal').modal();
     };
 
-    $scope.delete = function (id) {
+    $scope.deleteQuote = function (id) {
         var deleteResource = $resource('/api/quotes/:quoteId/', {quoteId: id});
-        deleteResource.delete();
+        deleteResource.delete(function (data) {
+            $route.reload();
+        });
+
+        $('#deleteQuoteModal').modal('hide');
     };
 
     makeRequest('/api/categories/', 'category', {});
@@ -93,7 +116,6 @@ quotesApp.controller('filterController', function ($scope, $routeParams, $locati
             if (isNaN(key)) {
                 continue;
             }
-            console.log($scope[field][key], field);
             var is_defined = typeof $scope.filterParams[field] != 'undefined';
             if (is_defined && $scope.filterParams[field].indexOf($scope[field][key].id.toString()) >= 0) {
                 $scope[field][key].active = true;
