@@ -6,3 +6,11 @@ quotesApp.config(function ($resourceProvider, $httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 });
+
+var filtersMapping = {
+    categories: 'category',
+    authors: 'author',
+    tags: 'tags',
+};
+
+quotesApp.value('filtersMapping', filtersMapping);

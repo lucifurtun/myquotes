@@ -32,18 +32,22 @@ quotesApp.directive('filter', function ($resource) {
         templateUrl: '/api/templates/filter.html',
         link: function (scope, element, attrs) {
             scope.updateParams = scope.$parent.updateParams;
-            scope.editFilter = function (item) {
-                item.edit = true;
-            };
-            scope.finishEditFilter = function (item) {
-                item.edit = false;
-                var updateResource = $resource('/api/' + scope.type + '/');
-                // TODO: Finish filter update.
+            if (!scope.$parent.user_id) {
+                scope.editFilter = function (item) {
+                    item.edit = true;
+                };
+                scope.finishEditFilter = function (item) {
+                    item.edit = false;
+                    var settings = {patch: {method: 'PATCH'}};
+                    var updateResource = $resource('/api/' + scope.type + '/:id/', {id: item.id}, settings);
+                    updateResource.patch(item);
 
-            };
-            scope.handleEnterKey = function (keyEvent, item) {
-                if (keyEvent.which == 13) {
-                    scope.finishEditFilter(item);
+                };
+                scope.handleEnterKey = function (keyEvent, item) {
+                    if (keyEvent.which == 13) {
+                        // scope.finishEditFilter(item);
+                        keyEvent.target.blur();
+                    }
                 }
             }
         }

@@ -1,10 +1,10 @@
 {% extends 'layouts/default.html' %}
 {% load static %}
 
-{% block title %}Quotes{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    <div id="quotes-list" class="row" ng-controller="filterController">
+    <div id="quotes-list" class="row" ng-controller="filterController" ng-init="init({{ object.id }})">
         <div id="filters" class="col-xs-6 col-md-3">
             {% include 'quotes/includes/quotes_sidebar.html' %}
         </div>

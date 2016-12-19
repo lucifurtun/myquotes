@@ -4,11 +4,25 @@ quotesApp.filter('unsafe', function ($sce) {
     };
 });
 
-quotesApp.controller('filterController', function ($scope, $route, $routeParams, $location, $resource) {
+quotesApp.controller('filterController', function ($scope, $route, $routeParams, $location, $resource, filtersMapping) {
     var filterResource;
     $scope.filterParams = {};
 
-    $location.path('/author/false/category/false/tags/false/');
+    $location.path('/authors/false/categories/false/tags/false/');
+
+    $scope.init = function (user_id) {
+        $scope.user_id = user_id || 0;
+
+        var params = {};
+        if ($scope.user_id) {
+            params['user_id'] = $scope.user_id;
+        }
+
+        makeRequest('/api/categories/', 'categories', params);
+        makeRequest('/api/authors/', 'authors', params);
+        makeRequest('/api/tags/', 'tags', params);
+        // makeRequest('/api/quotes/', 'quotes', {}, true);
+    };
 
     $scope.$on('$routeChangeStart', function (next, current) {
         for (var key in current.params) {
@@ -17,37 +31,42 @@ quotesApp.controller('filterController', function ($scope, $route, $routeParams,
             if (data.indexOf('false') >= 0) {
                 continue
             }
-            $scope.filterParams[key] = data;
+            $scope.filterParams[filtersMapping[key]] = data;
+        }
+
+        if ($scope.user_id) {
+            $scope.filterParams['user_id'] = $scope.user_id;
         }
 
         makeRequest('/api/quotes/', 'quotes', $scope.filterParams, true);
     });
 
     $scope.updateParams = function (type, id) {
-        var is_defined = typeof $scope.filterParams[type] != 'undefined';
+        var filter_type = filtersMapping[type];
+        var is_defined = typeof $scope.filterParams[filter_type] != 'undefined';
 
-        if (is_defined && $scope.filterParams[type].indexOf(id.toString()) >= 0) {
-            var index = $scope.filterParams[type].indexOf(id.toString());
-            $scope.filterParams[type].splice(index, 1);
+        if (is_defined && $scope.filterParams[filter_type].indexOf(id.toString()) >= 0) {
+            var index = $scope.filterParams[filter_type].indexOf(id.toString());
+            $scope.filterParams[filter_type].splice(index, 1);
         }
         else {
-            if ($scope.filterParams[type] instanceof Array) {
-                $scope.filterParams[type].push(id.toString());
+            if ($scope.filterParams[filter_type] instanceof Array) {
+                $scope.filterParams[filter_type].push(id.toString());
             }
             else {
-                $scope.filterParams[type] = [id.toString()];
+                $scope.filterParams[filter_type] = [id.toString()];
             }
         }
 
         var filters = {
-            author: $routeParams.author || false,
-            category: $routeParams.category || false,
+            authors: $routeParams.authors || false,
+            categories: $routeParams.categories || false,
             tags: $routeParams.tags || false,
         };
 
-        filters[type] = $scope.filterParams[type].join(',') || false;
+        filters[type] = $scope.filterParams[filter_type].join(',') || false;
 
-        var path = '/author/' + filters.author + '/category/' + filters.category + '/tags/' + filters.tags + '/';
+        var path = '/authors/' + filters.authors + '/categories/' + filters.categories + '/tags/' + filters.tags + '/';
         updateFilters(type);
         $location.path(path);
     };
@@ -86,11 +105,6 @@ quotesApp.controller('filterController', function ($scope, $route, $routeParams,
         $('#deleteQuoteModal').modal('hide');
     };
 
-    makeRequest('/api/categories/', 'category', {});
-    makeRequest('/api/authors/', 'author', {});
-    makeRequest('/api/tags/', 'tags', {});
-    // makeRequest('/api/quotes/', 'quotes', {}, true);
-
     function makeRequest(url, field, params, paginated) {
         paginated = paginated || false;
 
@@ -104,8 +118,8 @@ quotesApp.controller('filterController', function ($scope, $route, $routeParams,
         else {
             $scope.req = filterResource.query(params, function (data) {
                 $scope[field] = data;
-                updateFilters('author');
-                updateFilters('category');
+                updateFilters('authors');
+                updateFilters('categories');
                 updateFilters('tags');
             });
         }

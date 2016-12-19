@@ -21,7 +21,8 @@ def schema_view(request):
 
 class CurrentUserFilterMixin(object):
     def get_queryset(self):
-        filters = Q(user_id=self.request.user.id)
+        user_id = self.request.GET.get('user_id', self.request.user.id)
+        filters = Q(user_id=user_id)
         queryset = super().get_queryset()
         return queryset.filter(filters)
 

@@ -2,31 +2,31 @@
 <div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title">Categories</h3>
-        <a href="" ng-click="setFilterType('categories')">
+        <a href="" ng-click="setFilterType('categories')" ng-if="!user_id">
             <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
         </a>
     </div>
     <div class="panel-body">
-        <filter items="category" type="category"></filter>
+        <filter items="categories" type="categories"></filter>
     </div>
 </div>
 
 <div class=" panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title">Autors</h3>
-        <a href="" ng-click="setFilterType('authors')">
+        <a href="" ng-click="setFilterType('authors')" ng-if="!user_id">
             <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
         </a>
     </div>
     <div class="panel-body">
-        <filter items="author" type="author"></filter>
+        <filter items="authors" type="authors"></filter>
     </div>
 </div>
 
 <div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title">Tags</h3>
-        <a href="" ng-click="setFilterType('tags')">
+        <a href="" ng-click="setFilterType('tags')" ng-if="!user_id">
             <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
         </a>
     </div>
