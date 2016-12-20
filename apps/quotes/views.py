@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -25,12 +26,30 @@ class QuoteCreateView(generic.CreateView):
     form_class = forms.QuoteForm
     success_url = reverse_lazy('quotes:quotes_list')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
 
 class QuoteEditView(generic.UpdateView):
     template_name = 'quotes/quote_edit.html'
     model = models.Quote
     form_class = forms.QuoteForm
     success_url = reverse_lazy('quotes:quotes_list')
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+
+        if self.request.user.id != self.object.user.id:
+            raise PermissionDenied
+
+        return response
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 
 class UserQuoteListView(generic.DetailView):
