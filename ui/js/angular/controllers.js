@@ -8,7 +8,9 @@ quotesApp.controller('filterController', function ($scope, $route, $routeParams,
     var filterResource;
     $scope.filterParams = {};
 
-    $location.path('/authors/false/categories/false/tags/false/');
+    if (!$location.$$path) {
+        $location.path('/authors/false/categories/false/tags/false/');
+    }
 
     $scope.init = function (user_id) {
         $scope.user_id = user_id || 0;
@@ -118,9 +120,7 @@ quotesApp.controller('filterController', function ($scope, $route, $routeParams,
         else {
             $scope.req = filterResource.query(params, function (data) {
                 $scope[field] = data;
-                updateFilters('authors');
-                updateFilters('categories');
-                updateFilters('tags');
+                updateFilters(field);
             });
         }
     }
@@ -130,8 +130,9 @@ quotesApp.controller('filterController', function ($scope, $route, $routeParams,
             if (isNaN(key)) {
                 continue;
             }
-            var is_defined = typeof $scope.filterParams[field] != 'undefined';
-            if (is_defined && $scope.filterParams[field].indexOf($scope[field][key].id.toString()) >= 0) {
+            var filter = filtersMapping[field];
+            var is_defined = typeof $scope.filterParams[filter] != 'undefined';
+            if (is_defined && $scope.filterParams[filter].indexOf($scope[field][key].id.toString()) >= 0) {
                 $scope[field][key].active = true;
             }
             else {

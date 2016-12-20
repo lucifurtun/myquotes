@@ -6,7 +6,8 @@
            ng-keypress="handleEnterKey($event, item)">
     <div class="material-switch pull-right">
         <input id="filterSwitch{{ type }}{{ item.id }}" type="checkbox"
-               ng-change="updateParams(type, item.id)" ng-model="filter" ng-checked="item.active"/>
+               ng-click="updateParams(type, item.id)" ng-model="filter" ng-checked="item.active"/>
+
         <label for="filterSwitch{{ type }}{{ item.id }}" class="label-success"></label>
     </div>
 </span>

@@ -32,6 +32,7 @@ quotesApp.directive('filter', function ($resource) {
         templateUrl: '/api/templates/filter.html',
         link: function (scope, element, attrs) {
             scope.updateParams = scope.$parent.updateParams;
+
             if (!scope.$parent.user_id) {
                 scope.editFilter = function (item) {
                     item.edit = true;
