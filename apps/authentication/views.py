@@ -24,3 +24,7 @@ class Settings(generic.UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class Inactive(generic.TemplateView):
+    template_name = 'authentication/inactive.html'
