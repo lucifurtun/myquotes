@@ -7,6 +7,17 @@
 {% block title %}Sign In{% endblock %}
 
 {% block content %}
+    {% if messages %}
+        <div>
+            <strong>Messages:</strong>
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
     {% get_providers as socialaccount_providers %}
 
     {% if socialaccount_providers %}
@@ -18,9 +29,7 @@
             <ul class="socialaccount_providers">
                 {% include "socialaccount/snippets/provider_list.html" with process="login" %}
             </ul>
-
             <div class="login-or">{% trans 'or' %}</div>
-
         </div>
 
         {% include "socialaccount/snippets/login_extra.html" %}
@@ -31,6 +40,10 @@
     {% endif %}
 
     <div class="text-danger small">{{ form.non_field_errors|striptags }}</div>
+    {% for field in form %}
+        <div class="text-danger small">{{ field.errors|striptags }}</div>
+    {% endfor %}
+
 
     <form class="login" method="POST" action="{% url 'account_login' %}">
         {% csrf_token %}

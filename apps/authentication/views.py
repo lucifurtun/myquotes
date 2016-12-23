@@ -2,6 +2,7 @@ from allauth.account.views import LoginView as AllAuthLoginView
 from allauth.account.views import LogoutView as AllAuthLogoutView
 from allauth.account.views import SignupView as AllAuthSignupView
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 from django.views import generic
 
 
@@ -19,8 +20,9 @@ class SignUpView(AllAuthSignupView):
 
 class Settings(generic.UpdateView):
     model = User
+    success_url = reverse_lazy('account_settings')
     template_name = 'authentication/user_edit.html'
-    fields = '__all__'
+    fields = ('username', 'email', 'first_name', 'last_name')
 
     def get_object(self, queryset=None):
         return self.request.user
