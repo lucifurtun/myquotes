@@ -4,13 +4,28 @@ quotesApp.filter('unsafe', function ($sce) {
     };
 });
 
-quotesApp.controller('filterController', function ($scope, $route, $routeParams, $location, $resource, filtersMapping) {
+quotesApp.controller('filterController', function ($scope, $window, $route, $routeParams, $location, $resource, filtersMapping) {
     var filterResource;
     $scope.filterParams = {};
 
     if (!$location.$$path) {
         $location.path('/authors/false/categories/false/tags/false/');
     }
+
+    $scope.desktopView = true;
+    if ($window.innerWidth < 768) {
+        $scope.desktopView = false;
+    }
+
+    $(window).resize(function () {
+        var desktopView = true;
+        if (window.innerWidth < 768) {
+            desktopView = false;
+        }
+        $scope.$apply(function () {
+            $scope.desktopView = desktopView;
+        });
+    });
 
     $scope.init = function (user_id) {
         $scope.user_id = user_id || 0;

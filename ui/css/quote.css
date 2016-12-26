@@ -1,9 +1,6 @@
 #quote-form #id_title {
   min-width: 300px;
 }
-#quote-form #id_reference {
-  max-width: 110px;
-}
 #quote-form #id_source {
   min-width: 180px;
 }
@@ -89,4 +86,9 @@
 .material-switch > input[type="checkbox"]:checked + label::after {
   background: inherit;
   left: 20px;
+}
+@media all and (max-width: 768px) {
+  .select2-container {
+    width: 100% !important;
+  }
 }

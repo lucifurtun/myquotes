@@ -5,7 +5,7 @@
 
 {% block content %}
     <div id="quotes-list" class="row" ng-controller="filterController" ng-init="init({{ object.id }})">
-        <div id="filters" class="col-xs-6 col-md-3">
+        <div id="filters" class="col-xs-12 col-md-3">
             {% include 'quotes/includes/quotes_sidebar.html' %}
         </div>
         <div id="filtered-content" class="col-xs-12 col-sm-6 col-md-8">

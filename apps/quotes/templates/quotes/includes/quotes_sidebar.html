@@ -1,37 +1,43 @@
 {% verbatim %}
 <div class="panel panel-info">
-    <div class="panel-heading">
+    <div class="panel-heading" data-toggle="collapse" data-target="#categories-filter-body" aria-expanded="true">
         <h3 class="panel-title">Categories</h3>
         <a href="" ng-click="setFilterType('categories')" ng-if="!user_id">
             <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
         </a>
     </div>
-    <div class="panel-body">
-        <filter items="categories" type="categories"></filter>
+    <div class="body-wrapper collapse" ng-class="{in: desktopView}" id="categories-filter-body">
+        <div class="panel-body">
+            <filter items="categories" type="categories"></filter>
+        </div>
     </div>
 </div>
 
 <div class=" panel panel-info">
-    <div class="panel-heading">
+    <div class="panel-heading" data-toggle="collapse" data-target="#authors-filter-body">
         <h3 class="panel-title">Autors</h3>
         <a href="" ng-click="setFilterType('authors')" ng-if="!user_id">
             <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
         </a>
     </div>
-    <div class="panel-body">
-        <filter items="authors" type="authors"></filter>
+    <div class="body-wrapper collapse" ng-class="{in: desktopView}" id="authors-filter-body">
+        <div class="panel-body">
+            <filter items="authors" type="authors"></filter>
+        </div>
     </div>
 </div>
 
 <div class="panel panel-info">
-    <div class="panel-heading">
+    <div class="panel-heading" data-toggle="collapse" data-target="#tags-filter-body">
         <h3 class="panel-title">Tags</h3>
         <a href="" ng-click="setFilterType('tags')" ng-if="!user_id">
             <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
         </a>
     </div>
-    <div class="panel-body">
-        <filter items="tags" type="tags"></filter>
+    <div class="body-wrapper collapse" ng-class="{in: desktopView}" id="tags-filter-body">
+        <div class="panel-body">
+            <filter items="tags" type="tags"></filter>
+        </div>
     </div>
 </div>
 
