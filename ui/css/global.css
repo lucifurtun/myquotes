@@ -10,8 +10,25 @@
   height: auto;
   padding: 0 3px;
 }
+#page-wrapper {
+  width: 100%;
+  margin: 0;
+}
+.sidebar-search {
+  display: inline-block;
+  width: 300px;
+  padding: 7px;
+}
 @media all and (max-width: 768px) {
   .navbar-top-links {
+    display: none;
+  }
+  .navbar-header .sidebar-search {
+    display: none;
+  }
+}
+@media all and (min-width: 768px) {
+  .navbar-default.sidebar {
     display: none;
   }
 }
