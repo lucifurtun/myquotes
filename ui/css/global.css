@@ -1,44 +1,55 @@
 #cke_id_text {
-  width: auto !important;
+    width: auto !important;
 }
+
 *:focus {
-  outline: none !important;
+    outline: none !important;
 }
+
 .sm-form-control {
-  display: inline-block;
-  width: auto;
-  height: auto;
-  padding: 0 3px;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    padding: 0 3px;
 }
+
 #page-wrapper {
-  width: 100%;
-  margin: 0;
+    width: 100%;
+    margin: 0;
 }
+
 .navbar-header .sidebar-search {
-  display: inline-block;
-  width: 300px;
-  padding: 7px;
+    display: inline-block;
+    width: 300px;
+    padding: 7px;
+    float: left;
 }
+
 .add-quote-icon {
-  margin-left: 20px;
+    margin-left: 20px;
 }
+
 .add-quote-icon span {
-  font-size: 28px;
+    font-size: 28px;
 }
+
 @media all and (max-width: 768px) {
-  .page-header {
-    margin: 10px 0 8px;
-    font-size: 30px;
-  }
-  .navbar-top-links {
-    display: none;
-  }
-  .navbar-header .sidebar-search {
-    display: none;
-  }
+    .page-header {
+        margin: 10px 0 8px;
+        font-size: 30px;
+    }
+
+    .navbar-top-links {
+        display: none;
+    }
+
+    .navbar-header .sidebar-search {
+        display: none;
+    }
 }
+
 @media all and (min-width: 768px) {
-  .navbar-default.sidebar {
-    display: none;
-  }
+    .navbar-default.sidebar {
+        display: none;
+    }
 }

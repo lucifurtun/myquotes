@@ -9,20 +9,22 @@
                     </span>
                 </div>
             </li>
-            <li>
-                <a href="{% url 'quotes:dashboard' %}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-            </li>
-            <li>
-                <a href="{% url 'quotes:profile' request.user.username %}">
-                    <i class="fa fa-user fa-fw"></i> My Profile
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'account_settings' %}"><i class="fa fa-gear fa-fw"></i> Settings</a>
-            </li>
-            <li>
-                <a href={% url 'account_logout' %}><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-            </li>
+            {% if request.user.is_authenticated %}
+                <li>
+                    <a href="{% url 'quotes:dashboard' %}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="{% url 'quotes:profile' request.user.username %}">
+                        <i class="fa fa-user fa-fw"></i> My Profile
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'account_settings' %}"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                </li>
+                <li>
+                    <a href={% url 'account_logout' %}><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </div>

@@ -11,37 +11,39 @@
         <div class="input-group custom-search-form">
             <input type="text" class="form-control" placeholder="Search...">
             <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-                    </span>
+                <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+            </span>
         </div>
     </div>
 </div>
 
-<ul class="nav navbar-top-links navbar-right">
-    <li>
-        {% if request.user.get_full_name %}
-            {{ request.user.get_full_name }}
-        {% else %}
-            {{ request.user.username }}
-        {% endif %}
-    </li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-user">
-            <li>
-                <a href="{% url 'quotes:profile' request.user.username %}">
-                    <i class="fa fa-user fa-fw"></i> My Profile
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'account_settings' %}"><i class="fa fa-gear fa-fw"></i> Settings</a>
-            </li>
-            <li class="divider"></li>
-            <li>
-                <a href={% url 'account_logout' %}><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-            </li>
-        </ul>
-    </li>
-</ul>
+{% if request.user.is_authenticated %}
+    <ul class="nav navbar-top-links navbar-right">
+        <li>
+            {% if request.user.get_full_name %}
+                {{ request.user.get_full_name }}
+            {% else %}
+                {{ request.user.username }}
+            {% endif %}
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li>
+                    <a href="{% url 'quotes:profile' request.user.username %}">
+                        <i class="fa fa-user fa-fw"></i> My Profile
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'account_settings' %}"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href={% url 'account_logout' %}><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+{% endif %}

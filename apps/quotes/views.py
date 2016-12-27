@@ -59,6 +59,9 @@ class UserQuoteListView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = "{name}'s quotes".format(name=self.object.username)
+        full_name = self.object.get_full_name()
+        name = full_name if full_name else self.object.username
+
+        context['title'] = "{name}'s quotes".format(name=name)
 
         return context
