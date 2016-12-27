@@ -7,7 +7,7 @@
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
-    <p>Already have an account? Then please <a href="{% url 'account_login' %}">sign in</a>.</p>
+    <p>Already have an account? Please <a href="{% url 'account_login' %}">sign in</a>.</p>
 
     <form class="signup" method="POST" action="{% url 'account_signup' %}">
         {% csrf_token %}
