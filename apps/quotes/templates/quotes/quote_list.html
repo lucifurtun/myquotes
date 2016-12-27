@@ -1,7 +1,13 @@
 {% extends 'layouts/default.html' %}
 {% load static %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}{{ title }}
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'quotes:quotes_add' %}" class="add-quote-icon" ng-if="user_id">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </a>
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     <div id="quotes-list" class="row" ng-controller="filterController" ng-init="init({{ object.id }})">

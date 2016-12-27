@@ -13,9 +13,6 @@
                 <a href="{% url 'quotes:dashboard' %}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
-                <a href="{% url 'quotes:quotes_add' %}"><i class="fa fa-plus fa-fw"></i> Add Quote</a>
-            </li>
-            <li>
                 <a href="{% url 'quotes:profile' request.user.username %}">
                     <i class="fa fa-user fa-fw"></i> My Profile
                 </a>
@@ -23,7 +20,6 @@
             <li>
                 <a href="{% url 'account_settings' %}"><i class="fa fa-gear fa-fw"></i> Settings</a>
             </li>
-            <li class="divider"></li>
             <li>
                 <a href={% url 'account_logout' %}><i class="fa fa-sign-out fa-fw"></i> Logout</a>
             </li>

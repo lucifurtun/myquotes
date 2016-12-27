@@ -18,16 +18,31 @@
   margin: 0;
 }
 
-.sidebar-search {
-  display: inline-block;
-  width: 300px;
-  padding: 7px;
+.navbar-header {
+  .sidebar-search {
+    display: inline-block;
+    width: 300px;
+    padding: 7px;
+  }
+}
+
+.add-quote-icon {
+  margin-left: 20px;
+  span {
+    font-size: 28px;
+  }
 }
 
 @media all and (max-width: 768px) {
+  .page-header {
+    margin: 10px 0 8px;
+    font-size: 30px;
+  }
+
   .navbar-top-links {
     display: none;
   }
+
   .navbar-header {
     .sidebar-search {
       display: none;

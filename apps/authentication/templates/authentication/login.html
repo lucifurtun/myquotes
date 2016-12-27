@@ -7,17 +7,6 @@
 {% block title %}Sign In{% endblock %}
 
 {% block content %}
-    {% if messages %}
-        <div>
-            <strong>Messages:</strong>
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-
     {% get_providers as socialaccount_providers %}
 
     {% if socialaccount_providers %}

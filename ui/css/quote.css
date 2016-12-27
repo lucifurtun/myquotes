@@ -91,4 +91,10 @@
   .select2-container {
     width: 100% !important;
   }
+  #quotes-list .panel {
+    margin-bottom: 10px;
+  }
+  #quotes-list .panel .panel-heading {
+    padding: 5px 15px;
+  }
 }
