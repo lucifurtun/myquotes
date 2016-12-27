@@ -24,8 +24,8 @@
         {% include "socialaccount/snippets/login_extra.html" %}
 
     {% else %}
-        <p>If you have not created an account yet, then please
-            <a href="{% url 'account_signup' %}">sign up</a> first.</p>
+        <p>If you don't have an account, please
+            <a href="{% url 'account_signup' %}">sign up</a>.</p>
     {% endif %}
 
     <div class="text-danger small">{{ form.non_field_errors|striptags }}</div>
