@@ -98,10 +98,11 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         var createResource = $resource('/api/' + $scope.filterType + '/');
 
         createResource.save($scope.formData, function () {
-
+            $('#addFilterModal').modal('hide');
+            $scope.init($scope.user_id);
         });
 
-        $('#addFilterModal').modal('hide');
+
     };
 
     $scope.setDeleteItem = function (id, title) {
