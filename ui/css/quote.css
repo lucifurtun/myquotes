@@ -45,6 +45,12 @@
 #quotes-list #filters .list-group-item:hover .visible-on-hover {
   display: block;
 }
+.pagination-wrapper {
+  float: right;
+}
+.pagination-wrapper .pagination {
+  width: 100%;
+}
 .material-switch > input[type="checkbox"] {
   display: none;
 }

@@ -1,6 +1,6 @@
 quotesApp.config(function ($routeProvider, $locationProvider) {
     $routeProvider
-        .when('/authors/:authors/categories/:categories/tags/:tags/', {
+        .when('/authors/:authors/categories/:categories/tags/:tags/page/:page', {
             controller: 'filterController',
         });
 

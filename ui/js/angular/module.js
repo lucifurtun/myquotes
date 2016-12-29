@@ -11,6 +11,7 @@ var filtersMapping = {
     categories: 'category',
     authors: 'author',
     tags: 'tags',
+    page: 'page',
 };
 
 quotesApp.value('filtersMapping', filtersMapping);

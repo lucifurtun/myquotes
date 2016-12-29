@@ -20,6 +20,20 @@
         There are no quotes!
     </div>
 </div>
+<div class="pagination-wrapper">
+    <ul class="pagination">
+        <li ng-if="pages.previous">
+            <a href="" ng-click="updatePage('previous')">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            </a>
+        </li>
+        <li ng-if="pages.next">
+            <a href="" ng-click="updatePage('next')">
+                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+            </a>
+        </li>
+    </ul>
+</div>
 
 <div class="modal fade" id="deleteQuoteModal" tabindex="-1" role="dialog" aria-labelledby="deleteQuoteModalLabel">
     <div class="modal-dialog" role="document">

@@ -9,7 +9,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
     $scope.filterParams = {};
 
     if (!$location.$$path) {
-        $location.path('/authors/false/categories/false/tags/false/');
+        $location.path('/authors/false/categories/false/tags/false/page/1');
     }
 
     $scope.desktopView = true;
@@ -83,8 +83,25 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
 
         filters[type] = $scope.filterParams[filter_type].join(',') || false;
 
-        var path = '/authors/' + filters.authors + '/categories/' + filters.categories + '/tags/' + filters.tags + '/';
+        var path = '/authors/' + filters.authors + '/categories/' + filters.categories + '/tags/' + filters.tags + '/' + 'page/1';
         updateFilters(type);
+        $location.path(path);
+    };
+
+    $scope.updatePage = function (direction) {
+        var page = $scope['pages'][direction];
+
+        if(!page) {
+            return;
+        }
+
+        var filters = {
+            authors: $routeParams.authors || false,
+            categories: $routeParams.categories || false,
+            tags: $routeParams.tags || false,
+        };
+
+        var path = '/authors/' + filters.authors + '/categories/' + filters.categories + '/tags/' + filters.tags + '/page/' + page;
         $location.path(path);
     };
 
@@ -101,8 +118,6 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             $('#addFilterModal').modal('hide');
             $scope.init($scope.user_id);
         });
-
-
     };
 
     $scope.setDeleteItem = function (id, title) {
@@ -131,6 +146,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         if (paginated) {
             $scope.req = filterResource.get(params, function (data) {
                 $scope[field] = data.results;
+                $scope['pages'] = data.pages;
             });
         }
         else {
@@ -156,7 +172,6 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             }
         }
     }
-
 });
 
 quotesApp.controller('dashboardController', function ($scope, $resource) {
