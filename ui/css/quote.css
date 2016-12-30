@@ -97,6 +97,9 @@
   .select2-container {
     width: 100% !important;
   }
+  #quotes-list.row {
+    margin: 0;
+  }
   #quotes-list .panel {
     margin-bottom: 10px;
   }
