@@ -35,10 +35,26 @@ quotesApp.service('dashboardService', function () {
     return tempServiceFunctions;
 });
 
-quotesApp.service('globalService', function () {
+quotesApp.service('globalService', function ($resource) {
     var globalServiceFunctions = {
-        applySelect2: function (selector) {
-            $(selector).select2();
+        applySelect2: function (selector, type) {
+            $(selector).select2({
+                tags: true
+            }).on("change", function (e) {
+                var isNew = $(this).find('[data-select2-tag="true"]');
+                if (isNew.length) {
+                    var settings = {patch: {method: 'PATCH'}, delete: {method: 'DELETE'}};
+                    var resource = $resource('/api/' + type + '/:id/', {id: '@id'}, settings);
+                    resource.save({name: isNew.val()}, function (data) {
+                        isNew.replaceWith('<option selected value="' + data.id + '">' + data.name + '</option>');
+                    });
+                }
+
+            }).on("select2:unselect", function (e) {
+                if ($(e.params.data.element).is('.newTag')) {
+                    // TODO: Decide if we do something if tag unselected.
+                }
+            });
         }
     };
 

@@ -32,7 +32,7 @@
             <div class="form-group">
                 <div class="form-inline">
                     <label for="{{ form.author.id_for_label }}">{{ form.author.label }}:</label>
-                    {{ form.author|attr:"select2" }}
+                    {{ form.author|attr:"select2:authors" }}
                 </div>
             </div>
             <div class="form-group">
@@ -50,13 +50,13 @@
             <div class="form-group">
                 <div class="form-inline">
                     <label for="{{ form.category.id_for_label }}">{{ form.category.label }}:</label>
-                    {{ form.category|attr:"select2" }}
+                    {{ form.category|attr:"select2:categories" }}
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-inline">
                     <label for="{{ form.tags.id_for_label }}">{{ form.tags.label }}:</label>
-                    {{ form.tags|attr:"select2" }}
+                    {{ form.tags|attr:"select2:tags" }}
                 </div>
             </div>
             <div class="form-group">

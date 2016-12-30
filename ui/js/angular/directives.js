@@ -17,7 +17,7 @@ quotesApp.directive('select2', ['globalService', function (globalService) {
             data: '='
         },
         link: function (scope, element, attrs) {
-            globalService.applySelect2(element);
+            globalService.applySelect2(element, attrs.select2);
         }
     }
 }]);
