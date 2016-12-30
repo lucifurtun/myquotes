@@ -91,7 +91,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
     $scope.updatePage = function (direction) {
         var page = $scope['pages'][direction];
 
-        if(!page) {
+        if (!page) {
             return;
         }
 
@@ -136,6 +136,15 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         });
 
         $('#deleteQuoteModal').modal('hide');
+    };
+
+    $scope.setEditItem = function (id) {
+        console.log('clicked');
+        $scope.editItem = {
+            'id': id,
+        };
+
+        $('#editQuoteModal').modal();
     };
 
     function makeRequest(url, field, params, paginated) {
