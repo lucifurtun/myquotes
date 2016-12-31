@@ -173,5 +173,6 @@ LOGIN_REDIRECT_URL = '/'
 CKEDITOR_CONFIGS = {
     "default": {
         "removePlugins": "flash, smiley, specialchar",
+        "height": 100
     }
 }

@@ -1,3 +1,4 @@
+{% load widget_tweaks %}
 {% verbatim %}
 
 <div cg-busy="{promise:req.$promise, message:'Loading', minDuration:300}">
@@ -54,7 +55,9 @@
     </div>
 </div>
 
-<div class="modal fade" id="editQuoteModal" tabindex="-1" role="dialog" aria-labelledby="editQuoteModalLabel">
+{% endverbatim %}
+
+<div class="modal fade" id="editQuoteModal" role="dialog" aria-labelledby="editQuoteModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -63,7 +66,41 @@
                 <h4 class="modal-title" id="editQuoteModalLabel">Quote</h4>
             </div>
             <div class="modal-body">
-                Create new Quote!
+                <form method="post" action="{{ request.path }}" id="quote-form"> {% csrf_token %}
+                    <input type="hidden" name="user" value="{{ request.user.id }}">
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <label for="{{ form.title.id_for_label }}">{{ form.title.label }}:</label>
+                            {{ form.title|add_class:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <label for="{{ form.author.id_for_label }}">{{ form.author.label }}:</label>
+                            {{ form.author|attr:"select2:authors" }}
+                            <label for="{{ form.category.id_for_label }}">{{ form.category.label }}:</label>
+                            {{ form.category|attr:"select2:categories" }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <label for="{{ form.source.id_for_label }}">{{ form.source.label }}:</label>
+                            {{ form.source|add_class:"form-control"|attr:"placeholder:book/video/article" }}
+                            <label for="{{ form.reference.id_for_label }}">{{ form.reference.label }}:</label>
+                            {{ form.reference|add_class:"form-control"|attr:"placeholder:page/minute" }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <label for="{{ form.tags.id_for_label }}">{{ form.tags.label }}:</label>
+                            {{ form.tags|attr:"select2:tags" }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.text.id_for_label }}">{{ form.text.label }}:</label>
+                        {{ form.text|attr:"rows:3" }}
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">Close</button>
@@ -72,5 +109,3 @@
         </div>
     </div>
 </div>
-
-{% endverbatim %}

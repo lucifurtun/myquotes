@@ -26,10 +26,14 @@
 {% block css %}
     {{ block.super }}
     <link href="{% get_static_prefix %}angular-busy/dist/angular-busy.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
     <link href="{% get_static_prefix %}css/quote.css" rel="stylesheet"/>
 {% endblock %}
 
 {% block js %}
     {{ block.super }}
     <script src="{% get_static_prefix %}angular-busy/dist/angular-busy.js"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 {% endblock %}

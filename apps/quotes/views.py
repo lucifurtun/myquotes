@@ -7,13 +7,21 @@ from . import forms
 from . import models
 
 
-class QuoteListView(generic.TemplateView):
+class QuoteListView(generic.TemplateView, generic.CreateView):
     template_name = 'quotes/quote_list.html'
+    model = models.Quote
+    form_class = forms.QuoteForm
 
     def get_context_data(self, **kwargs):
+        self.object = None
         context = super().get_context_data(**kwargs)
         context['title'] = 'My Quotes'
         return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 
 class Dashboard(generic.TemplateView):
