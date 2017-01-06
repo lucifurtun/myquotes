@@ -114,7 +114,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
     $scope.createFilter = function () {
         var createResource = $resource('/api/' + $scope.filterType + '/');
 
-        createResource.save($scope.formData, function () {
+        createResource.save($scope.filterData, function () {
             $('#addFilterModal').modal('hide');
             $scope.init($scope.user_id);
         });
@@ -145,6 +145,10 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         };
 
         $('#editQuoteModal').modal();
+    };
+
+    $scope.editQuote = function (item) {
+
     };
 
     function makeRequest(url, field, params, paginated) {
