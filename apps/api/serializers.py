@@ -4,6 +4,8 @@ from apps.quotes import models
 
 
 class QuoteSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault(), write_only=True)
+
     class Meta:
         model = models.Quote
         fields = '__all__'

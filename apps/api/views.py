@@ -2,7 +2,9 @@ import os
 
 from django.db.models import Q, Count
 from django.views import generic
+from rest_framework import permissions
 from rest_framework import schemas, viewsets
+from rest_framework import views
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.response import Response
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
@@ -57,6 +59,36 @@ class CategoryViewSet(CurrentUserFilterMixin, viewsets.ModelViewSet):
 class TagViewSet(CurrentUserFilterMixin, viewsets.ModelViewSet):
     serializer_class = serializers.TagSerializer
     queryset = models.Tag.objects.all()
+
+
+class FiltersOptionsView(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        return Response('Please use OPTIONS request!')
+
+    def options(self, request, *args, **kwargs):
+        data = {
+            'results': {
+                'authors': self._get_options(models.Author),
+                'categories': self._get_options(models.Category),
+                'tags': self._get_options(models.Tag),
+            }
+        }
+
+        return Response(data)
+
+    def _get_options(self, model):
+        mapping = {
+            'Author': serializers.AuthorSerializer,
+            'Category': serializers.CategorySerializer,
+            'Tag': serializers.TagSerializer
+        }
+
+        serializer = mapping.get(model.__name__)
+        data = serializer(model.objects.filter(user=self.request.user), many=True)
+
+        return data.data
 
 
 class AngularTemplateView(generic.TemplateView):
