@@ -46,6 +46,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             var data = current.params[key].split(',');
 
             if (data.indexOf('false') >= 0) {
+                delete $scope.filterParams[filtersMapping[key]];
                 continue
             }
             $scope.filterParams[filtersMapping[key]] = data;
@@ -244,8 +245,11 @@ quotesApp.controller('search', function ($scope, $route, $routeParams, $location
             search: $scope.search || false,
         };
 
+        console.log(filters);
+
         var path = '/authors/' + filters.authors + '/categories/' + filters.categories +
             '/tags/' + filters.tags + '/search/' + filters.search + '/page/1';
+        console.log(path);
         $location.path(path);
     };
 
