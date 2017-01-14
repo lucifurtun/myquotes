@@ -11,9 +11,11 @@
 
 {% block content %}
     <div id="quotes-list" class="row" ng-controller="filterController" ng-init="init({{ object.id }})">
-        <a href="" class="add-quote-icon" ng-click="setEditItem()">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        </a>
+        {% if request.user.is_superuser %}
+            <a href="" class="add-quote-icon" ng-click="setEditItem()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </a>
+        {% endif %}
         <div id="filters" class="col-xs-12 col-md-3">
             {% include 'quotes/includes/quotes_sidebar.html' %}
         </div>
