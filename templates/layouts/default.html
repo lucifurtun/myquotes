@@ -38,7 +38,7 @@
 
 <body>
 
-<div id="wrapper">
+<div id="wrapper" ng-app="quotesApp">
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -54,7 +54,7 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-        <div class="row" ng-app="quotesApp">
+        <div class="row">
             {% block content %}
             {% endblock %}
         </div>

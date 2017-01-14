@@ -12,6 +12,7 @@ var filtersMapping = {
     authors: 'author',
     tags: 'tags',
     page: 'page',
+    search: 'search',
 };
 
 quotesApp.value('filtersMapping', filtersMapping);

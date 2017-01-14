@@ -9,7 +9,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
     $scope.filterParams = {};
 
     if (!$location.$$path) {
-        $location.path('/authors/false/categories/false/tags/false/page/1');
+        $location.path('/authors/false/categories/false/tags/false/search/false/page/1');
     }
 
     $scope.desktopView = true;
@@ -79,11 +79,14 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             authors: $routeParams.authors || false,
             categories: $routeParams.categories || false,
             tags: $routeParams.tags || false,
+            search: $routeParams.search || false,
         };
 
         filters[type] = $scope.filterParams[filter_type].join(',') || false;
 
-        var path = '/authors/' + filters.authors + '/categories/' + filters.categories + '/tags/' + filters.tags + '/' + 'page/1';
+        var path = '/authors/' + filters.authors + '/categories/' + filters.categories +
+            '/tags/' + filters.tags + '/search/' + filters.search + '/' + 'page/1';
+
         updateFilters(type);
         $location.path(path);
     };
@@ -99,9 +102,11 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             authors: $routeParams.authors || false,
             categories: $routeParams.categories || false,
             tags: $routeParams.tags || false,
+            search: $routeParams.search || false,
         };
 
-        var path = '/authors/' + filters.authors + '/categories/' + filters.categories + '/tags/' + filters.tags + '/page/' + page;
+        var path = '/authors/' + filters.authors + '/categories/' + filters.categories +
+            '/tags/' + filters.tags + '/search/' + filters.search + '/page/' + page;
         $location.path(path);
     };
 
@@ -176,10 +181,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
 
         function onError(data) {
             $scope.quoteDataErrors = data.data;
-            console.log(data);
         }
-
-        console.log($scope.quoteData);
     };
 
     function makeRequest(url, field, params, paginated) {
@@ -230,5 +232,26 @@ quotesApp.controller('dashboardController', function ($scope, $resource) {
         $scope.req = filterResource.query(params, function (data) {
             $scope[field] = data;
         });
+    }
+});
+
+quotesApp.controller('search', function ($scope, $route, $routeParams, $location) {
+    $scope.performSearch = function () {
+        var filters = {
+            authors: $routeParams.authors || false,
+            categories: $routeParams.categories || false,
+            tags: $routeParams.tags || false,
+            search: $scope.search || false,
+        };
+
+        var path = '/authors/' + filters.authors + '/categories/' + filters.categories +
+            '/tags/' + filters.tags + '/search/' + filters.search + '/page/1';
+        $location.path(path);
+    };
+
+    $scope.handleEnterKey = function (keyEvent) {
+        if (keyEvent.which == 13) {
+            $scope.performSearch();
+        }
     }
 });
