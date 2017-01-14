@@ -139,7 +139,23 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
     };
 
     $scope.setEditItem = function (id) {
-        console.log('clicked');
+        // var settings = {options: {method: 'OPTIONS'}};
+        // var optionsResource = $resource('/api/filters', {}, settings);
+        //
+        // optionsResource.options(function (data) {
+        //     var options = {};
+        //     angular.forEach(data.results, function (options, filter) {
+        //         options[filter] = [];
+        //         angular.forEach(options, function (value, key) {
+        //             options[filter].push({
+        //                 id: value.id,
+        //                 label: value.name,
+        //             });
+        //         });
+        //     });
+        //
+        //     $scope.options = options;
+        // });
         $scope.editItem = {
             'id': id,
         };
@@ -148,7 +164,22 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
     };
 
     $scope.editQuote = function (item) {
+        $scope.quoteData.text = CKEDITOR.instances['id_text'].getData();
 
+        var quoteResource = $resource('/api/quotes/');
+        quoteResource.save($scope.quoteData, onSuccess, onError);
+
+        function onSuccess(data) {
+            $route.reload();
+            $('#editQuoteModal').modal('hide');
+        }
+
+        function onError(data) {
+            $scope.quoteDataErrors = data.data;
+            console.log(data);
+        }
+
+        console.log($scope.quoteData);
     };
 
     function makeRequest(url, field, params, paginated) {

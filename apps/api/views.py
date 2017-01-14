@@ -65,13 +65,15 @@ class FiltersOptionsView(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-        return Response({'kk': 'maka'})
+        return Response('Please use OPTIONS request!')
 
     def options(self, request, *args, **kwargs):
         data = {
-            'authors': self._get_options(models.Author),
-            'categories': self._get_options(models.Category),
-            'tags': self._get_options(models.Tag),
+            'results': {
+                'authors': self._get_options(models.Author),
+                'categories': self._get_options(models.Category),
+                'tags': self._get_options(models.Tag),
+            }
         }
 
         return Response(data)

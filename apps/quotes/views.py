@@ -10,7 +10,7 @@ from . import models
 class QuoteListView(generic.TemplateView, generic.CreateView):
     template_name = 'quotes/quote_list.html'
     model = models.Quote
-    form_class = forms.QuoteForm
+    form_class = forms.AngularQuoteForm
 
     def get_context_data(self, **kwargs):
         self.object = None
