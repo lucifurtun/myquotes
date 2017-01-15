@@ -247,11 +247,8 @@ quotesApp.controller('search', function ($scope, $route, $routeParams, $location
             search: $scope.search || false,
         };
 
-        console.log(filters);
-
         var path = '/authors/' + filters.authors + '/categories/' + filters.categories +
             '/tags/' + filters.tags + '/search/' + filters.search + '/page/1';
-        console.log(path);
         $location.path(path);
     };
 
