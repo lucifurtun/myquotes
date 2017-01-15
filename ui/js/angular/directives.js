@@ -18,6 +18,18 @@ quotesApp.directive('select2', ['globalService', function (globalService) {
         },
         link: function (scope, element, attrs) {
             globalService.applySelect2(element, attrs.select2);
+
+            element.bind('change', function () {
+                var model = attrs.ngModel;
+                var splitted = model.split('.');
+                var instance = splitted[0], field = splitted[1];
+
+                setTimeout(function () {
+                    var value = $(element).val();
+                    scope.$parent[instance][field] = value;
+                }, 100);
+
+            });
         }
     }
 }]);

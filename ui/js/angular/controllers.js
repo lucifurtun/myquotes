@@ -173,11 +173,13 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         $scope.quoteData.text = CKEDITOR.instances['id_text'].getData();
 
         var quoteResource = $resource('/api/quotes/');
+
         quoteResource.save($scope.quoteData, onSuccess, onError);
 
         function onSuccess(data) {
             $route.reload();
             $('#editQuoteModal').modal('hide');
+            delete $scope.quoteData;
         }
 
         function onError(data) {
