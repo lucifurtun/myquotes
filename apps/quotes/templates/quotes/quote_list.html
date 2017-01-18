@@ -3,7 +3,7 @@
 
 {% block title %}{{ title }}
     {% if request.user.is_authenticated %}
-        <a href="{% url 'quotes:quotes_add' %}" class="add-quote-icon" ng-if="user_id">
+        <a href="{% url 'quotes:quotes_add' %}" class="add-quote-icon">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         </a>
     {% endif %}
