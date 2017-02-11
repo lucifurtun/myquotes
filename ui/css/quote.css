@@ -26,6 +26,14 @@
   right: 10px;
   color: red;
 }
+#quotes-list #filtered-content .list-group-item .author {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+}
+#quotes-list #filtered-content .list-group-item .author.label-danger {
+  background-color: rgba(217, 83, 79, 0.82);
+}
 #quotes-list #filtered-content .list-group-item:hover .visible-on-hover {
   display: block;
 }

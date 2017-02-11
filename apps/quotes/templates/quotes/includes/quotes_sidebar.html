@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div class=" panel panel-info">
+<div class=" panel panel-danger">
     <div class="panel-heading">
         <h3 class="panel-title" data-target="#authors-filter-body" data-toggle="collapse">Autors</h3>
         <a href="" ng-click="setFilterType('authors')" ng-if="!user_id">
@@ -52,9 +52,7 @@
                     <h4 class="modal-title" id="addFilterModalLabel">Add new <strong>{{ filterType }}</strong></h4>
                 </div>
                 <div class="modal-body">
-
                     <input name="Name" class="form-control" placeholder="Name" ng-model="filterData.name">
-
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-default" data-dismiss="modal">Close</button>

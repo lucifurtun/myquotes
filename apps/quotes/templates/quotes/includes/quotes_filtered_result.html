@@ -15,6 +15,7 @@
             </span>
             <h4 class="list-group-item-heading">{{ quote.title }}</h4>
             <p class="list-group-item-text" ng-bind-html="quote.text | unsafe"></p>
+            <div class="author label label-danger">{{ quote.author.name }}</div>
         </div>
     </div>
     <div ng-if="quotes.length == 0" class="alert alert-warning" role="alert">

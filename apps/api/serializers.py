@@ -8,6 +8,7 @@ class QuoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Quote
+        depth = 1
         fields = '__all__'
 
 
