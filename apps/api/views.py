@@ -51,7 +51,7 @@ class QuoteViewSet(CurrentUserFilterMixin, viewsets.ModelViewSet):
                     text_q = Q(text__icontains=value)
                     filters &= Q(title_q | text_q)
 
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by('-created')
         return queryset.filter(filters)
 
 
