@@ -26,13 +26,21 @@ class CurrentUserFilterMixin(object):
         user_id = self.request.GET.get('user_id', self.request.user.id)
         filters = Q(user_id=user_id)
         queryset = super().get_queryset()
-        return queryset.filter(filters)
+
+        if user_id:
+            return queryset.filter(filters)
+        else:
+            return queryset
 
 
 class QuoteViewSet(CurrentUserFilterMixin, viewsets.ModelViewSet):
     serializer_class = serializers.QuoteSerializer
     queryset = models.Quote.objects.all()
     pagination_class = QuotesResultsSetPagination
+
+    def retrieve(self, request, *args, **kwargs):
+
+        return super().retrieve(request, *args, **kwargs)
 
     def get_queryset(self):
         filters = Q()
