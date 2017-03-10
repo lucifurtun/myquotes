@@ -177,6 +177,8 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+AUTH_USER_MODEL = 'authentication.User'
+
 try:
     from project.local import *
 except ImportError:
