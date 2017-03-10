@@ -9,3 +9,4 @@ node_modules/
 webpack-stats.json
 ui/js/bundles/
 fabfile.py
+project/local.py

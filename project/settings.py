@@ -176,3 +176,8 @@ CKEDITOR_CONFIGS = {
         "height": 100
     }
 }
+
+try:
+    from project.local import *
+except ImportError:
+    pass
