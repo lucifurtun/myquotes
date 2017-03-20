@@ -29,13 +29,13 @@ class AngularQuoteForm(forms.ModelForm):
         self.fields['category'].queryset = self.fields['category'].queryset.filter(user=user)
         self.fields['tags'].queryset = self.fields['tags'].queryset.filter(user=user)
 
-        self.fields['title'].widget.attrs.update({'ng-model': 'quoteData.title'})
-        self.fields['source'].widget.attrs.update({'ng-model': 'quoteData.source'})
-        self.fields['reference'].widget.attrs.update({'ng-model': 'quoteData.reference'})
-        self.fields['author'].widget.attrs.update({'ng-model': 'quoteData.author'})
-        self.fields['category'].widget.attrs.update({'ng-model': 'quoteData.category'})
-        self.fields['tags'].widget.attrs.update({'ng-model': 'quoteData.tags'})
-        self.fields['text'].widget.attrs.update({'ng-model': 'quoteData.text'})
+        self.fields['title'].widget.attrs.update({'ng-model': 'title'})
+        self.fields['source'].widget.attrs.update({'ng-model': 'source'})
+        self.fields['reference'].widget.attrs.update({'ng-model': 'reference'})
+        self.fields['author'].widget.attrs.update({'ng-model': 'author'})
+        self.fields['category'].widget.attrs.update({'ng-model': 'category'})
+        self.fields['tags'].widget.attrs.update({'ng-model': 'tags'})
+        self.fields['text'].widget.attrs.update({'ng-model': 'text'})
 
     class Meta:
         model = models.Quote
