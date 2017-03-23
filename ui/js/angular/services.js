@@ -35,18 +35,28 @@ quotesApp.service('dashboardService', function () {
     return tempServiceFunctions;
 });
 
-quotesApp.service('globalService', function ($resource) {
+quotesApp.service('globalService', function ($resource, $timeout) {
     var globalServiceFunctions = {
-        applySelect2: function (selector, type) {
+        applySelect2: function ($scope, selector, attrs) {
             $(selector).select2({
-                tags: true
-            }).on("change", function (e) {
+                tags: true,
+            }).on("change", function (e, triggered) {
+                triggered = typeof triggered !== 'undefined' ? triggered : false;
+                console.log(e);
+                if (triggered) {
+                    return false;
+                }
+
                 var isNew = $(this).find('[data-select2-tag="true"]');
                 if (isNew.length) {
                     var settings = {patch: {method: 'PATCH'}, delete: {method: 'DELETE'}};
-                    var resource = $resource('/api/' + type + '/:id/', {id: '@id'}, settings);
+                    var resource = $resource('/api/' + attrs.select2 + '/:id/', {id: '@id'}, settings);
                     resource.save({name: isNew.val()}, function (data) {
-                        isNew.replaceWith('<option selected value="' + data.id + '">' + data.name + '</option>');
+                        isNew.attr('value', data.id.toString());
+                        isNew.attr('selected', 'selected');
+                        $timeout(function () {
+                            $(selector).trigger('change', [true]);
+                        });
                     });
                 }
 

@@ -5,6 +5,12 @@ from apps.quotes import models
 
 class QuoteSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault(), write_only=True)
+    tags_id = serializers.PrimaryKeyRelatedField(many=True, queryset=models.Tag.objects.all(), required=False,
+                                                 source='tags')
+    author_id = serializers.PrimaryKeyRelatedField(queryset=models.Author.objects.all(), required=False,
+                                                   source='author')
+    category_id = serializers.PrimaryKeyRelatedField(queryset=models.Category.objects.all(), required=False,
+                                                     source='category')
 
     class Meta:
         model = models.Quote

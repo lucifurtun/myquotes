@@ -170,11 +170,18 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
     };
 
     $scope.editQuote = function (item) {
-        $scope.quoteData.text = CKEDITOR.instances['id_text'].getData();
-
         var quoteResource = $resource('/api/quotes/');
+        var data = {
+            title: $scope.quoteData.title,
+            author_id: parseInt($scope.quoteData.author),
+            category_id: parseInt($scope.quoteData.category),
+            source: $scope.quoteData.source,
+            reference: $scope.quoteData.reference,
+            tags_id: $scope.quoteData.tags,
+            text: CKEDITOR.instances['id_text'].getData()
+        };
 
-        quoteResource.save($scope.quoteData, onSuccess, onError);
+        quoteResource.save(data, onSuccess, onError);
 
         function onSuccess(data) {
             $route.reload();

@@ -21,6 +21,17 @@ def schema_view(request):
     return Response(generator.get_schema(request=request))
 
 
+class ReadNestedWriteFlatMixin(object):
+    def get_serializer_class(self, *args, **kwargs):
+        serializer_class = super(ReadNestedWriteFlatMixin, self).get_serializer_class(*args, **kwargs)
+        if self.request.method in ['PATCH', 'POST', 'PUT']:
+            serializer_class.Meta.depth = 0
+        else:
+            serializer_class.Meta.depth = 1
+
+        return serializer_class
+
+
 class CurrentUserFilterMixin(object):
     def get_queryset(self):
         user_id = self.request.GET.get('user_id', self.request.user.id)
@@ -33,10 +44,13 @@ class CurrentUserFilterMixin(object):
             return queryset
 
 
-class QuoteViewSet(CurrentUserFilterMixin, viewsets.ModelViewSet):
+class QuoteViewSet(CurrentUserFilterMixin, ReadNestedWriteFlatMixin, viewsets.ModelViewSet):
     serializer_class = serializers.QuoteSerializer
     queryset = models.Quote.objects.all()
     pagination_class = QuotesResultsSetPagination
+
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
 
