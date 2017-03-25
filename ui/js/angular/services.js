@@ -40,7 +40,7 @@ quotesApp.service('globalService', function ($resource, $timeout) {
         applySelect2: function ($scope, selector, attrs) {
             $(selector).select2({
                 tags: true,
-                allowClear: true,
+                // allowClear: true,
             }).on("change", function (e, triggered) {
                 triggered = typeof triggered !== 'undefined' ? triggered : false;
                 if (triggered) {

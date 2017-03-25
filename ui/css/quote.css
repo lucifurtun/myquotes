@@ -13,6 +13,14 @@
 #quote-form #id_tags + span {
   min-width: 300px;
 }
+#quotes-list {
+  position: relative;
+}
+#quotes-list .add-quote-icon {
+  position: absolute;
+  top: -62px;
+  left: 222px;
+}
 #quotes-list #filtered-content .list-group-item .visible-on-hover {
   display: none;
 }
@@ -107,6 +115,10 @@
   }
   #quotes-list.row {
     margin: 0;
+  }
+  #quotes-list .add-quote-icon {
+    top: -50px;
+    left: 185px;
   }
   #quotes-list .panel {
     margin-bottom: 10px;
