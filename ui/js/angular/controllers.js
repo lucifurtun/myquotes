@@ -4,7 +4,7 @@ quotesApp.filter('unsafe', function ($sce) {
     };
 });
 
-quotesApp.controller('filterController', function ($scope, $window, $route, $routeParams, $location, $resource, filtersMapping) {
+quotesApp.controller('filterController', function ($scope, $window, $route, $routeParams, $location, $resource, $timeout, filtersMapping) {
     var filterResource;
     $scope.filterParams = {};
 
@@ -145,28 +145,15 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
     };
 
     $scope.setEditItem = function (id) {
-        // var settings = {options: {method: 'OPTIONS'}};
-        // var optionsResource = $resource('/api/filters', {}, settings);
-        //
-        // optionsResource.options(function (data) {
-        //     var options = {};
-        //     angular.forEach(data.results, function (options, filter) {
-        //         options[filter] = [];
-        //         angular.forEach(options, function (value, key) {
-        //             options[filter].push({
-        //                 id: value.id,
-        //                 label: value.name,
-        //             });
-        //         });
-        //     });
-        //
-        //     $scope.options = options;
-        // });
-        var getResource = $resource('/api/quotes/:quoteId/', {quoteId: id});
+        id = typeof id !== 'undefined' ? id : null;
 
-        getResource.get(function (data) {
-            $scope.quoteData = data;
-        });
+        if (id) {
+            var getResource = $resource('/api/quotes/:quoteId/', {quoteId: id});
+
+            getResource.get(function (data) {
+                $scope.quoteData = data;
+            });
+        }
 
         $('#editQuoteModal').modal();
     };
@@ -175,8 +162,8 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         var quoteResource = $resource('/api/quotes/');
         var data = {
             title: $scope.quoteData.title,
-            author_id: parseInt($scope.quoteData.author),
-            category_id: parseInt($scope.quoteData.category),
+            author_id: $scope.quoteData.author,
+            category_id: $scope.quoteData.category,
             source: $scope.quoteData.source,
             reference: $scope.quoteData.reference,
             tags_id: $scope.quoteData.tags,
@@ -188,7 +175,14 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         function onSuccess(data) {
             $route.reload();
             $('#editQuoteModal').modal('hide');
-            delete $scope.quoteData;
+
+            $timeout(function () {
+                delete $scope.quoteData;
+                CKEDITOR.instances['id_text'].setData('');
+                $('#id_author').trigger('change', [true]);
+                $('#id_category').trigger('change', [true]);
+                $('#id_tags').trigger('change', [true]);
+            });
         }
 
         function onError(data) {
