@@ -162,9 +162,11 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         //
         //     $scope.options = options;
         // });
-        $scope.editItem = {
-            'id': id,
-        };
+        var getResource = $resource('/api/quotes/:quoteId/', {quoteId: id});
+
+        getResource.get(function (data) {
+            $scope.quoteData = data;
+        });
 
         $('#editQuoteModal').modal();
     };

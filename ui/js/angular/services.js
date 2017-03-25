@@ -42,7 +42,6 @@ quotesApp.service('globalService', function ($resource, $timeout) {
                 tags: true,
             }).on("change", function (e, triggered) {
                 triggered = typeof triggered !== 'undefined' ? triggered : false;
-                console.log(e);
                 if (triggered) {
                     return false;
                 }
@@ -52,8 +51,9 @@ quotesApp.service('globalService', function ($resource, $timeout) {
                     var settings = {patch: {method: 'PATCH'}, delete: {method: 'DELETE'}};
                     var resource = $resource('/api/' + attrs.select2 + '/:id/', {id: '@id'}, settings);
                     resource.save({name: isNew.val()}, function (data) {
-                        isNew.attr('value', data.id.toString());
-                        isNew.attr('selected', 'selected');
+                        // isNew.attr('value', data.id.toString());
+                        // isNew.attr('selected', 'selected');
+                        isNew.replaceWith('<option selected value="' + data.id + '">' + data.name + '</option>');
                         $timeout(function () {
                             $(selector).trigger('change', [true]);
                         });
