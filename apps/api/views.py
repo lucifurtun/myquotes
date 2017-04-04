@@ -77,7 +77,17 @@ class QuoteViewSet(CurrentUserFilterMixin, ReadNestedWriteFlatMixin, viewsets.Mo
         return queryset.filter(filters)
 
 
-class AuthorViewSet(CurrentUserFilterMixin, viewsets.ModelViewSet):
+class AuthorViewSet(viewsets.ModelViewSet):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        name = self.request.GET.get('name')
+        if name:
+            filters = Q(name__icontains=name)
+            return queryset.filter(filters)
+
+        return queryset
+
     serializer_class = serializers.AuthorSerializer
     queryset = models.Author.objects.all().annotate(Count('quote'))
 
