@@ -84,7 +84,8 @@ class AuthorViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.L
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        filters = Q(users__in=[self.request.user.id]) | Q(user=self.request.user.id)
+        user_id = self.request.GET.get('user_id', self.request.user.id)
+        filters = Q(users__in=[user_id]) | Q(user=user_id)
 
         name = self.request.GET.get('name')
 
