@@ -31,11 +31,13 @@ quotesApp.directive('filter', function ($resource) {
         },
         templateUrl: '/api/templates/filter.html',
         link: function (scope, element, attrs) {
+            scope.user_id = scope.$parent.user_id;
+
             scope.updateParams = scope.$parent.updateParams;
             var settings = {patch: {method: 'PATCH'}, delete: {method: 'DELETE'}};
             var resource = $resource('/api/' + scope.type + '/:id/', {id: '@id'}, settings);
 
-            if (!scope.$parent.user_id) {
+            if (!scope.user_id) {
                 scope.editFilter = function (item) {
                     if(scope.type != 'authors') {
                         item.edit = true;
