@@ -5,11 +5,12 @@ from apps.quotes import models
 
 class AuthorSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault(), write_only=True)
+
     quotes = serializers.IntegerField(source='quote__count', read_only=True)
 
     class Meta:
         model = models.Author
-        fields = ('id', 'name', 'quotes', 'user')
+        fields = ('id', 'name', 'quotes', 'user', 'users')
 
 
 class CategorySerializer(serializers.ModelSerializer):

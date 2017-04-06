@@ -20,7 +20,7 @@ class UserTimeStampedModel(models.Model):
         if not self.id:
             self.created = timezone.now()
         self.modified = timezone.now()
-        return super(UserTimeStampedModel, self).save(*args, **kwargs)
+        super(UserTimeStampedModel, self).save(*args, **kwargs)
 
     class Meta:
         get_latest_by = 'modified'
@@ -33,14 +33,19 @@ class Category(NameAsStrMixin, UserTimeStampedModel):
 
     class Meta:
         verbose_name_plural = 'Categories'
+        unique_together = ('user', 'name')
 
 
 class Tag(NameAsStrMixin, UserTimeStampedModel):
     name = models.CharField(max_length=300)
 
+    class Meta:
+        unique_together = ('user', 'name')
+
 
 class Author(NameAsStrMixin, UserTimeStampedModel):
-    name = models.CharField(max_length=300)
+    name = models.CharField(max_length=300, unique=True)
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='authors')
 
 
 class Quote(UserTimeStampedModel):
@@ -54,6 +59,12 @@ class Quote(UserTimeStampedModel):
 
     class Meta:
         unique_together = (('user', 'title'), ('user', 'text'))
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if not self.author.users.filter(id=self.user.id).exists():
+            self.author.users.add(self.user)
 
     def __str__(self):
         return '{title} - {author}'.format(title=self.title, author=self.author)

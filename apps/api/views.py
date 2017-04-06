@@ -2,11 +2,13 @@ import os
 
 from django.db.models import Q, Count
 from django.views import generic
-from rest_framework import permissions
+from rest_framework import permissions, mixins, status
 from rest_framework import schemas, viewsets
 from rest_framework import views
 from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
 from .paginators import QuotesResultsSetPagination
@@ -77,16 +79,57 @@ class QuoteViewSet(CurrentUserFilterMixin, ReadNestedWriteFlatMixin, viewsets.Mo
         return queryset.filter(filters)
 
 
-class AuthorViewSet(viewsets.ModelViewSet):
+class AuthorViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.ListModelMixin,
+                    mixins.DestroyModelMixin, GenericViewSet):
+
     def get_queryset(self):
         queryset = super().get_queryset()
+        filters = Q(users__in=[self.request.user.id]) | Q(user=self.request.user.id)
 
         name = self.request.GET.get('name')
-        if name:
-            filters = Q(name__icontains=name)
-            return queryset.filter(filters)
 
-        return queryset
+        if name:
+            filters &= Q(name__icontains=name)
+
+            exists = queryset.filter(filters).exists()
+            if not exists:
+                filters = Q(name__icontains=name)
+
+        return queryset.filter(filters)
+
+    def create(self, request, *args, **kwargs):
+        request.data['users'] = [request.user.id]
+
+        serializer = self.get_serializer(data=request.data)
+        headers = self.get_success_headers(serializer.data)
+
+        if serializer.is_valid(raise_exception=False):
+            self.perform_create(serializer)
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            name = serializer.data.get('name')
+            if name:
+                try:
+                    author = models.Author.objects.get(name=name)
+                except models.Author.DoesNotExist:
+                    raise ValidationError(serializer.errors)
+
+                author.users.add(request.user)
+
+                return Response(serializer.data, status=status.HTTP_200_OK, headers=headers)
+
+    def destroy(self, request, *args, **kwargs):
+        quotes_exists = models.Quote.objects.filter(author_id=kwargs['pk']).exists()
+
+        author = self.get_object()
+
+        if quotes_exists:
+            author.users.remove(request.user)
+            return Response(status=status.HTTP_200_OK)
+
+        self.perform_destroy(author)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     serializer_class = serializers.AuthorSerializer
     queryset = models.Author.objects.all().annotate(Count('quote'))

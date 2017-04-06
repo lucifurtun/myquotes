@@ -58,8 +58,13 @@
 #quotes-list #filters .list-group-item .visible-on-hover {
   display: none;
 }
+#quotes-list #filters .list-group-item #remove-filter {
+  font-size: 11px;
+  color: red;
+  cursor: pointer;
+}
 #quotes-list #filters .list-group-item:hover .visible-on-hover {
-  display: block;
+  display: inline-block;
 }
 .pagination-wrapper {
   float: right;

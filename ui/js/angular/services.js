@@ -40,10 +40,36 @@ quotesApp.service('globalService', function ($resource, $timeout) {
         applySelect2: function ($scope, selector, attrs) {
             $(selector).select2({
                 tags: true,
-                // allowClear: true,
-            }).on("change", function (e, triggered) {
+                ajax: attrs.select2 != 'authors' ? null : {
+                    url: '/api/authors',
+                    delay: 250,
+                    dataType: 'json',
+                    data: function (params) {
+                        var query = {
+                            name: params.term,
+                            page: params.page
+                        };
+
+                        return query;
+                    },
+                    processResults: function (data) {
+                        var items = [];
+
+                        for (var i = 0; i < data.length; i++) {
+                            items.push({
+                                id: data[i].id,
+                                text: data[i].name
+                            });
+                        }
+
+                        return {
+                            results: items
+                        };
+                    }
+                }
+            }).on("select2:select", function (e, triggered) {
                 triggered = typeof triggered !== 'undefined' ? triggered : false;
-                if (triggered) {
+                if (triggered || e.params.data != e.params.id) {
                     return false;
                 }
 
@@ -61,10 +87,6 @@ quotesApp.service('globalService', function ($resource, $timeout) {
                     });
                 }
 
-            }).on("select2:unselect", function (e) {
-                if ($(e.params.data.element).is('.newTag')) {
-                    // TODO: Decide if we do something if tag unselected.
-                }
             });
         }
     };

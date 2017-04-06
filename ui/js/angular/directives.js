@@ -37,7 +37,9 @@ quotesApp.directive('filter', function ($resource) {
 
             if (!scope.$parent.user_id) {
                 scope.editFilter = function (item) {
-                    item.edit = true;
+                    if(scope.type != 'authors') {
+                        item.edit = true;
+                    }
                 };
                 scope.finishEditFilter = function (item) {
                     if (item.name) {
@@ -48,6 +50,10 @@ quotesApp.directive('filter', function ($resource) {
                         item.deleted = true;
                         resource.delete(item);
                     }
+                };
+                scope.deleteFilter = function (item) {
+                    item.deleted = true;
+                    resource.delete(item);
                 };
                 scope.handleEnterKey = function (keyEvent, item) {
                     if (keyEvent.which == 13) {
