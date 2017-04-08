@@ -104,11 +104,10 @@ class AuthorViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.L
         serializer = self.get_serializer(data=request.data)
 
         is_valid = serializer.is_valid(raise_exception=False)
-        headers = self.get_success_headers(serializer.data)
 
         if is_valid:
             self.perform_create(serializer)
-
+            headers = self.get_success_headers(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         else:
             name = serializer.data.get('name')
@@ -120,6 +119,7 @@ class AuthorViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.L
 
                 author.users.add(request.user)
 
+                headers = self.get_success_headers(serializer.data)
                 return Response(serializer.data, status=status.HTTP_200_OK, headers=headers)
 
     def destroy(self, request, *args, **kwargs):

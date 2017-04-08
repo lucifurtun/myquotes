@@ -69,7 +69,7 @@ quotesApp.service('globalService', function ($resource, $timeout) {
                 }
             }).on("select2:select", function (e, triggered) {
                 triggered = typeof triggered !== 'undefined' ? triggered : false;
-                if (triggered || e.params.data != e.params.id) {
+                if (triggered || e.params.data.text != e.params.data.id) {
                     return false;
                 }
 
