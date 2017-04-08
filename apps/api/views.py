@@ -71,8 +71,8 @@ class QuoteViewSet(CurrentUserFilterMixin, ReadNestedWriteFlatMixin, viewsets.Mo
             elif field == 'search':
                 value = self.request.GET.get('search')
                 if value:
-                    title_q = Q(title__icontains=value)
-                    text_q = Q(text__icontains=value)
+                    title_q = Q(title__unaccent__icontains=value)
+                    text_q = Q(text__unaccent__icontains=value)
                     filters &= Q(title_q | text_q)
 
         queryset = super().get_queryset().order_by('-created')
