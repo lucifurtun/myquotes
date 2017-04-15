@@ -3,12 +3,12 @@
     <span ng-show="!item.edit" class="text" ng-dblclick="editFilter(item)">
         {{ item.name | limitTo: 30 }} {{item.name.length > 30 ? '...' : ''}}
     </span>
-    <span class="glyphicon glyphicon-remove visible-on-hover" ng-click="deleteFilter(item)"
-          id="remove-filter" ng-if="!user_id">
-    </span>
     <input ng-show="item.edit" class="form-control sm-form-control"
            sync-focus-with="item.edit" ng-model="item.name" ng-blur="finishEditFilter(item)"
            ng-keypress="handleEnterKey($event, item)">
+    <span class="glyphicon glyphicon-remove visible-on-hover" ng-click="deleteFilter(item)"
+          id="remove-filter" ng-if="!user_id">
+    </span>
     <div class="material-switch pull-right">
         <input id="filterSwitch{{ type }}{{ item.id }}" type="checkbox"
                ng-click="updateParams(type, item.id)" ng-model="filter" ng-checked="item.active"/>
