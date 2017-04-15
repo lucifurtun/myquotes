@@ -76,7 +76,7 @@ class QuoteViewSet(CurrentUserFilterMixin, ReadNestedWriteFlatMixin, viewsets.Mo
                     filters &= Q(title_q | text_q)
 
         queryset = super().get_queryset().order_by('-created')
-        return queryset.filter(filters)
+        return queryset.filter(filters).distinct()
 
 
 class AuthorViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.ListModelMixin,
