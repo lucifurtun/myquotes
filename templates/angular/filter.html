@@ -1,6 +1,8 @@
 {% verbatim %}
 <span class="list-group-item" ng-repeat="item in items" ng-if="!item.deleted">
-    <span ng-show="!item.edit" class="text" ng-dblclick="editFilter(item)">{{ item.name }}</span>
+    <span ng-show="!item.edit" class="text" ng-dblclick="editFilter(item)">
+        {{ item.name | limitTo: 30 }} {{item.name.length > 30 ? '...' : ''}}
+    </span>
     <span class="glyphicon glyphicon-remove visible-on-hover" ng-click="deleteFilter(item)"
           id="remove-filter" ng-if="!user_id">
     </span>

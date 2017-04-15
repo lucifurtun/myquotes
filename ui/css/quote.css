@@ -62,6 +62,7 @@
 }
 #quotes-list #filters .list-group-item {
   padding: 5px 8px;
+  overflow-y: auto;
 }
 #quotes-list #filters .list-group-item .text {
   padding: 1px 0;
