@@ -51,13 +51,6 @@ class QuoteViewSet(CurrentUserFilterMixin, ReadNestedWriteFlatMixin, viewsets.Mo
     queryset = models.Quote.objects.all()
     pagination_class = QuotesResultsSetPagination
 
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
-
-    def retrieve(self, request, *args, **kwargs):
-
-        return super().retrieve(request, *args, **kwargs)
-
     def get_queryset(self):
         filters = Q()
         fields = dict(self.request.GET).keys()
@@ -121,6 +114,8 @@ class AuthorViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.L
 
                 headers = self.get_success_headers(serializer.data)
                 return Response(serializer.data, status=status.HTTP_200_OK, headers=headers)
+
+            raise ValidationError(serializer.errors)
 
     def destroy(self, request, *args, **kwargs):
         quotes_exists = models.Quote.objects.filter(author_id=kwargs['pk']).exists()

@@ -88,7 +88,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         var path = '/authors/' + filters.authors + '/categories/' + filters.categories +
             '/tags/' + filters.tags + '/search/' + filters.search + '/' + 'page/1';
 
-        updateFilters(type);
+        $scope.updateFilters(type);
         $location.path(path);
     };
 
@@ -113,6 +113,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
 
     $scope.setFilterType = function (type) {
         $scope.filterType = type;
+        delete $scope.filterData;
 
         $('#addFilterModal').modal();
     };
@@ -204,12 +205,12 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         else {
             $scope.req = filterResource.query(params, function (data) {
                 $scope[field] = data;
-                updateFilters(field);
+                $scope.updateFilters(field);
             });
         }
     }
 
-    function updateFilters(field) {
+    $scope.updateFilters = function (field) {
         for (var key in $scope[field]) {
             if (isNaN(key)) {
                 continue;

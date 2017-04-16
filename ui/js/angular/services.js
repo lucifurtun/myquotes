@@ -42,7 +42,7 @@ quotesApp.service('globalService', function ($resource, $timeout) {
                 tags: true,
                 ajax: attrs.select2 != 'authors' ? null : {
                     url: '/api/authors',
-                    delay: 250,
+                    delay: 400,
                     dataType: 'json',
                     data: function (params) {
                         var query = {
@@ -83,6 +83,7 @@ quotesApp.service('globalService', function ($resource, $timeout) {
                         isNew.replaceWith('<option selected value="' + data.id + '">' + data.name + '</option>');
                         $timeout(function () {
                             $(selector).trigger('change', [true]);
+                            $scope.$parent.init($scope.$parent.user_id);
                         });
                     });
                 }
