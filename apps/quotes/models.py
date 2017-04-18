@@ -63,7 +63,7 @@ class Quote(UserTimeStampedModel):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-        if not self.author.users.filter(id=self.user.id).exists():
+        if self.author and not self.author.users.filter(id=self.user.id).exists():
             self.author.users.add(self.user)
 
     def __str__(self):
