@@ -1,4 +1,4 @@
-var quotesApp = angular.module("quotesApp", ['ngResource', 'cgBusy', 'ngRoute']);
+var quotesApp = angular.module('quotesApp', ['ngResource', 'cgBusy', 'ngRoute']);
 
 quotesApp.config(function ($resourceProvider, $httpProvider) {
     $resourceProvider.defaults.stripTrailingSlashes = false;
@@ -12,7 +12,7 @@ var filtersMapping = {
     authors: 'author',
     tags: 'tags',
     page: 'page',
-    search: 'search',
+    search: 'search'
 };
 
 quotesApp.value('filtersMapping', filtersMapping);

@@ -47,7 +47,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
 
             if (data.indexOf('false') >= 0) {
                 delete $scope.filterParams[filtersMapping[key]];
-                continue
+                continue;
             }
             $scope.filterParams[filtersMapping[key]] = data;
         }
@@ -224,7 +224,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
                 $scope[field][key].active = false;
             }
         }
-    }
+    };
 });
 
 quotesApp.controller('dashboardController', function ($scope, $resource) {
@@ -260,5 +260,5 @@ quotesApp.controller('search', function ($scope, $route, $routeParams, $location
         if (keyEvent.which == 13) {
             $scope.performSearch();
         }
-    }
+    };
 });

@@ -7,7 +7,7 @@ quotesApp.directive('pieChart', ['dashboardService', function (dashboardService)
         link: function (scope, element, attrs) {
             dashboardService.drawPieChart(element, scope.data);
         }
-    }
+    };
 }]);
 
 quotesApp.directive('select2', ['globalService', function (globalService) {
@@ -19,7 +19,7 @@ quotesApp.directive('select2', ['globalService', function (globalService) {
         link: function (scope, element, attrs) {
             globalService.applySelect2(scope, element, attrs);
         }
-    }
+    };
 }]);
 
 quotesApp.directive('filter', function ($resource) {
@@ -27,7 +27,7 @@ quotesApp.directive('filter', function ($resource) {
         restrict: 'E',
         scope: {
             items: '=items',
-            type: '@type',
+            type: '@type'
         },
         templateUrl: '/api/templates/filter.html',
         link: function (scope, element, attrs) {
@@ -62,25 +62,25 @@ quotesApp.directive('filter', function ($resource) {
                         // scope.finishEditFilter(item);
                         keyEvent.target.blur();
                     }
-                }
+                };
             }
         }
-    }
+    };
 });
 
 quotesApp.directive('syncFocusWith', function ($timeout, $rootScope) {
     return {
         restrict: 'A',
         scope: {
-            focusValue: "=syncFocusWith",
-            ngShow: "="
+            focusValue: '=syncFocusWith',
+            ngShow: '='
         },
         link: function (scope, $element, attrs) {
             scope.$watch('focusValue', function (currentValue, previousValue) {
                 setTimeout(function () {
                     $element[0].focus();
                 }, 1);
-            })
+            });
         }
-    }
+    };
 });

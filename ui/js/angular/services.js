@@ -2,7 +2,7 @@ quotesApp.service('dashboardService', function () {
     var tempServiceFunctions = {
 
         drawPieChart: function (selector, rawData) {
-            data = [];
+            var data = [];
             for (var i = 0; i < rawData.length; i++) {
                 data.push({
                     label: rawData[i].name,
@@ -21,7 +21,7 @@ quotesApp.service('dashboardService', function () {
                 },
                 tooltip: true,
                 tooltipOpts: {
-                    content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+                    content: '%p.0%, %s', // show percentages, rounding to 2 decimal places
                     shifts: {
                         x: 20,
                         y: 0
@@ -40,7 +40,7 @@ quotesApp.service('globalService', function ($resource, $timeout) {
         applySelect2: function ($scope, selector, attrs) {
             $(selector).select2({
                 tags: true,
-                ajax: attrs.select2 != 'authors' ? null : {
+                ajax: attrs.select2 !== 'authors' ? null : {
                     url: '/api/authors',
                     delay: 400,
                     dataType: 'json',
@@ -67,7 +67,7 @@ quotesApp.service('globalService', function ($resource, $timeout) {
                         };
                     }
                 }
-            }).on("select2:select", function (e, triggered) {
+            }).on('select2:select', function (e, triggered) {
                 triggered = typeof triggered !== 'undefined' ? triggered : false;
                 if (triggered || e.params.data.text != e.params.data.id) {
                     return false;
