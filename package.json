@@ -1,0 +1,20 @@
+{
+  "name": "myquotes",
+  "version": "1.0.0",
+  "description": "The app to keep MyQuotes",
+  "dependencies": {
+    "angular": "1.5.9",
+    "angular-resource": "1.5.9",
+    "angular-route": "1.5.9",
+    "angular-busy": "^4.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucifurtun/myquotes.git"
+  },
+  "author": "Luci Furtun",
+  "bugs": {
+    "url": "https://github.com/lucifurtun/myquotes/issues"
+  },
+  "homepage": "https://github.com/lucifurtun/myquotes#readme"
+}
