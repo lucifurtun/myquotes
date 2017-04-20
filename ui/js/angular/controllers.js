@@ -27,8 +27,10 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         });
     });
 
-    $scope.init = function (user_id) {
-        $scope.user_id = user_id || 0;
+    $scope.init = function (userId, loggedUserID) {
+        $scope.user_id = userId || 0;
+        $scope.loggedUserId = loggedUserID || 0;
+        $scope.readOnly = (userId !== loggedUserID);
 
         var params = {};
         if ($scope.user_id) {

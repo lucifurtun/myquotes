@@ -16,6 +16,7 @@ class QuoteListView(generic.TemplateView, generic.CreateView):
         self.object = None
         context = super().get_context_data(**kwargs)
         context['title'] = 'My Quotes'
+        context['object'] = {'id': 0}  # FIXME: It's just a temporary workaround
         return context
 
     def get_form_kwargs(self):
