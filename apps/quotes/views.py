@@ -68,9 +68,14 @@ class UserQuoteListView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         full_name = self.object.get_full_name()
         name = full_name if full_name else self.object.username
 
-        context['title'] = "{name}'s quotes".format(name=name)
+        title = "My Quotes" if self.request.user.is_authenticated() else "{name}'s quotes".format(name=name)
+        context['title'] = title
+
+        if self.request.user.is_authenticated():
+            context['form'] = forms.AngularQuoteForm(user=self.request.user)
 
         return context
