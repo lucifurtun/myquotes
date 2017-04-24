@@ -1,3 +1,5 @@
+var ALL_ITEMS_ID = 0;
+
 quotesApp.filter('unsafe', function ($sce) {
     return function (val) {
         return $sce.trustAsHtml(val);
@@ -62,7 +64,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             $scope.filterParams[filtersMapping[key]] = data;
         }
 
-        if ($scope.user_id && !$scope.loggedUserId) {
+        if (($scope.user_id && !$scope.loggedUserId) || $scope.user_id == ALL_ITEMS_ID) {
             $scope.filterParams['user_id'] = $scope.user_id;
         }
 
@@ -211,6 +213,16 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
                 $scope[field] = data.results;
                 $scope['pages'] = data.pages;
             });
+            setTimeout(function () {
+                $('.grid').masonry({
+                    itemSelector: '.grid-item',
+                    // columnWidth: '.grid-item',
+                    columnWidth: 275,
+                    // isFitWidth: true,
+                    // percentPosition: true
+                });
+                console.log("test");
+            }, 2000);
         }
         else {
             $scope.req = filterResource.query(params, function (data) {
