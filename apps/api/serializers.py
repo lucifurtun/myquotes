@@ -41,25 +41,6 @@ class QuoteSerializer(serializers.ModelSerializer):
     category_id = serializers.PrimaryKeyRelatedField(queryset=models.Category.objects.all(),
                                                      required=False, allow_null=True, source='category')
 
-    def create(self, validated_data):
-        # tags_name = validated_data.pop('tags')
-        # if tags_name:
-        #     tags_id = []
-        #     tag_objects = models.Tag.objects.filter(name__in=tags_name)
-        #     # ids_by_names = dict(tag_objects.values_list('name', 'id'))
-        #     ids_by_names = {tag.name: tag for tag in tag_objects}
-        #
-        #     for tag in tags_name:
-        #         tag_object = ids_by_names.get(tag)
-        #         if tag_object:
-        #             tags_id.append(tag_object)
-        #         else:
-        #             tags_id.append(models.Tag.objects.create(name=tag))
-        #
-        #     validated_data['tags'] = tags_id
-
-        return super().create(validated_data)
-
     class Meta:
         model = models.Quote
         depth = 1
