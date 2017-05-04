@@ -38,19 +38,20 @@ quotesApp.service('dashboardService', function () {
 quotesApp.service('globalService', function ($resource, $timeout) {
     var globalServiceFunctions = {
         applySelect2: function ($scope, selector, attrs) {
-            $(selector).select2({
-                tags: true,
-                ajax: attrs.select2 !== 'authors' ? null : {
-                    url: '/api/authors',
+            $scope.$watchCollection(attrs.select2, function (options) {
+                var data = typeof options.data !== 'undefined' ? options.data : null;
+                var type = typeof options.type !== 'undefined' ? options.type : null;
+                var ajax = typeof options.ajax !== 'undefined' ? options.ajax : null;
+
+                var ajaxConfig = {
+                    url: ajax,
                     delay: 400,
                     dataType: 'json',
                     data: function (params) {
-                        var query = {
+                        return {
                             name: params.term,
                             page: params.page
                         };
-
-                        return query;
                     },
                     processResults: function (data) {
                         var items = [];
@@ -66,29 +67,37 @@ quotesApp.service('globalService', function ($resource, $timeout) {
                             results: items
                         };
                     }
-                }
-            }).on('select2:select', function (e, triggered) {
-                triggered = typeof triggered !== 'undefined' ? triggered : false;
-                if (triggered || e.params.data.text != e.params.data.id) {
-                    return false;
-                }
+                };
 
-                var isNew = $(this).find('[data-select2-tag="true"]');
-                if (isNew.length) {
-                    var settings = {patch: {method: 'PATCH'}, delete: {method: 'DELETE'}};
-                    var resource = $resource('/api/' + attrs.select2 + '/:id/', {id: '@id'}, settings);
-                    resource.save({name: isNew.val()}, function (data) {
-                        // isNew.attr('value', data.id.toString());
-                        // isNew.attr('selected', 'selected');
-                        isNew.replaceWith('<option selected value="' + data.id + '">' + data.name + '</option>');
-                        $timeout(function () {
-                            $(selector).trigger('change', [true]);
-                            $scope.$parent.init($scope.$parent.user_id);
-                        });
-                    });
-                }
+                $(selector).select2({
+                    tags: true,
+                    ajax: ajax === null ? null : ajaxConfig
+                }).on('select2:select', function (e, triggered) {
+                    triggered = typeof triggered !== 'undefined' ? triggered : false;
+                    if (triggered || e.params.data.text != e.params.data.id) {
+                        return false;
+                    }
 
+                    var isNew = $(this).find('[data-select2-tag="true"]');
+                    if (isNew.length) {
+                        var settings = {patch: {method: 'PATCH'}, delete: {method: 'DELETE'}};
+                        var resource = $resource('/api/' + data + '/:id/', {id: '@id'}, settings);
+
+                        if (type === 'dynamic') {
+                            resource.save({name: isNew.val()}, function (data) {
+                                isNew.replaceWith('<option selected value="' + data.id + '">' + data.name + '</option>');
+                                $timeout(function () {
+                                    $(selector).trigger('change', [true]);
+                                    $scope.$parent.init($scope.$parent.user_id);
+                                });
+                            });
+                        }
+                    }
+
+                });
             });
+
+
         }
     };
 

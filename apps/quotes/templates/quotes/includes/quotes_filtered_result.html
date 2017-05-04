@@ -78,9 +78,9 @@
                     <div id="authors" class="form-group">
                         <div class="form-inline">
                             <label for="{{ form.author.id_for_label }}">{{ form.author.label }}:</label>
-                            {{ form.author|attr:"select2:authors" }}
+                            {{ form.author|attr:"select2:{data: 'authors', type: 'dynamic', ajax: '/api/authors/'}" }}
                             <label for="{{ form.category.id_for_label }}">{{ form.category.label }}:</label>
-                            {{ form.category|attr:"select2:categories" }}
+                            {{ form.category|attr:"select2:{data: 'categories', type: 'dynamic'}" }}
                         </div>
                     </div>
                     <div id="source" class="form-group">
@@ -91,12 +91,20 @@
                             {{ form.reference|add_class:"form-control"|attr:"placeholder:page/minute" }}
                         </div>
                     </div>
+                    {% verbatim %}
                     <div id="tags" class="form-group">
                         <div class="form-inline">
-                            <label for="{{ form.tags.id_for_label }}">{{ form.tags.label }}:</label>
-                            {{ form.tags|attr:"select2:tags" }}
+                            <label for="id_tags">Tags:</label>
+
+                            <select id="id_tags"
+                                    ng-model="quoteData.tags" name="tags" multiple
+                                    select2="{data: 'tags', type: 'simple'}">
+                                <option ng-repeat="item in options.tags" ng-value="item.name">{{ item.name }}</option>
+                            </select>
+
                         </div>
                     </div>
+                    {% endverbatim %}
                     <div id="text" class="form-group">
                         <label for="{{ form.text.id_for_label }}">{{ form.text.label }}:</label>
                         {{ form.text|attr:"rows:3" }}
