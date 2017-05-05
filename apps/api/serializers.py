@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from . import fields
 from apps.quotes import models
 
 
@@ -31,8 +32,10 @@ class TagSerializer(serializers.ModelSerializer):
 
 class QuoteSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault(), write_only=True)
-    tags_id = serializers.PrimaryKeyRelatedField(many=True, queryset=models.Tag.objects.all(),
-                                                 required=False, allow_null=True, source='tags')
+    tags_name = fields.CreatableSlugRelatedField(required=False, queryset=models.Tag.objects.all(), many=True,
+                                                 allow_null=True, slug_field='name', source='tags')
+    # tags_id = serializers.PrimaryKeyRelatedField(many=True, queryset=models.Tag.objects.all(),
+    #                                              required=False, allow_null=True, source='tags')
     author_id = serializers.PrimaryKeyRelatedField(queryset=models.Author.objects.all(),
                                                    required=False, allow_null=True, source='author')
     category_id = serializers.PrimaryKeyRelatedField(queryset=models.Category.objects.all(),

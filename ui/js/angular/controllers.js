@@ -50,7 +50,11 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         makeRequest('/api/categories/', 'categories', params);
         makeRequest('/api/authors/', 'authors', params);
         makeRequest('/api/tags/', 'tags', params);
-        // makeRequest('/api/quotes/', 'quotes', {}, true);
+
+        var optionsResource = $resource('/api/filters/', {}, {options: {method: 'OPTIONS'}});
+        optionsResource.options(function (data) {
+            $scope.options = data.results;
+        });
     };
 
     $scope.$on('$routeChangeStart', function (next, current) {
@@ -179,7 +183,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             category_id: $scope.quoteData.category,
             source: $scope.quoteData.source,
             reference: $scope.quoteData.reference,
-            tags_id: $scope.quoteData.tags,
+            tags_name: $scope.quoteData.tags,
             text: CKEDITOR.instances['id_text'].getData()
         };
 
@@ -187,6 +191,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
 
         function onSuccess(data) {
             $route.reload();
+            $scope.init($scope.user_id);
             $('#editQuoteModal').modal('hide');
 
             $timeout(function () {
@@ -270,7 +275,7 @@ quotesApp.controller('search', function ($scope, $route, $routeParams, $location
             authors: $routeParams.authors || false,
             categories: $routeParams.categories || false,
             tags: $routeParams.tags || false,
-            search: $scope.search || false,
+            search: $scope.search || false
         };
 
         var path = '/authors/' + filters.authors + '/categories/' + filters.categories +
