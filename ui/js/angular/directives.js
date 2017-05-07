@@ -39,7 +39,7 @@ quotesApp.directive('filter', function ($resource) {
 
             if (!scope.readOnly) {
                 scope.editFilter = function (item) {
-                    if(scope.type != 'authors') {
+                    if (scope.type != 'authors') {
                         item.edit = true;
                     }
                 };
@@ -84,3 +84,70 @@ quotesApp.directive('syncFocusWith', function ($timeout, $rootScope) {
         }
     };
 });
+
+quotesApp.directive('masonryGrid', function ($timeout, $window, $document, $resource) {
+    return {
+        restrict: 'A',
+
+        link: function (scope, $element, attrs) {
+            scope.$parent.grid = $('.grid').masonry({
+                itemSelector: '.grid-item',
+                columnWidth: 275
+            });
+
+            var docHeight = $($document).height();
+            var windowHeight = $($window).height();
+
+            var nextPage = 2;
+            var blockRequest = false;
+
+            $timeout(function () {
+                updateDimensions();
+
+                angular.element(document).bind('scroll', function () {
+
+                    if (!nextPage || blockRequest) {
+                        return false;
+                    }
+
+                    if ($window.pageYOffset >= (docHeight - windowHeight) - 200) {
+                        alert('Now');
+                        blockRequest = true;
+                        var quotesResource = $resource('/api/quotes/');
+                        var params = {'page': nextPage, 'user_id': 0};
+                        scope.req = quotesResource.get(params, function (data) {
+                            nextPage = data.pages.next;
+                            scope.quotes = scope.quotes.concat(data.results);
+
+                            $timeout(function () {
+                                scope.$apply();
+                                updateDimensions();
+                            });
+                        });
+                    }
+                });
+            }, 500);
+
+
+            function updateDimensions() {
+                $timeout(function () {
+                    docHeight = $($document).height();
+                    windowHeight = $($window).height();
+                    blockRequest = false;
+                }, 500);
+            }
+        }
+    };
+});
+
+
+quotesApp.directive('masonryItem', ['$timeout', function ($timeout) {
+    return {
+        restrict: 'AEC',
+        link: function (scope, $element, attrs) {
+            $timeout(function () {
+                scope.$parent.grid.append($element).masonry('appended', $element);
+            });
+        }
+    };
+}]);

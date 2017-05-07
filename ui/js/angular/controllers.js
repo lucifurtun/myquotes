@@ -218,16 +218,6 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
                 $scope[field] = data.results;
                 $scope['pages'] = data.pages;
             });
-            setTimeout(function () {
-                $('.grid').masonry({
-                    itemSelector: '.grid-item',
-                    // columnWidth: '.grid-item',
-                    columnWidth: 275,
-                    // isFitWidth: true,
-                    // percentPosition: true
-                });
-                console.log("test");
-            }, 2000);
         }
         else {
             $scope.req = filterResource.query(params, function (data) {
