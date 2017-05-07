@@ -105,13 +105,11 @@ quotesApp.directive('masonryGrid', function ($timeout, $window, $document, $reso
                 updateDimensions();
 
                 angular.element(document).bind('scroll', function () {
-
                     if (!nextPage || blockRequest) {
                         return false;
                     }
 
                     if ($window.pageYOffset >= (docHeight - windowHeight) - 200) {
-                        alert('Now');
                         blockRequest = true;
                         var quotesResource = $resource('/api/quotes/');
                         var params = {'page': nextPage, 'user_id': 0};
