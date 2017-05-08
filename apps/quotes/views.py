@@ -11,7 +11,6 @@ class QuoteListView(generic.TemplateView):
     template_name = 'quotes/all_quote_list.html'
 
     def get_context_data(self, **kwargs):
-        self.object = None
         context = super().get_context_data(**kwargs)
         context['title'] = 'All Quotes'
         return context

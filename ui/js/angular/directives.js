@@ -101,6 +101,11 @@ quotesApp.directive('masonryGrid', function ($timeout, $window, $document, $reso
             var nextPage = 2;
             var blockRequest = false;
 
+            scope.refreshGrid = function () {
+                scope.$parent.grid.masonry('reloadItems').masonry('layout');
+                nextPage = 2;
+            };
+
             $timeout(function () {
                 updateDimensions();
 
@@ -109,11 +114,12 @@ quotesApp.directive('masonryGrid', function ($timeout, $window, $document, $reso
                         return false;
                     }
 
-                    if ($window.pageYOffset >= (docHeight - windowHeight) - 200) {
+                    if ($window.pageYOffset >= (docHeight - windowHeight) - 400) {
                         blockRequest = true;
                         var quotesResource = $resource('/api/quotes/');
-                        var params = {'page': nextPage, 'user_id': 0};
-                        scope.req = quotesResource.get(params, function (data) {
+                        var params = scope.filterParams;
+                        params.page = nextPage;
+                        quotesResource.get(params, function (data) {
                             nextPage = data.pages.next;
                             scope.quotes = scope.quotes.concat(data.results);
 

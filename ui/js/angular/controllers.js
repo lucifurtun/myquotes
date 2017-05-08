@@ -72,6 +72,12 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             $scope.filterParams['user_id'] = $scope.user_id;
         }
 
+        $timeout(function () {
+            if ($scope.grid) {
+                $scope.refreshGrid();
+            }
+        }, 500);
+
         makeRequest('/api/quotes/', 'quotes', $scope.filterParams, true);
     });
 
