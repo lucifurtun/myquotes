@@ -175,6 +175,11 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
 
             getResource.get(function (data) {
                 $scope.quoteData = data;
+                $scope.quoteData.tags = data.tags_name;
+
+                $timeout(function () {
+                    $('#id_tags').trigger('change')
+                })
             });
         }
 
