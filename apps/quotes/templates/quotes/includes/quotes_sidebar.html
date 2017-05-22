@@ -3,7 +3,7 @@
     <div class="panel-heading">
         <h3 class="panel-title" data-target="#categories-filter-body" aria-expanded="true" data-toggle="collapse">
             Categories</h3>
-        <a href="" ng-click="setFilterType('categories')" ng-if="!user_id">
+        <a href="" ng-click="setFilterType('categories')" ng-if="!readOnly">
             <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
         </a>
     </div>
@@ -17,7 +17,7 @@
 <div class=" panel panel-danger">
     <div class="panel-heading">
         <h3 class="panel-title" data-target="#authors-filter-body" data-toggle="collapse">Authors</h3>
-        <a href="" ng-click="setFilterType('authors')" ng-if="!user_id">
+        <a href="" ng-click="setFilterType('authors')" ng-if="!readOnly">
             <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
         </a>
     </div>
@@ -31,7 +31,7 @@
 <div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title" data-target="#tags-filter-body" data-toggle="collapse">Tags</h3>
-        <a href="" ng-click="setFilterType('tags')" ng-if="!user_id">
+        <a href="" ng-click="setFilterType('tags')" ng-if="!readOnly">
             <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
         </a>
     </div>

@@ -1,3 +1,5 @@
+var ALL_ITEMS_ID = 0;
+
 quotesApp.filter('unsafe', function ($sce) {
     return function (val) {
         return $sce.trustAsHtml(val);
@@ -27,11 +29,21 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         });
     });
 
-    $scope.init = function (user_id) {
-        $scope.user_id = user_id || 0;
+    $scope.init = function (userId, loggedUserID) {
+        if ($scope.user_id === undefined) {
+            $scope.user_id = userId || 0;
+        }
+
+        if ($scope.loggedUserId === undefined) {
+            $scope.loggedUserId = loggedUserID || 0;
+        }
+
+        if ($scope.readOnly === undefined) {
+            $scope.readOnly = (userId !== loggedUserID);
+        }
 
         var params = {};
-        if ($scope.user_id) {
+        if ($scope.user_id && !$scope.loggedUserId) {
             params['user_id'] = $scope.user_id;
         }
 
@@ -56,27 +68,33 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             $scope.filterParams[filtersMapping[key]] = data;
         }
 
-        if ($scope.user_id) {
+        if (($scope.user_id && !$scope.loggedUserId) || $scope.user_id == ALL_ITEMS_ID) {
             $scope.filterParams['user_id'] = $scope.user_id;
         }
+
+        $timeout(function () {
+            if ($scope.grid) {
+                $scope.refreshGrid();
+            }
+        }, 500);
 
         makeRequest('/api/quotes/', 'quotes', $scope.filterParams, true);
     });
 
     $scope.updateParams = function (type, id) {
-        var filter_type = filtersMapping[type];
-        var is_defined = typeof $scope.filterParams[filter_type] != 'undefined';
+        var filterType = filtersMapping[type];
+        var isDefined = typeof $scope.filterParams[filterType] != 'undefined';
 
-        if (is_defined && $scope.filterParams[filter_type].indexOf(id.toString()) >= 0) {
-            var index = $scope.filterParams[filter_type].indexOf(id.toString());
-            $scope.filterParams[filter_type].splice(index, 1);
+        if (isDefined && $scope.filterParams[filterType].indexOf(id.toString()) >= 0) {
+            var index = $scope.filterParams[filterType].indexOf(id.toString());
+            $scope.filterParams[filterType].splice(index, 1);
         }
         else {
-            if ($scope.filterParams[filter_type] instanceof Array) {
-                $scope.filterParams[filter_type].push(id.toString());
+            if ($scope.filterParams[filterType] instanceof Array) {
+                $scope.filterParams[filterType].push(id.toString());
             }
             else {
-                $scope.filterParams[filter_type] = [id.toString()];
+                $scope.filterParams[filterType] = [id.toString()];
             }
         }
 
@@ -87,7 +105,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             search: $routeParams.search || false,
         };
 
-        filters[type] = $scope.filterParams[filter_type].join(',') || false;
+        filters[type] = $scope.filterParams[filterType].join(',') || false;
 
         var path = '/authors/' + filters.authors + '/categories/' + filters.categories +
             '/tags/' + filters.tags + '/search/' + filters.search + '/' + 'page/1';
@@ -127,7 +145,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
 
         createResource.save($scope.filterData, function () {
             $('#addFilterModal').modal('hide');
-            $scope.init($scope.user_id);
+            $scope.init();
         });
     };
 

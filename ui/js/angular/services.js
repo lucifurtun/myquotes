@@ -88,7 +88,7 @@ quotesApp.service('globalService', function ($resource, $timeout) {
                                 isNew.replaceWith('<option selected value="' + data.id + '">' + data.name + '</option>');
                                 $timeout(function () {
                                     $(selector).trigger('change', [true]);
-                                    $scope.$parent.init($scope.$parent.user_id);
+                                    $scope.$parent.init();
                                 });
                             });
                         }

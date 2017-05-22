@@ -6,8 +6,9 @@
 {% block content %}
     <div id="loader"></div>
 
-    <div id="quotes-list" class="row" ng-controller="filterController" ng-init="init({{ object.id }})">
-        {% if request.user.is_authenticated and not object %}
+    <div id="quotes-list" class="row" ng-controller="filterController"
+         ng-init="init({{ object.id }}, {{ request.user.id }})">
+        {% if request.user.is_authenticated %}
             <a href="" class="add-quote-icon" ng-click="setEditItem()">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             </a>

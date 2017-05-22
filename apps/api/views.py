@@ -1,6 +1,7 @@
 import os
 
 from django.db.models import Q, Count
+from django.http import HttpResponseBadRequest
 from django.views import generic
 from rest_framework import permissions, mixins, status
 from rest_framework import schemas, viewsets
@@ -14,6 +15,8 @@ from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 from .paginators import QuotesResultsSetPagination
 from . import serializers
 from apps.quotes import models
+
+CURRENT_USER_FIELD = 'user_id'
 
 
 @api_view()
@@ -36,7 +39,7 @@ class ReadNestedWriteFlatMixin(object):
 
 class CurrentUserFilterMixin(object):
     def get_queryset(self):
-        user_id = self.request.GET.get('user_id', self.request.user.id)
+        user_id = int(self.request.GET.get(CURRENT_USER_FIELD, self.request.user.id))
         filters = Q(user_id=user_id)
         queryset = super().get_queryset()
 
@@ -50,12 +53,16 @@ class QuoteViewSet(CurrentUserFilterMixin, ReadNestedWriteFlatMixin, viewsets.Mo
     serializer_class = serializers.QuoteSerializer
     queryset = models.Quote.objects.all()
     pagination_class = QuotesResultsSetPagination
+    black_list_fields = (CURRENT_USER_FIELD,)
 
     def get_queryset(self):
         filters = Q()
         fields = dict(self.request.GET).keys()
 
         for field in fields:
+            if field in self.black_list_fields:
+                continue
+
             if hasattr(models.Quote, field):
                 values = self.request.GET.getlist(field)
                 params = {'{field}__in'.format(field=field): [int(value) for value in values if int(value)]}
@@ -74,7 +81,6 @@ class QuoteViewSet(CurrentUserFilterMixin, ReadNestedWriteFlatMixin, viewsets.Mo
 
 class AuthorViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin, mixins.ListModelMixin,
                     mixins.DestroyModelMixin, GenericViewSet):
-
     def get_queryset(self):
         queryset = super().get_queryset()
         user_id = self.request.GET.get('user_id', self.request.user.id)
@@ -144,10 +150,10 @@ class TagViewSet(CurrentUserFilterMixin, viewsets.ModelViewSet):
 
 
 class FiltersOptionsView(views.APIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get(self, request, *args, **kwargs):
-        return Response('Please use OPTIONS request!')
+        return HttpResponseBadRequest('Please use OPTIONS request!')
 
     def options(self, request, *args, **kwargs):
         data = {
@@ -166,6 +172,9 @@ class FiltersOptionsView(views.APIView):
             'Category': serializers.CategorySerializer,
             'Tag': serializers.TagSerializer
         }
+
+        if not self.request.user.is_authenticated():
+            return []
 
         serializer = mapping.get(model.__name__)
         data = serializer(model.objects.filter(user=self.request.user), many=True)

@@ -31,15 +31,15 @@ quotesApp.directive('filter', function ($resource) {
         },
         templateUrl: '/api/templates/filter.html',
         link: function (scope, element, attrs) {
-            scope.user_id = scope.$parent.user_id;
+            scope.readOnly = scope.$parent.readOnly;
 
             scope.updateParams = scope.$parent.updateParams;
             var settings = {patch: {method: 'PATCH'}, delete: {method: 'DELETE'}};
             var resource = $resource('/api/' + scope.type + '/:id/', {id: '@id'}, settings);
 
-            if (!scope.user_id) {
+            if (!scope.readOnly) {
                 scope.editFilter = function (item) {
-                    if(scope.type != 'authors') {
+                    if (scope.type != 'authors') {
                         item.edit = true;
                     }
                 };
@@ -84,3 +84,74 @@ quotesApp.directive('syncFocusWith', function ($timeout, $rootScope) {
         }
     };
 });
+
+quotesApp.directive('masonryGrid', function ($timeout, $window, $document, $resource) {
+    return {
+        restrict: 'A',
+
+        link: function (scope, $element, attrs) {
+            scope.$parent.grid = $('.grid').masonry({
+                itemSelector: '.grid-item',
+                columnWidth: 275
+            });
+
+            var docHeight = $($document).height();
+            var windowHeight = $($window).height();
+
+            var nextPage = 2;
+            var blockRequest = false;
+
+            scope.refreshGrid = function () {
+                scope.$parent.grid.masonry('reloadItems').masonry('layout');
+                nextPage = 2;
+            };
+
+            $timeout(function () {
+                updateDimensions();
+
+                angular.element(document).bind('scroll', function () {
+                    if (!nextPage || blockRequest) {
+                        return false;
+                    }
+
+                    if ($window.pageYOffset >= (docHeight - windowHeight) - 400) {
+                        blockRequest = true;
+                        var quotesResource = $resource('/api/quotes/');
+                        var params = scope.filterParams;
+                        params.page = nextPage;
+                        quotesResource.get(params, function (data) {
+                            nextPage = data.pages.next;
+                            scope.quotes = scope.quotes.concat(data.results);
+
+                            $timeout(function () {
+                                scope.$apply();
+                                updateDimensions();
+                            });
+                        });
+                    }
+                });
+            }, 500);
+
+
+            function updateDimensions() {
+                $timeout(function () {
+                    docHeight = $($document).height();
+                    windowHeight = $($window).height();
+                    blockRequest = false;
+                }, 500);
+            }
+        }
+    };
+});
+
+
+quotesApp.directive('masonryItem', ['$timeout', function ($timeout) {
+    return {
+        restrict: 'AEC',
+        link: function (scope, $element, attrs) {
+            $timeout(function () {
+                scope.$parent.grid.append($element).masonry('appended', $element);
+            });
+        }
+    };
+}]);
