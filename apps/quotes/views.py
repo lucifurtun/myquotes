@@ -1,6 +1,7 @@
+from django import http
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 
 from . import forms
@@ -70,3 +71,13 @@ class UserQuoteListView(generic.DetailView):
             context['form'] = forms.AngularQuoteForm(user=self.request.user)
 
         return context
+
+
+class HomePageView(generic.TemplateView):
+    template_name = 'quotes/homepage.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated():
+            return http.HttpResponseRedirect(reverse('quotes:profile', args=[request.user.username]))
+
+        return super().dispatch(request, *args, **kwargs)

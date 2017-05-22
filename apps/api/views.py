@@ -1,6 +1,7 @@
 import os
 
 from django.db.models import Q, Count
+from django.http import HttpResponseBadRequest
 from django.views import generic
 from rest_framework import permissions, mixins, status
 from rest_framework import schemas, viewsets
@@ -149,10 +150,10 @@ class TagViewSet(CurrentUserFilterMixin, viewsets.ModelViewSet):
 
 
 class FiltersOptionsView(views.APIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get(self, request, *args, **kwargs):
-        return Response('Please use OPTIONS request!')
+        return HttpResponseBadRequest('Please use OPTIONS request!')
 
     def options(self, request, *args, **kwargs):
         data = {
@@ -171,6 +172,9 @@ class FiltersOptionsView(views.APIView):
             'Category': serializers.CategorySerializer,
             'Tag': serializers.TagSerializer
         }
+
+        if not self.request.user.is_authenticated():
+            return []
 
         serializer = mapping.get(model.__name__)
         data = serializer(model.objects.filter(user=self.request.user), many=True)
