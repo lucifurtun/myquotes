@@ -37,7 +37,6 @@ class QuoteEditView(generic.UpdateView):
     template_name = 'quotes/quote_edit.html'
     model = models.Quote
     form_class = forms.QuoteForm
-    success_url = reverse_lazy('quotes:quotes_list')
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
@@ -46,6 +45,9 @@ class QuoteEditView(generic.UpdateView):
             raise PermissionDenied
 
         return response
+
+    def get_success_url(self):
+        return reverse('quotes:profile', args=[self.request.user.username])
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
