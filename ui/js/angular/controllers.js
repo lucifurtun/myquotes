@@ -176,10 +176,24 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             getResource.get(function (data) {
                 $scope.quoteData = data;
                 $scope.quoteData.tags = data.tags_name;
+                $scope.quoteData.author = data.author_id ? data.author_id.toString() : null;
+                $scope.quoteData.category = data.category_id ? data.category_id.toString() : null;
 
                 $timeout(function () {
-                    $('#id_tags').trigger('change')
-                })
+                    $('#id_tags').trigger('change');
+                    $('#id_author').trigger('change');
+                    $('#id_category').trigger('change');
+                    CKEDITOR.instances['id_text'].setData(data.text);
+                });
+            });
+        }
+        else {
+            $timeout(function () {
+                delete $scope.quoteData;
+                CKEDITOR.instances['id_text'].setData('');
+                $('#id_author').trigger('change', [true]);
+                $('#id_category').trigger('change', [true]);
+                $('#id_tags').trigger('change', [true]);
             });
         }
 
@@ -187,7 +201,8 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
     };
 
     $scope.editQuote = function (item) {
-        var quoteResource = $resource('/api/quotes/');
+        var settings = {patch: {method: 'PATCH'}};
+        var quoteResource = $resource('/api/quotes/:id/', {id: '@id'}, settings);
         var data = {
             title: $scope.quoteData.title,
             author_id: $scope.quoteData.author,
@@ -198,7 +213,13 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             text: CKEDITOR.instances['id_text'].getData()
         };
 
-        quoteResource.save(data, onSuccess, onError);
+        if ($scope.quoteData.id) {
+            data.id = $scope.quoteData.id;
+            quoteResource.patch(data, onSuccess, onError);
+        }
+        else {
+            quoteResource.save(data, onSuccess, onError);
+        }
 
         function onSuccess(data) {
             $route.reload();
