@@ -68,7 +68,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             $scope.filterParams[filtersMapping[key]] = data;
         }
 
-        if (($scope.user_id && !$scope.loggedUserId) || $scope.user_id == ALL_ITEMS_ID) {
+        if (($scope.user_id !== $scope.loggedUserId) || $scope.user_id == ALL_ITEMS_ID) {
             $scope.filterParams['user_id'] = $scope.user_id;
         }
 
