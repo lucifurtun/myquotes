@@ -66,7 +66,11 @@ class UserQuoteListView(generic.DetailView):
         full_name = self.object.get_full_name()
         name = full_name if full_name else self.object.username
 
-        title = "My Quotes" if self.request.user.is_authenticated() else "{name}'s quotes".format(name=name)
+        if self.object.id == self.request.user.id:
+            title = "My Quotes"
+        else:
+            title = "{name}'s quotes".format(name=name)
+
         context['title'] = title
 
         if self.request.user.is_authenticated():
