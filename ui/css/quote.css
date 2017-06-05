@@ -21,6 +21,9 @@
   top: -62px;
   left: 222px;
 }
+#quotes-list #filtered-content {
+  margin-left: 320px;
+}
 #quotes-list #filtered-content .list-group-item .visible-on-hover {
   display: none;
 }
@@ -44,6 +47,9 @@
 }
 #quotes-list #filtered-content .list-group-item:hover .visible-on-hover {
   display: block;
+}
+#quotes-list #filters {
+  position: absolute;
 }
 #quotes-list #filters .panel {
   margin-bottom: 10px;
