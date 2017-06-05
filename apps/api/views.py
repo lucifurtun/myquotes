@@ -39,7 +39,7 @@ class ReadNestedWriteFlatMixin(object):
 
 class CurrentUserFilterMixin(object):
     def get_queryset(self):
-        user_id = int(self.request.GET.get(CURRENT_USER_FIELD, self.request.user.id))
+        user_id = int(self.request.GET.get(CURRENT_USER_FIELD, self.request.user.id or 0))
         filters = Q(user_id=user_id)
         queryset = super().get_queryset()
 
