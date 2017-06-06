@@ -32,7 +32,11 @@
   width: 100%;
   margin: 0;
 }
-.navbar-header .sidebar-search {
+.navbar {
+  position: fixed;
+  width: 100%;
+}
+.navbar .navbar-header .sidebar-search {
   display: inline-block;
   width: 300px;
   padding: 7px;
@@ -47,6 +51,11 @@
 #footer .navbar-footer {
   padding: 20px 5px;
   text-align: center;
+}
+.page-header-row {
+  position: fixed;
+  z-index: 1000;
+  top: 40px;
 }
 @media all and (max-width: 768px) {
   .page-header {
