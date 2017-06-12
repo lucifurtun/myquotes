@@ -6,7 +6,7 @@
 {% block content %}
     <div id="loader"></div>
 
-    <div id="quotes-list" class="row" ng-controller="filterController" fixed-sidebar
+    <div id="quotes-list" class="row" ng-controller="filterController"
          ng-init="init({{ object.id }}, {{ request.user.id }})">
         {% if request.user.id == object.id %}
             <a href="" class="add-quote-icon" ng-click="setEditItem()">
@@ -16,10 +16,37 @@
         <div id="filters" class="col-xs-12 col-md-3">
             {% include 'quotes/includes/quotes_sidebar.html' %}
         </div>
+
         <div id="filtered-content" class="col-xs-12 col-sm-12 col-md-8">
             {% include 'quotes/includes/quotes_filtered_result.html' %}
         </div>
+
+        {% verbatim %}
+        <div class="modal fade" id="addFilterModal" tabindex="-1" role="dialog"
+             aria-labelledby="addFilterModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <form ng-submit="createFilter()">
+                        <div class="modal-header">
+                            <a type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></a>
+                            <h4 class="modal-title" id="addFilterModalLabel">Add new
+                                <strong>{{ filterType }}</strong></h4>
+                        </div>
+                        <div class="modal-body">
+                            <input name="Name" class="form-control" placeholder="Name" ng-model="filterData.name">
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-default" data-dismiss="modal">Close</a>
+                            <button type="submit" class="btn btn-success">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endverbatim %}
     </div>
+
 {% endblock %}
 
 {% block css %}
