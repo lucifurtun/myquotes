@@ -184,7 +184,8 @@ JWT_AUTH = {
 CKEDITOR_CONFIGS = {
     "default": {
         "removePlugins": "flash, smiley, specialchar",
-        "height": 100
+        "height": 100,
+        "enterMode": 3
     }
 }
 

@@ -15,10 +15,11 @@
 }
 #quotes-list {
   position: relative;
+  margin-top: 130px;
 }
 #quotes-list .add-quote-icon {
-  position: absolute;
-  top: -62px;
+  position: fixed;
+  top: 68px;
   left: 222px;
 }
 #quotes-list #filtered-content .list-group-item .visible-on-hover {
@@ -128,7 +129,7 @@
   background: inherit;
   left: 20px;
 }
-@media all and (max-width: 768px) {
+@media all and (max-width: 992px) {
   .select2-container {
     width: 100% !important;
   }
@@ -136,6 +137,7 @@
     margin: 0;
   }
   #quotes-list .add-quote-icon {
+    position: absolute;
     top: -50px;
     left: 185px;
   }
@@ -144,5 +146,13 @@
   }
   #quotes-list .panel .panel-heading {
     padding: 5px 15px;
+  }
+}
+@media all and (min-width: 992px) {
+  #quotes-list #filters {
+    position: fixed;
+  }
+  #quotes-list #filtered-content {
+    margin-left: 25%;
   }
 }
