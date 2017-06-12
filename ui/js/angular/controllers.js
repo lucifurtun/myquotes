@@ -43,7 +43,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         }
 
         var params = {};
-        if ($scope.user_id && !$scope.loggedUserId) {
+        if ($scope.user_id !== $scope.loggedUserId) {
             params['user_id'] = $scope.user_id;
         }
 
