@@ -25,7 +25,6 @@
     left: 222px;
   }
   #filtered-content {
-    margin-left: 25%;
     .list-group-item {
       .visible-on-hover {
         display: none;
@@ -60,7 +59,6 @@
     }
   }
   #filters {
-    position: fixed;
     .panel {
       margin-bottom: 10px;
     }
@@ -161,7 +159,7 @@
   left: 20px;
 }
 
-@media all and (max-width: 768px) {
+@media all and (max-width: 992px) {
   .select2-container {
     width: 100% !important;
   }
@@ -172,6 +170,7 @@
 
   #quotes-list {
     .add-quote-icon {
+      position: absolute;
       top: -50px;
       left: 185px;
     }
@@ -180,6 +179,18 @@
       .panel-heading {
         padding: 5px 15px;
       }
+    }
+  }
+}
+
+@media all and (min-width: 992px) {
+  #quotes-list {
+    #filters {
+      position: fixed;
+    }
+
+    #filtered-content {
+      margin-left: 25%;
     }
   }
 }

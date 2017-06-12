@@ -15,13 +15,13 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
     }
 
     $scope.desktopView = true;
-    if ($window.innerWidth < 768) {
+    if ($window.innerWidth < 992) {
         $scope.desktopView = false;
     }
 
     $(window).resize(function () {
         var desktopView = true;
-        if (window.innerWidth < 768) {
+        if (window.innerWidth < 992) {
             desktopView = false;
         }
         $scope.$apply(function () {

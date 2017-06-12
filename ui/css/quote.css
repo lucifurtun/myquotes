@@ -22,9 +22,6 @@
   top: 68px;
   left: 222px;
 }
-#quotes-list #filtered-content {
-  margin-left: 25%;
-}
 #quotes-list #filtered-content .list-group-item .visible-on-hover {
   display: none;
 }
@@ -48,9 +45,6 @@
 }
 #quotes-list #filtered-content .list-group-item:hover .visible-on-hover {
   display: block;
-}
-#quotes-list #filters {
-  position: fixed;
 }
 #quotes-list #filters .panel {
   margin-bottom: 10px;
@@ -135,7 +129,7 @@
   background: inherit;
   left: 20px;
 }
-@media all and (max-width: 768px) {
+@media all and (max-width: 992px) {
   .select2-container {
     width: 100% !important;
   }
@@ -143,6 +137,7 @@
     margin: 0;
   }
   #quotes-list .add-quote-icon {
+    position: absolute;
     top: -50px;
     left: 185px;
   }
@@ -151,5 +146,13 @@
   }
   #quotes-list .panel .panel-heading {
     padding: 5px 15px;
+  }
+}
+@media all and (min-width: 992px) {
+  #quotes-list #filters {
+    position: fixed;
+  }
+  #quotes-list #filtered-content {
+    margin-left: 25%;
   }
 }

@@ -41,8 +41,6 @@
 }
 
 .navbar {
-  position: fixed;
-  width: 100%;
   .navbar-header {
     .sidebar-search {
       display: inline-block;
@@ -69,13 +67,7 @@
   }
 }
 
-.page-header-row {
-  position: fixed;
-  z-index: 1000;
-  top: 40px;
-}
-
-@media all and (max-width: 768px) {
+@media all and (max-width: 992px) {
   .page-header {
     margin: 10px 0 8px;
     font-size: 30px;
@@ -87,6 +79,28 @@
 
   .navbar-header {
     .sidebar-search {
+      display: none !important;
+    }
+  }
+}
+
+@media all and (min-width: 992px) {
+  .navbar {
+    position: fixed;
+    width: 100%;
+  }
+
+  .page-header-row {
+    position: fixed;
+    z-index: 1000;
+    top: 40px;
+  }
+
+  .navbar-default {
+    .navbar-header {
+      width: 450px;
+    }
+    .sidebar {
       display: none;
     }
   }
@@ -94,9 +108,6 @@
 
 @media all and (min-width: 768px) {
   .navbar-default {
-    .navbar-header {
-      width: 450px;
-    }
     .sidebar {
       display: none;
     }
