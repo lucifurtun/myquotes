@@ -79,6 +79,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         }, 500);
 
         makeRequest('/api/quotes/', 'quotes', $scope.filterParams, true);
+        $window.scrollTo(0, 0);
     });
 
     $scope.updateParams = function (type, id) {
