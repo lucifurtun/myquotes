@@ -6,7 +6,7 @@
 {% block content %}
     <div id="loader"></div>
 
-    <div id="quotes-list" class="row" ng-controller="filterController"
+    <div id="quotes-list" class="row" ng-controller="filterController" fixed-sidebar
          ng-init="init({{ object.id }}, {{ request.user.id }})">
         {% if request.user.id == object.id %}
             <a href="" class="add-quote-icon" ng-click="setEditItem()">

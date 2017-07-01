@@ -164,21 +164,8 @@ quotesApp.directive('fixedSidebar', function ($timeout, $window) {
         link: function (scope, $element, attrs) {
             var windowHeight = $($window).height();
 
-            var maxHeight = (windowHeight / 3) - (15 * 3);
-
+            var maxHeight = (windowHeight / 3) - (25 * 3);
             $('#filters .panel-body').css('max-height', maxHeight);
-
-            angular.element(document).bind('scroll', function () {
-                // if ($window.pageYOffset > 132) {
-                //     $('#filters').css('position', 'fixed');
-                //     $('#filters').css('top', '10px');
-                // }
-                // else {
-                //     $('#filters').css('position', 'absolute');
-                //     $('#filters').css('top', '0');
-                // }
-
-            });
         }
     };
 });
