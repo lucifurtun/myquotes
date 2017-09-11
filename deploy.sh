@@ -21,7 +21,7 @@ function start() {
 
 function status() {
     if [ -r "${pidfile}" ]; then
-        kill -0 $(cat ${pidfile}) >/dev/null 2>&1 && return 0
+        return 0
     fi
 
     return 1
@@ -29,34 +29,34 @@ function status() {
 
 if [ "$1" == "start" ]; then
     if status; then
-        echo "safehug already started"
+        echo "server already started"
         exit 1
     fi
 
-    start && echo "safehug started" || echo "safehug failed to start"
+    start && echo "server started" || echo "server failed to start"
 
 elif [ "$1" == "stop" ]; then
     if ! status; then
-        echo "safehug not running"
+        echo "server not running"
         exit 1
     fi
 
-    stop && echo "safehug stopped" || echo "safehug failed to stop"
+    stop && echo "server stopped" || echo "server failed to stop"
 
 elif  [ "$1" == "restart" ]; then
     if status; then
-        stop && echo "safehug stopped"
+        stop && echo "server stopped"
     fi
 
-    start && echo "safehug started"
+    start && echo "server started"
 
 elif [ "$1" == "status" ]; then
     if status; then
-        echo "safehug running"
+        echo "server running"
         exit 0
 
     else
-        echo "safehug stopped"
+        echo "server stopped"
         exit 1
     fi
 fi
