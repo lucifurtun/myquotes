@@ -25,7 +25,7 @@ class AngularQuoteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
-        self.fields['author'].queryset = self.fields['author'].queryset.filter(user=user)
+        self.fields['author'].queryset = self.fields['author'].queryset.filter(users__in=[user.id])
         self.fields['category'].queryset = self.fields['category'].queryset.filter(user=user)
         self.fields['tags'].queryset = self.fields['tags'].queryset.filter(user=user)
 
