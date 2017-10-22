@@ -2,13 +2,16 @@
 
 
 projdir=$(pwd)
-pidfile="$projdir/gunicorn.pid"
+venv="$(dirname ${projdir})/Envs/myquotes"
+pidfile="${projdir}/gunicorn.pid"
 
+source ${venv}/bin/activate
 
 function stop() {
     if [ -r "${pidfile}" ]; then
         pid=$(cat ${pidfile}) || return 1
-        kill ${pid} || return 1
+        rm ${pidfile}
+        kill -9 ${pid} || return 1
     fi
 
     return 0
@@ -16,15 +19,14 @@ function stop() {
 
 function start() {
     gunicorn project.wsgi:application --config gunicorn.py
-    sleep 1
 }
 
 function status() {
     if [ -r "${pidfile}" ]; then
-        return 0
+        kill -0 $(cat ${pidfile}) &>/dev/null && return 0
     fi
 
-    return 1
+    return 1;
 }
 
 if [ "$1" == "start" ]; then
