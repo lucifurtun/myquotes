@@ -177,7 +177,11 @@ class FiltersOptionsView(views.APIView):
             return []
 
         serializer = mapping.get(model.__name__)
-        data = serializer(model.objects.filter(user=self.request.user), many=True)
+        filters = Q(user=self.request.user)
+        if model == models.Author:
+            filters |= Q(users__in=[self.request.user])
+
+        data = serializer(model.objects.filter(filters), many=True)
 
         return data.data
 

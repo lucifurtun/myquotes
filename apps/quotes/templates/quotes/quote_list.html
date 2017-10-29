@@ -59,15 +59,17 @@
 {% block js %}
     {{ block.super }}
     <script src="{% get_static_prefix %}angular-busy/dist/angular-busy.js"></script>
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
-    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="{% get_static_prefix %}ckeditor/ckeditor.js"></script>
+    <script src="{% get_static_prefix %}ckeditor/ckeditor-init.js"></script>
+    {#    <script src="{% static "ckeditor/ckeditor-init.js" %}"></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 
     <script type="text/javascript">
         $(window).load(function () {
             setTimeout(function () {
                 $("#loader").fadeOut("slow");
             }, 250)
-        })
+        });
+
     </script>
 {% endblock %}

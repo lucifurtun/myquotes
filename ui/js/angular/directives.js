@@ -22,6 +22,20 @@ quotesApp.directive('select2', ['globalService', function (globalService) {
     };
 }]);
 
+quotesApp.directive('ckeditor', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            data: '='
+        },
+        link: function (scope, element, attrs) {
+            CKEDITOR.replace(attrs.id, {
+                customConfig: '/static/js/ckeditor/config.js'
+            });
+        }
+    };
+});
+
 quotesApp.directive('filter', function ($resource) {
     return {
         restrict: 'E',

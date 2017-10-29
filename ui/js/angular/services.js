@@ -58,7 +58,7 @@ quotesApp.service('globalService', function ($resource, $timeout) {
 
                         for (var i = 0; i < data.length; i++) {
                             items.push({
-                                id: data[i].id,
+                                id: data[i].name,
                                 text: data[i].name
                             });
                         }
@@ -73,31 +73,13 @@ quotesApp.service('globalService', function ($resource, $timeout) {
                     tags: true,
                     ajax: ajax === null ? null : ajaxConfig
                 }).on('select2:select', function (e, triggered) {
-                    triggered = typeof triggered !== 'undefined' ? triggered : false;
-                    if (triggered || e.params.data.text != e.params.data.id) {
-                        return false;
-                    }
-
-                    var isNew = $(this).find('[data-select2-tag="true"]');
-                    if (isNew.length) {
-                        var settings = {patch: {method: 'PATCH'}, delete: {method: 'DELETE'}};
-                        var resource = $resource('/api/' + data + '/:id/', {id: '@id'}, settings);
-
-                        if (type === 'dynamic') {
-                            resource.save({name: isNew.val()}, function (data) {
-                                isNew.replaceWith('<option selected value="' + data.id + '">' + data.name + '</option>');
-                                $timeout(function () {
-                                    $(selector).trigger('change', [true]);
-                                    $scope.$parent.init();
-                                });
-                            });
+                    $timeout(function () {
+                        if (type === 'manual') {
+                            $scope.$parent.quoteData[e.currentTarget.name] = e.params.data.id.toString();
                         }
-                    }
-
+                    });
                 });
             });
-
-
         }
     };
 

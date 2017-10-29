@@ -177,14 +177,18 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             getResource.get(function (data) {
                 $scope.quoteData = data;
                 $scope.quoteData.tags = data.tags_name;
-                $scope.quoteData.author = data.author_id ? data.author_id.toString() : null;
-                $scope.quoteData.category = data.category_id ? data.category_id.toString() : null;
+                $scope.quoteData.author = data.author_name ? data.author_name.toString() : null;
+                $scope.quoteData.category = data.category_name ? data.category_name.toString() : null;
 
                 $timeout(function () {
-                    $('#id_tags').trigger('change');
-                    $('#id_author').trigger('change');
-                    $('#id_category').trigger('change');
                     CKEDITOR.instances['id_text'].setData(data.text);
+                    $('#id_author').val($scope.quoteData.author);
+                    $('#id_author').trigger('change');
+                    $('#id_category').val($scope.quoteData.category);
+                    $('#id_category').trigger('change');
+
+                    $('#id_tags').trigger('change');
+                    $('#editQuoteModal').modal();
                 });
             });
         }
@@ -192,13 +196,15 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             $timeout(function () {
                 delete $scope.quoteData;
                 CKEDITOR.instances['id_text'].setData('');
-                $('#id_author').trigger('change', [true]);
-                $('#id_category').trigger('change', [true]);
-                $('#id_tags').trigger('change', [true]);
+                $('#id_author').val('');
+                $('#id_author').trigger('change');
+                $('#id_category').val('');
+                $('#id_category').trigger('change');
+                $('#id_tags').val([]);
+                $('#id_tags').trigger('change');
             });
+            $('#editQuoteModal').modal();
         }
-
-        $('#editQuoteModal').modal();
     };
 
     $scope.editQuote = function (item) {
@@ -206,8 +212,8 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         var quoteResource = $resource('/api/quotes/:id/', {id: '@id'}, settings);
         var data = {
             title: $scope.quoteData.title,
-            author_id: $scope.quoteData.author,
-            category_id: $scope.quoteData.category,
+            author_name: $scope.quoteData.author,
+            category_name: $scope.quoteData.category,
             source: $scope.quoteData.source,
             reference: $scope.quoteData.reference,
             tags_name: $scope.quoteData.tags,
@@ -230,9 +236,12 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
             $timeout(function () {
                 delete $scope.quoteData;
                 CKEDITOR.instances['id_text'].setData('');
-                $('#id_author').trigger('change', [true]);
-                $('#id_category').trigger('change', [true]);
-                $('#id_tags').trigger('change', [true]);
+                $('#id_author').val('');
+                $('#id_author').trigger('change');
+                $('#id_category').val('');
+                $('#id_category').trigger('change');
+                $('#id_tags').val([]);
+                $('#id_tags').trigger('change');
             });
         }
 

@@ -1,11 +1,7 @@
 from django import http
 from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 from django.views import generic
-
-from . import forms
-from . import models
 
 
 class QuoteListView(generic.TemplateView):
@@ -19,40 +15,6 @@ class QuoteListView(generic.TemplateView):
 
 class Dashboard(generic.TemplateView):
     template_name = 'quotes/dashboard.html'
-
-
-class QuoteCreateView(generic.CreateView):
-    template_name = 'quotes/quote_edit.html'
-    model = models.Quote
-    form_class = forms.QuoteForm
-    success_url = reverse_lazy('quotes:quotes_list')
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-
-
-class QuoteEditView(generic.UpdateView):
-    template_name = 'quotes/quote_edit.html'
-    model = models.Quote
-    form_class = forms.QuoteForm
-
-    def get(self, request, *args, **kwargs):
-        response = super().get(request, *args, **kwargs)
-
-        if self.request.user.id != self.object.user.id:
-            raise PermissionDenied
-
-        return response
-
-    def get_success_url(self):
-        return reverse('quotes:profile', args=[self.request.user.username])
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
 
 
 class UserQuoteListView(generic.DetailView):
@@ -72,9 +34,6 @@ class UserQuoteListView(generic.DetailView):
             title = "{name}'s quotes".format(name=name)
 
         context['title'] = title
-
-        if self.request.user.is_authenticated():
-            context['form'] = forms.AngularQuoteForm(user=self.request.user)
 
         return context
 

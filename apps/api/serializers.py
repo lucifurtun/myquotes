@@ -34,12 +34,10 @@ class QuoteSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault(), write_only=True)
     tags_name = fields.CreatableSlugRelatedField(required=False, queryset=models.Tag.objects.all(), many=True,
                                                  allow_null=True, slug_field='name', source='tags')
-    # tags_id = serializers.PrimaryKeyRelatedField(many=True, queryset=models.Tag.objects.all(),
-    #                                              required=False, allow_null=True, source='tags')
-    author_id = serializers.PrimaryKeyRelatedField(queryset=models.Author.objects.all(),
-                                                   required=False, allow_null=True, source='author')
-    category_id = serializers.PrimaryKeyRelatedField(queryset=models.Category.objects.all(),
-                                                     required=False, allow_null=True, source='category')
+    author_name = fields.CreatableSlugRelatedField(required=False, queryset=models.Author.objects.all(),
+                                                   allow_null=True, slug_field='name', source='author')
+    category_name = fields.CreatableSlugRelatedField(required=False, queryset=models.Category.objects.all(),
+                                                     allow_null=True, slug_field='name', source='category')
 
     class Meta:
         model = models.Quote
