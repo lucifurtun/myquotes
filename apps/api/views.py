@@ -43,6 +43,9 @@ class CurrentUserFilterMixin(object):
         filters = Q(user_id=user_id)
         queryset = super().get_queryset()
 
+        if user_id != self.request.user.id:
+            filters &= Q(private=False)
+
         if user_id:
             return queryset.filter(filters)
         else:
