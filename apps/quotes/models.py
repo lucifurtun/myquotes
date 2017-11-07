@@ -56,6 +56,7 @@ class Quote(UserTimeStampedModel):
     reference = models.CharField(max_length=100, blank=True, null=True)
     tags = models.ManyToManyField('Tag', blank=True)
     text = RichTextField()
+    private = models.BooleanField(default="False")
 
     class Meta:
         unique_together = (('user', 'title'), ('user', 'text'))
