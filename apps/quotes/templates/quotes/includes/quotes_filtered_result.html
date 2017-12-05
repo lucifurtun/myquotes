@@ -71,8 +71,17 @@
                             <label for="id_title">Title:</label>
                             <input type="text" name="title" maxlength="400" ng-model="quoteData.title"
                                    class="form-control " id="id_title">
+
+                            <div class="material-switch pull-right">
+                                <input id="id_private" type="checkbox"
+                                       ng-model="quoteData.private"
+                                       ng-checked="quoteData.private"/>
+                                <label for="id_private" class="label-success switch-label"></label>
+                                <label for="id_private">Private</label>
+                            </div>
                         </div>
                         <div id="errors" class="text-danger small" ng-bind="quoteDataErrors.title"></div>
+
                     </div>
                     <div id="authors" class="form-group">
                         <div class="form-inline">

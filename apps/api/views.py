@@ -1,6 +1,6 @@
 import os
 
-from django.db.models import Q, Count
+from django.db.models import Q, Count, FieldDoesNotExist
 from django.http import HttpResponseBadRequest
 from django.views import generic
 from rest_framework import permissions, mixins, status
@@ -44,7 +44,11 @@ class CurrentUserFilterMixin(object):
         queryset = super().get_queryset()
 
         if user_id != self.request.user.id:
-            filters &= Q(private=False)
+            try:
+                queryset.model._meta.get_field('private')
+                filters &= Q(private=False)
+            except FieldDoesNotExist:
+                pass
 
         if user_id:
             return queryset.filter(filters)

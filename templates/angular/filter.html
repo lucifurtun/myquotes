@@ -13,7 +13,7 @@
         <input id="filterSwitch{{ type }}{{ item.id }}" type="checkbox"
                ng-click="updateParams(type, item.id)" ng-model="filter" ng-checked="item.active"/>
 
-        <label for="filterSwitch{{ type }}{{ item.id }}" class="label-success"></label>
+        <label for="filterSwitch{{ type }}{{ item.id }}" class="label-success switch-label"></label>
     </div>
 </span>
 <span ng-if="items.length == 0">There are no {{ type }}...</span>

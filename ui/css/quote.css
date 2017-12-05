@@ -90,14 +90,14 @@
 .material-switch > input[type="checkbox"] {
   display: none;
 }
-.material-switch > label {
+.material-switch .switch-label {
   cursor: pointer;
   height: 0px;
   position: relative;
   width: 40px;
   margin-bottom: 3px;
 }
-.material-switch > label::before {
+.material-switch .switch-label::before {
   background: #000000;
   box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
@@ -109,7 +109,7 @@
   transition: all 0.4s ease-in-out;
   width: 37px;
 }
-.material-switch > label::after {
+.material-switch .switch-label::after {
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);

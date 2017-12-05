@@ -212,6 +212,7 @@ quotesApp.controller('filterController', function ($scope, $window, $route, $rou
         var quoteResource = $resource('/api/quotes/:id/', {id: '@id'}, settings);
         var data = {
             title: $scope.quoteData.title,
+            private: $scope.quoteData.private,
             author_name: $scope.quoteData.author,
             category_name: $scope.quoteData.category,
             source: $scope.quoteData.source,
