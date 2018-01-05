@@ -22,7 +22,6 @@ class AuthorCreatableSlugRelatedField(serializers.SlugRelatedField):
         try:
             author = self.get_queryset().get(**filters)
         except ObjectDoesNotExist:
-
             author = self.get_queryset().create(name=data, user=user)
 
         author.users.add(user)
