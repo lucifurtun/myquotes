@@ -2,10 +2,17 @@ version: '3'
 services:
   db:
     image: postgres:9.6
+    restart: always
     ports:
       - "5432:5432"
     expose:
       - 5432
+    volumes:
+      - ~/docker-db/myquotes:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=myquotes
+      - POSTGRES_USER=myquotes
+      - POSTGRES_PASSWORD=some-password
   web:
     build: .
     command: gunicorn project.wsgi:application --config gunicorn.py
