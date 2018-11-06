@@ -3,3 +3,4 @@ workers = 1
 reload = True
 daemon = False
 loglevel = 'info'
+accesslog = "-"
