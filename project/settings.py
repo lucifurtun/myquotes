@@ -26,7 +26,7 @@ SECRET_KEY = '0amdjo@hx-0u6txq6=1b@d)i#1x4o8phk0xe*m11f%4&acosqx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '91.216.75.118', 'myquotes.io']
+ALLOWED_HOSTS = ['127.0.0.1', '91.216.75.118', 'myquotes.io', '0.0.0.0']
 
 # Application definition
 

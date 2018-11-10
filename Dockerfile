@@ -1,12 +1,15 @@
-FROM matthieugouel/python-gunicorn-nginx:latest
+FROM python:3.6
+
 MAINTAINER Luci Furtun <lucianfurtun@gmail.com>
 
 ENV PYTHONUNBUFFERED 1
 
 RUN mkdir /app
-WORKDIR /app
-ADD requirements.txt /usr/src/requirements.txt
-RUN cd ../ && pip install -r requirements.txt
-ADD . /app/
 
-CMD python manage.py runserver 0.0.0.0:80
+ADD . /app/
+WORKDIR /app
+
+RUN pip install -r requirements.txt
+RUN pip install gunicorn==19.7.1
+
+CMD python manage.py runserver 0.0.0.0:8888
