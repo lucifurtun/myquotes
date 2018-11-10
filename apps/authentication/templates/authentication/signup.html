@@ -4,19 +4,13 @@
 {% load account socialaccount %}
 {% load widget_tweaks %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block title %}Sign Up{% endblock %}
 
 {% block content %}
-    <p>Already have an account? Then please <a href="{% url 'account_login' %}">sign in</a>.</p>
+    <p>Already have an account? Please <a href="{% url 'account_login' %}">sign in</a>.</p>
 
     <form class="signup" method="POST" action="{% url 'account_signup' %}">
         {% csrf_token %}
-        <div class="form-group">
-            {{ form.username|add_class:"form-control"|attr:"placeholder:Username" }}
-            {% if form.username.errors %}
-                <div class="text-danger">{{ form.username.errors|striptags }}</div>
-            {% endif %}
-        </div>
         <div class="form-group">
             {{ form.email|add_class:"form-control"|attr:"placeholder:E-mail" }}
             {% if form.email.errors %}

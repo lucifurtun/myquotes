@@ -1,0 +1,75 @@
+{% extends 'layouts/default.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+    <div id="user-edit">
+        {% if form.errors %}
+            {% for field in form %}
+                {% if field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ field.label }}: {{ field.errors|striptags }}</strong>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="col-xs-12 col-sm-12 col-md-8">
+            <form method="post" action="{{ request.path }}" id="quote-form"> {% csrf_token %}
+                <input type="hidden" name="user" value="{{ request.user.id }}">
+                <div class="form-group">
+                    <div class="form-inline">
+                        <label for="{{ form.username.id_for_label }}">{{ form.username.label }} (URL):</label>
+                        {{ form.username|add_class:"form-control" }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-inline">
+                        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}:</label>
+                        {{ form.email|add_class:"form-control" }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-inline">
+                        <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}:</label>
+                        {{ form.first_name|add_class:"form-control" }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-inline">
+                        <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}:</label>
+                        {{ form.last_name|add_class:"form-control" }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet"/>
+    <link href="{% get_static_prefix %}css/quote.css" rel="stylesheet"/>
+    <link href="{% get_static_prefix %}css/user.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="{% get_static_prefix %}angular-busy/dist/angular-busy.js"></script>
+{% endblock %}

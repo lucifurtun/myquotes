@@ -4,7 +4,7 @@
 {% load account socialaccount %}
 {% load widget_tweaks %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block title %}Sign In{% endblock %}
 
 {% block content %}
     {% get_providers as socialaccount_providers %}
@@ -18,19 +18,21 @@
             <ul class="socialaccount_providers">
                 {% include "socialaccount/snippets/provider_list.html" with process="login" %}
             </ul>
-
             <div class="login-or">{% trans 'or' %}</div>
-
         </div>
 
         {% include "socialaccount/snippets/login_extra.html" %}
 
     {% else %}
-        <p>If you have not created an account yet, then please
-            <a href="{% url 'account_signup' %}">sign up</a> first.</p>
+        <p>If you don't have an account, please
+            <a href="{% url 'account_signup' %}">sign up</a>.</p>
     {% endif %}
 
     <div class="text-danger small">{{ form.non_field_errors|striptags }}</div>
+    {% for field in form %}
+        <div class="text-danger small">{{ field.errors|striptags }}</div>
+    {% endfor %}
+
 
     <form class="login" method="POST" action="{% url 'account_login' %}">
         {% csrf_token %}

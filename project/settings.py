@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import datetime
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
@@ -24,7 +26,7 @@ SECRET_KEY = '0amdjo@hx-0u6txq6=1b@d)i#1x4o8phk0xe*m11f%4&acosqx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '91.216.75.118', 'myquotes.io', '0.0.0.0']
 
 # Application definition
 
@@ -36,6 +38,7 @@ CORE_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.postgres'
 ]
 
 CONTRIB_APPS = [
@@ -152,25 +155,47 @@ AUTHENTICATION_BACKENDS = (
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
+        'apps.api.permissions.IsOwnerOrReadOnly',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
     )
 }
 
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_LOGIN_REDIRECT_URLNAME = '/'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_SIGNUP_FORM_CLASS = 'apps.authentication.forms.SignupForm'
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_ALLOW_REFRESH': True
+}
 
 CKEDITOR_CONFIGS = {
     "default": {
         "removePlugins": "flash, smiley, specialchar",
+        "height": 100,
+        "enterMode": 3
     }
 }
+
+AUTH_USER_MODEL = 'authentication.User'
+
+try:
+    from project.local import *
+except ImportError:
+    pass
 
 WEBPACK_LOADER = {
     'DEFAULT': {

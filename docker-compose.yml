@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db:
+    image: postgres:9.6
+    restart: always
+    ports:
+      - "5555:5432"
+    expose:
+      - 5432
+    volumes:
+      - ~/docker-db/myquotes:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=myquotes
+      - POSTGRES_USER=myquotes
+      - POSTGRES_PASSWORD=some-password
+  web:
+    build: .
+    command: gunicorn project.wsgi:application --config gunicorn.py
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=project.settings
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - db
