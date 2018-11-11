@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt import views as jwt_views
 
+from apps.search.bible.views import VerseView, BookView, ChapterView
 from . import views
 
 router = DefaultRouter()
@@ -18,4 +19,8 @@ urlpatterns = [
     url(r'^token/verify/$', jwt_views.VerifyJSONWebToken.as_view()),
     url(r'^filters/$', views.FiltersOptionsView.as_view()),
     url(r'^templates/(?P<page>[-\w]+.html)/$', views.AngularTemplateView.as_view()),
+
+    url(r'^verses/$', VerseView.as_view({'get': 'list'})),
+    url(r'^books/$', BookView.as_view()),
+    url(r'^chapters/$', ChapterView.as_view()),
 ]

@@ -48,13 +48,19 @@ CONTRIB_APPS = [
     'ckeditor',
     'rest_framework',
     'rest_framework_swagger',
-    'widget_tweaks'
+    'widget_tweaks',
+
+    'corsheaders',
+
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf'
 ]
 
 CUSTOM_APPS = [
     'apps.authentication',
     'apps.api',
     'apps.quotes',
+    'apps.search.bible',
 ]
 
 INSTALLED_APPS = CORE_APPS + CONTRIB_APPS + CUSTOM_APPS
@@ -62,6 +68,7 @@ INSTALLED_APPS = CORE_APPS + CONTRIB_APPS + CUSTOM_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -161,7 +168,11 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
-    )
+    ),
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
+    'ORDERING_PARAM': 'ordering',
 }
 
 ACCOUNT_LOGOUT_ON_GET = True
@@ -190,6 +201,14 @@ CKEDITOR_CONFIGS = {
 }
 
 AUTH_USER_MODEL = 'authentication.User'
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': '127.0.0.1:9200'
+    },
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 try:
     from project.local import *
