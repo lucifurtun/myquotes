@@ -1,11 +1,8 @@
 import React from 'react'
 import Select from 'react-select'
 
-const bookOptions = [
-    { value: 'Geneza', label: 'Geneza' },
-    { value: 'Exod', label: 'Exod' },
-    { value: 'Leviticul', label: 'Leviticul' }
-]
+import { connect } from 'react-redux'
+import { isEmpty, values } from 'lodash'
 
 const chapterOptions = [
     { value: '1', label: '1' },
@@ -13,10 +10,10 @@ const chapterOptions = [
     { value: '3', label: '3' }
 ]
 
-const Filters = () => (
+const Filters = ({ books }) => (
     <div className='row'>
         <div className='col-sm-2'>
-            <Select placeholder='Book' options={bookOptions}/>
+            <Select placeholder='Book' options={books}/>
         </div>
         <div className='col-xs-2'>
             <Select placeholder='Chapter' options={chapterOptions}/>
@@ -27,4 +24,10 @@ const Filters = () => (
     </div>
 )
 
-export default Filters
+function mapStateToProps(state) {
+    const options = values(state.books).map((item) => ({ value: item.title, label: item.title }))
+
+    return { books: options }
+}
+
+export default connect(mapStateToProps)(Filters)
