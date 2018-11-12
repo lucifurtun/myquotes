@@ -4,6 +4,7 @@ from django_elasticsearch_dsl_drf.filter_backends import FilteringFilterBackend,
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from rest_framework.generics import ListAPIView
 
+from apps.common.paginators import CustomPageNumberPagination
 from .indexes import Verse
 from .models import Book, Chapter
 from .serializers import VerseSerializer, BookSerializer, ChapterSerializer
@@ -36,8 +37,7 @@ class ChapterView(ListAPIView):
 
 
 class VerseView(DocumentViewSet):
-    """The PublisherDocument view."""
-
+    pagination_class = CustomPageNumberPagination
     document = Verse
     serializer_class = VerseSerializer
     lookup_field = 'id'
@@ -47,21 +47,15 @@ class VerseView(DocumentViewSet):
         DefaultOrderingFilterBackend,
         SearchFilterBackend,
     ]
-    # Define search fields
+
     search_fields = (
         'text',
     )
-    # Define filtering fields
+
     filter_fields = {
-        'book': 'book',
-        'chapter': 'chapter',
+        'book_title': 'book_title.raw',
+        'chapter_number': 'chapter_number',
+        'number': 'number',
     }
-    # Define ordering fields
-    # ordering_fields = {
-    #     'id': None,
-    #     'name': None,
-    #     'city': None,
-    #     'country': None,
-    # }
-    # Specify default ordering
-    # ordering = ('id', 'name',)
+
+    ordering = ('number',)

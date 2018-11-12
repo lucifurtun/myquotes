@@ -8,7 +8,7 @@ from .models import Book, Chapter
 class VerseSerializer(DocumentSerializer):
     class Meta:
         document = Verse
-        fields = ('id', 'number', 'text', 'chapter', 'book')
+        fields = ('id', 'number', 'text', 'chapter_number', 'book_title')
 
 
 class ChapterSerializer(ModelSerializer):

@@ -11,6 +11,13 @@ diacritics = analyzer(
     filter=["standard", "lowercase", "asciifolding"]
 )
 
+html_strip = analyzer(
+    'html_strip',
+    tokenizer="standard",
+    filter=["standard", "lowercase", "stop", "snowball"],
+    char_filter=["html_strip"]
+)
+
 verses_index = Index('verses')
 verses_index.settings(
     number_of_shards=1,
@@ -20,8 +27,13 @@ verses_index.settings(
 
 @verses_index.doc_type
 class Verse(DocType):
-    book = fields.StringField(attr='book_title')
-    chapter = fields.IntegerField(attr='chapter_number')
+    book_title = fields.StringField(
+        analyzer=html_strip,
+        fields={
+            'raw': fields.StringField(analyzer='keyword'),
+        }
+    )
+    chapter_number = fields.IntegerField()
 
     number = fields.LongField()
     text = fields.TextField(analyzer=diacritics)
