@@ -33,6 +33,7 @@ class Verse(DocType):
             'raw': fields.StringField(analyzer='keyword'),
         }
     )
+    book_number = fields.IntegerField()
     chapter_number = fields.IntegerField()
 
     number = fields.LongField()

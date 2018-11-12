@@ -58,4 +58,4 @@ class VerseView(DocumentViewSet):
         'number': 'number',
     }
 
-    ordering = ('number',)
+    ordering = ('book_number', 'chapter_number', 'number')
