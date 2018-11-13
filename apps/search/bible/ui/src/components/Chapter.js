@@ -1,15 +1,22 @@
 import React, { Component } from 'react'
 import Verse from './Verse'
+import { connect } from 'react-redux'
+import { values } from 'lodash'
 
-class Chapter extends Component {
-    render() {
-        return (
-            <div>
-                {/*{this.state.verses.map((verse, i) => <Verse key={i} number={verse.number} text={verse.text}/>)}*/}
-                {<Verse key={1} number={1} text="Text .. "/>}
-            </div>
-        )
+
+const Chapter = ({ verses }) => (
+    <div>
+        {verses.map((verse, i) => <Verse key={i} number={verse.number} text={verse.text}/>)}
+    </div>
+)
+
+
+function mapStateToProps(state) {
+    const verses = values(state.verses.data)
+
+    return {
+        verses: verses
     }
 }
 
-export default Chapter
+export default connect(mapStateToProps)(Chapter)

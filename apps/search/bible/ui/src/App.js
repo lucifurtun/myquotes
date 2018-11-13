@@ -4,13 +4,13 @@ import { connect } from 'react-redux'
 
 import './App.css'
 import Layout from './components/Layout'
-import { loadBooks } from './redux/book'
+import { getBooks } from './redux/book'
 
 class App extends Component {
     componentDidMount() {
         const { dispatch } = this.props
 
-        dispatch(loadBooks())
+        dispatch(getBooks())
     }
 
     render() {

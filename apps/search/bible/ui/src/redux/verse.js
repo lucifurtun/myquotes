@@ -2,7 +2,7 @@ import { keyBy } from 'lodash'
 
 export function reducer(state = {}, action = {}) {
     switch(action.type) {
-        case 'GET_BOOKS_SUCCESS':
+        case 'GET_VERSES_SUCCESS':
             return {
                 data: keyBy(action.payload.data.results, 'number'),
                 count: action.payload.data.count
@@ -12,14 +12,15 @@ export function reducer(state = {}, action = {}) {
     }
 }
 
-export function getBooks() {
+export function getVerses(bookTitle, chapterNumber) {
     return {
-        type: 'GET_BOOKS',
+        type: 'GET_VERSES',
         payload: {
             request: {
-                url: '/books/',
+                url: '/verses/',
                 params: {
-                    page_size: 1000
+                    book_title: bookTitle,
+                    chapter_number: chapterNumber
                 }
             }
         }

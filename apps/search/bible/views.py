@@ -11,6 +11,7 @@ from .serializers import VerseSerializer, BookSerializer, ChapterSerializer
 
 
 class BookView(ListAPIView):
+    pagination_class = CustomPageNumberPagination
     serializer_class = BookSerializer
     queryset = Book.objects.all()
 
@@ -19,6 +20,7 @@ class BookView(ListAPIView):
 
 
 class ChapterView(ListAPIView):
+    pagination_class = CustomPageNumberPagination
     serializer_class = ChapterSerializer
     queryset = Chapter.objects.all()
 
