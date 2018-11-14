@@ -55,6 +55,7 @@ CUSTOM_APPS = [
     'apps.authentication',
     'apps.api',
     'apps.quotes',
+    'apps.integrations',
 ]
 
 INSTALLED_APPS = CORE_APPS + CONTRIB_APPS + CUSTOM_APPS
@@ -195,3 +196,5 @@ try:
     from project.local import *
 except ImportError:
     pass
+
+SITE_ID=1
