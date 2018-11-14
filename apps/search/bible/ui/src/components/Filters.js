@@ -2,7 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 
 import { connect } from 'react-redux'
-import { isEmpty, values } from 'lodash'
+import { values } from 'lodash'
 import Search from './Search'
 
 const Filters = ({ book, chapter, verse, dispatch }) => {
@@ -11,29 +11,32 @@ const Filters = ({ book, chapter, verse, dispatch }) => {
             <div className='col-sm-2'>
                 <Select
                     placeholder='Book'
+                    isClearable
                     options={book.options}
                     value={book.value}
-                    onChange={(event) => dispatch({ type: 'CHANGE_BOOK', payload: event.value })}
+                    onChange={(event) => dispatch({ type: 'CHANGE_BOOK', payload: event ? event.value : null })}
                 />
             </div>
             <div className='col-xs-2'>
                 <Select
                     placeholder='Chapter'
+                    isClearable
                     options={chapter.options}
                     value={chapter.value}
-                    onChange={(event) => dispatch({ type: 'CHANGE_CHAPTER', payload: event.value })}
+                    onChange={(event) => dispatch({ type: 'CHANGE_CHAPTER', payload: event ? event.value : null })}
                 />
             </div>
-            <div className='col-sm-1'>
+            <div className='col-xs-2'>
                 <Select
                     placeholder='Verse'
+                    isClearable
                     options={verse.options}
                     value={verse.value}
-                    onChange={(event) => dispatch({ type: 'CHANGE_VERSE', payload: event.value })}
+                    onChange={(event) => dispatch({ type: 'CHANGE_VERSE', payload: event ? event.value : null })}
                 />
             </div>
             <div className='col-sm-3'>
-                <Search/>
+                <Search onSearch={(event) => dispatch({ type: 'CHANGE_SEARCH', payload: event.target.value })}/>
             </div>
         </div>
     )
@@ -44,9 +47,9 @@ function mapStateToProps(state) {
     const chapterOptions = values(state.chapters.data).map((item) => ({ value: item.number, label: item.number }))
     const verseOptions = values(state.verses.data).map((item) => ({ value: item.number, label: item.number }))
 
-    const bookValue = { value: state.filters.book, label: state.filters.book }
-    const chapterValue = { value: state.filters.chapter, label: state.filters.chapter }
-    const verseValue = { value: state.filters.verse, label: state.filters.verse }
+    const bookValue = state.filters.book ? { value: state.filters.book, label: state.filters.book } : null
+    const chapterValue = state.filters.chapter ? { value: state.filters.chapter, label: state.filters.chapter } : null
+    const verseValue = state.filters.verse ? { value: state.filters.verse, label: state.filters.verse } : null
 
     return {
         book: { value: bookValue, options: bookOptions },

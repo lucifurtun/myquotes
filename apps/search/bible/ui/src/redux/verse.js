@@ -12,7 +12,7 @@ export function reducer(state = {}, action = {}) {
     }
 }
 
-export function getVerses(bookTitle, chapterNumber) {
+export function getVerses(bookTitle, chapterNumber, search = null) {
     return {
         type: 'GET_VERSES',
         payload: {
@@ -20,7 +20,9 @@ export function getVerses(bookTitle, chapterNumber) {
                 url: '/verses/',
                 params: {
                     book_title: bookTitle,
-                    chapter_number: chapterNumber
+                    chapter_number: chapterNumber,
+                    search: search,
+                    page_size: 1000
                 }
             }
         }

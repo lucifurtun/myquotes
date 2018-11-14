@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Verse from './Verse'
 import { connect } from 'react-redux'
 import { values } from 'lodash'
