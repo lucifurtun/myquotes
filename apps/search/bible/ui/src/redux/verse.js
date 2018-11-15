@@ -1,10 +1,14 @@
-import { keyBy } from 'lodash'
+const initialState = {
+    data: [],
+    count: null
+}
 
-export function reducer(state = {}, action = {}) {
+
+export function reducer(state = initialState, action = {}) {
     switch(action.type) {
         case 'GET_VERSES_SUCCESS':
             return {
-                data: keyBy(action.payload.data.results, 'number'),
+                data: action.payload.data.results,
                 count: action.payload.data.count
             }
         default:

@@ -30,7 +30,7 @@ export function reducer(state = initialState, action = {}) {
             console.log(action)
             return {
                 ...state,
-                search: action.payload
+                search: action.payload || null
             }
         default:
             return state
@@ -44,26 +44,33 @@ export function* saga() {
 }
 
 function* handleChangeBook() {
-    yield put({ type: 'CHANGE_CHAPTER', payload: 1 })
-    yield put({ type: 'CHANGE_VERSE', payload: 1 })
+    let currentBook = yield select((state) => state.filters.book)
 
-    const currentBook = yield select((state) => state.filters.book)
+    if (currentBook) {
+        yield put({ type: 'CHANGE_CHAPTER', payload: 1 })
+        yield put({ type: 'CHANGE_VERSE', payload: 1 })
+    }
+    else {
+        yield put({ type: 'CHANGE_CHAPTER', payload: null })
+        yield put({ type: 'CHANGE_VERSE', payload: null })
+    }
+
     yield put(getChapters(currentBook))
 }
 
 function* handleChangeChapter() {
     const currentBook = yield select((state) => state.filters.book)
     let currentChapter = yield select((state) => state.filters.chapter)
+    const currentSearchText = yield select((state) => state.filters.search)
 
     if (currentChapter) {
         yield put({ type: 'CHANGE_VERSE', payload: 1 })
     }
     else {
         yield put({ type: 'CHANGE_VERSE', payload: null })
-        currentChapter = 1
     }
 
-    yield put(getVerses(currentBook, currentChapter || 1))
+    yield put(getVerses(currentBook, currentChapter, currentSearchText))
 }
 
 function* handleChangeSearch() {
@@ -71,5 +78,5 @@ function* handleChangeSearch() {
     const currentChapter = yield select((state) => state.filters.chapter)
     const currentSearchText = yield select((state) => state.filters.search)
 
-    yield put(getVerses(currentBook, currentChapter, currentSearchText || null))
+    yield put(getVerses(currentBook, currentChapter, currentSearchText))
 }

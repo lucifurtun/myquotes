@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { values } from 'lodash'
 
 
 class Search extends Component {

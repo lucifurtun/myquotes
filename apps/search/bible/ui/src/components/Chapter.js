@@ -1,7 +1,6 @@
 import React from 'react'
 import Verse from './Verse'
 import { connect } from 'react-redux'
-import { values } from 'lodash'
 
 
 const Chapter = ({ verses }) => (
@@ -12,7 +11,7 @@ const Chapter = ({ verses }) => (
 
 
 function mapStateToProps(state) {
-    const verses = values(state.verses.data)
+    const verses = state.verses.data
 
     return {
         verses: verses
