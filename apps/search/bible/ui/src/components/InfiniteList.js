@@ -3,7 +3,6 @@ import Verse from './Verse'
 import { connect } from 'react-redux'
 import { getVerses } from '../redux/verse'
 import { groupBy, isUndefined } from 'lodash'
-import Chapter from './Chapter'
 
 function isFirstChapterOccurrence(item, index, array) {
     const previousItem = array[index - 1]
