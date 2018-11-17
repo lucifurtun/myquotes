@@ -38,9 +38,9 @@ class Verse(DocType):
 
     number = fields.LongField()
     text = fields.TextField(analyzer=diacritics)
+    is_nt = fields.BooleanField()
 
     class Meta(object):
-        """Meta options."""
-
         model = VerseModel
+        ignore_signals = True
         # fields = ('number', 'text',)

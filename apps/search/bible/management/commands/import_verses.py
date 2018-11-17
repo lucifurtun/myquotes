@@ -21,26 +21,20 @@ class Command(BaseCommand):
 
         for book in data['XMLBIBLE']['BIBLEBOOK']:
             book_title = book['@bname']
-            book_number = book['@bnumber']
+            book_number = int(book['@bnumber'])
+            is_nt = book_number > 39
 
-            book_obj = models.Book.objects.create(number=book_number, title=book_title)
+            book_obj = models.Book.objects.create(number=book_number, title=book_title, is_nt=is_nt)
 
             for chapter in book['CHAPTER']:
-                chapter_number = chapter['@cnumber']
+                chapter_number = int(chapter['@cnumber'])
 
                 chapter_obj = models.Chapter.objects.create(number=chapter_number, book=book_obj)
 
                 for verse in chapter['VERS']:
-                    verse_number = verse['@vnumber']
+                    verse_number = int(verse['@vnumber'])
                     text = verse['#text']
-                    print(text)
 
                     verse_object = models.Verse.objects.create(number=verse_number, text=text, chapter=chapter_obj)
 
-                    # verse = Verse(number=verse_number, chapter=chapter_number, book=book_title, content=text)
-                    # verse.save()
-
-                    # print(verse)
-                    print(verse_object)
-
-        self.stdout.write(self.style.SUCCESS('Import completed!'))
+                self.stdout.write(self.style.SUCCESS('Imported "{}:{}"'.format(book_title, chapter_number)))

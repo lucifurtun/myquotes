@@ -4,6 +4,7 @@ from django.db import models
 class Book(models.Model):
     number = models.IntegerField()
     title = models.CharField(max_length=255)
+    is_nt = models.BooleanField()
 
     class Meta:
         ordering = ('number',)
