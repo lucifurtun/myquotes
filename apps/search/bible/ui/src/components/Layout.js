@@ -1,11 +1,11 @@
 import React from 'react'
-import Chapter from './Chapter'
 import Filters from './Filters'
+import InfiniteList from './InfiniteList'
 
 const Layout = () => (
     <div>
         <Filters/>
-        <Chapter/>
+        <InfiniteList/>
     </div>
 )
 

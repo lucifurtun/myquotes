@@ -3,7 +3,7 @@ import Verse from './Verse'
 import { connect } from 'react-redux'
 
 
-const Chapter = ({ verses }) => (
+const List = ({ verses }) => (
     <div>
         {verses.map((verse, i) => <Verse key={i} number={verse.number} text={verse.text}/>)}
     </div>
@@ -18,4 +18,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Chapter)
+export default connect(mapStateToProps)(List)

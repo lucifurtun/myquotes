@@ -46,15 +46,7 @@ export function* saga() {
 function* handleChangeBook() {
     let currentBook = yield select((state) => state.filters.book)
 
-    if (currentBook) {
-        yield put({ type: 'CHANGE_CHAPTER', payload: 1 })
-        yield put({ type: 'CHANGE_VERSE', payload: 1 })
-    }
-    else {
-        yield put({ type: 'CHANGE_CHAPTER', payload: null })
-        yield put({ type: 'CHANGE_VERSE', payload: null })
-    }
-
+    yield put({ type: 'CHANGE_CHAPTER', payload: null })
     yield put(getChapters(currentBook))
 }
 
@@ -63,13 +55,7 @@ function* handleChangeChapter() {
     let currentChapter = yield select((state) => state.filters.chapter)
     const currentSearchText = yield select((state) => state.filters.search)
 
-    if (currentChapter) {
-        yield put({ type: 'CHANGE_VERSE', payload: 1 })
-    }
-    else {
-        yield put({ type: 'CHANGE_VERSE', payload: null })
-    }
-
+    yield put({ type: 'CHANGE_VERSE', payload: null })
     yield put(getVerses(currentBook, currentChapter, currentSearchText))
 }
 
