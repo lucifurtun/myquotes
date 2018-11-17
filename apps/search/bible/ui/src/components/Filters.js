@@ -36,25 +36,26 @@ const Filters = ({ book, chapter, verse, dispatch }) => {
                 />
             </div>
             <div className='col-sm-3'>
-                <Search onSearch={(event) => dispatch({ type: 'CHANGE_SEARCH', payload: event.target.value })}/>
+                <Search onSearch={(value) => dispatch({ type: 'CHANGE_SEARCH', payload: value })}/>
             </div>
         </div>
     )
 }
 
 function mapStateToProps(state) {
-    const bookOptions = values(state.books.data).map((item) => ({ value: item.title, label: item.title }))
-    const chapterOptions = values(state.chapters.data).map((item) => ({ value: item.number, label: item.number }))
-    const verseOptions = values(state.verses.data).map((item) => ({ value: item.number, label: item.number }))
-
     const bookValue = state.filters.book ? { value: state.filters.book, label: state.filters.book } : null
     const chapterValue = state.filters.chapter ? { value: state.filters.chapter, label: state.filters.chapter } : null
     const verseValue = state.filters.verse ? { value: state.filters.verse, label: state.filters.verse } : null
 
+    const bookOptions = values(state.books.data).map((item) => ({ value: item.title, label: item.title }))
+    const chapterOptions = values(state.chapters.data).map((item) => ({ value: item.number, label: item.number }))
+    const verseOptions = values(state.verses.data).map((item) => ({ value: item.number, label: item.number }))
+
+
     return {
         book: { value: bookValue, options: bookOptions },
-        chapter: { value: chapterValue, options: chapterOptions },
-        verse: { value: verseValue, options: verseOptions }
+        chapter: { value: chapterValue, options: bookValue ? chapterOptions : []},
+        verse: { value: verseValue, options:  chapterValue ? verseOptions : [] }
     }
 }
 

@@ -2,7 +2,9 @@ from django.db.models import Q
 from django_elasticsearch_dsl_drf.filter_backends import FilteringFilterBackend, OrderingFilterBackend, \
     DefaultOrderingFilterBackend, SearchFilterBackend
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
+from rest_framework.exceptions import APIException
 from rest_framework.generics import ListAPIView
+from rest_framework.response import Response
 
 from apps.common.paginators import CustomPageNumberPagination
 from .indexes import Verse
@@ -35,7 +37,16 @@ class ChapterView(ListAPIView):
         if book_id is not None:
             filters &= Q(book_id=book_id)
 
+        if (book_title is None) and (book_id is None):
+            raise APIException('Chapters endpoints needs "book_id" or "book_title"', code=400)
+
         return super().get_queryset().filter(filters)
+
+    def list(self, request, *args, **kwargs):
+        try:
+            return super().list(request, *args, **kwargs)
+        except APIException as err:
+            return Response(err.detail, status=400)
 
 
 class VerseView(DocumentViewSet):

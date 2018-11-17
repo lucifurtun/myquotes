@@ -27,7 +27,6 @@ export function reducer(state = initialState, action = {}) {
                 verse: action.payload
             }
         case 'CHANGE_SEARCH':
-            console.log(action)
             return {
                 ...state,
                 search: action.payload || null
@@ -47,7 +46,11 @@ function* handleChangeBook() {
     let currentBook = yield select((state) => state.filters.book)
 
     yield put({ type: 'CHANGE_CHAPTER', payload: null })
-    yield put(getChapters(currentBook))
+
+    if (currentBook) {
+        yield put(getChapters(currentBook))
+    }
+
 }
 
 function* handleChangeChapter() {
