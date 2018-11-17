@@ -8,7 +8,7 @@ import Search from './Search'
 const Filters = ({ book, chapter, verse, dispatch }) => {
     return (
         <div className='row'>
-            <div className='col-sm-2'>
+            <div className='col-sm-2' style={{margin: '5px'}}>
                 <Select
                     placeholder='Book'
                     isClearable
@@ -17,7 +17,7 @@ const Filters = ({ book, chapter, verse, dispatch }) => {
                     onChange={(event) => dispatch({ type: 'CHANGE_BOOK', payload: event ? event.value : null })}
                 />
             </div>
-            <div className='col-xs-2'>
+            <div className='col-sm-2' style={{margin: '5px'}}>
                 <Select
                     placeholder='Chapter'
                     isClearable
@@ -26,7 +26,7 @@ const Filters = ({ book, chapter, verse, dispatch }) => {
                     onChange={(event) => dispatch({ type: 'CHANGE_CHAPTER', payload: event ? event.value : null })}
                 />
             </div>
-            <div className='col-xs-2'>
+            <div className='col-sm-2' style={{margin: '5px'}}>
                 <Select
                     placeholder='Verse'
                     isClearable
@@ -35,7 +35,7 @@ const Filters = ({ book, chapter, verse, dispatch }) => {
                     onChange={(event) => dispatch({ type: 'CHANGE_VERSE', payload: event ? event.value : null })}
                 />
             </div>
-            <div className='col-sm-3'>
+            <div className='col-sm-3' style={{margin: '5px'}}>
                 <Search onSearch={(value) => dispatch({ type: 'CHANGE_SEARCH', payload: value })}/>
             </div>
         </div>

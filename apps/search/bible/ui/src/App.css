@@ -56,6 +56,10 @@
     text-align: center;
 }
 
+input, button {
+    z-index: 0 !important;
+}
+
 @media all and (max-width: 992px) {
     .page-header {
         margin: 10px 0 8px;
