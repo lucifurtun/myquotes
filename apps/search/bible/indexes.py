@@ -38,9 +38,8 @@ class Verse(DocType):
 
     number = fields.LongField()
     text = fields.TextField(analyzer=diacritics)
-    is_nt = fields.BooleanField()
+    is_nt = fields.BooleanField('chapter.book.is_nt')
 
     class Meta(object):
         model = VerseModel
-        ignore_signals = True
-        # fields = ('number', 'text',)
+        # ignore_signals = True

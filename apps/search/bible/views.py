@@ -1,12 +1,12 @@
 from django.db.models import Q
-from django_elasticsearch_dsl_drf.filter_backends import FilteringFilterBackend, OrderingFilterBackend, \
-    DefaultOrderingFilterBackend, SearchFilterBackend
+from django_elasticsearch_dsl_drf.filter_backends import FilteringFilterBackend, DefaultOrderingFilterBackend
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from rest_framework.exceptions import APIException
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
 from apps.common.paginators import CustomPageNumberPagination
+from apps.search.bible.backends import SearchFilterBackend
 from .indexes import Verse
 from .models import Book, Chapter
 from .serializers import VerseSerializer, BookSerializer, ChapterSerializer
@@ -56,7 +56,6 @@ class VerseView(DocumentViewSet):
     lookup_field = 'id'
     filter_backends = [
         FilteringFilterBackend,
-        OrderingFilterBackend,
         DefaultOrderingFilterBackend,
         SearchFilterBackend,
     ]

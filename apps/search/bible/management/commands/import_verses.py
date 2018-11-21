@@ -26,7 +26,12 @@ class Command(BaseCommand):
 
             book_obj = models.Book.objects.create(number=book_number, title=book_title, is_nt=is_nt)
 
-            for chapter in book['CHAPTER']:
+            if isinstance(book['CHAPTER'], list):
+                chapters = book['CHAPTER']
+            else:
+                chapters = [book['CHAPTER']]
+
+            for chapter in chapters:
                 chapter_number = int(chapter['@cnumber'])
 
                 chapter_obj = models.Chapter.objects.create(number=chapter_number, book=book_obj)
