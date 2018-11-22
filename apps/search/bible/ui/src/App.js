@@ -5,12 +5,14 @@ import { connect } from 'react-redux'
 import './App.css'
 import Layout from './components/Layout'
 import { getBooks } from './redux/book'
+import { getVerses } from './redux/verse'
 
 class App extends Component {
     componentDidMount() {
         const { dispatch } = this.props
 
         dispatch(getBooks())
+        dispatch(getVerses())
     }
 
     render() {

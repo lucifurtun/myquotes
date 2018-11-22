@@ -26,10 +26,7 @@
 #page-wrapper {
     width: 100%;
     margin: 0;
-}
-
-#content-wrapper {
-    margin-top: 110px;
+    padding-bottom: 10px;
 }
 
 .navbar {
@@ -76,6 +73,10 @@ input, button {
 }
 
 @media all and (min-width: 992px) {
+    #content-wrapper {
+        margin-top: 110px;
+    }
+
     .navbar {
         position: fixed;
         width: 100%;

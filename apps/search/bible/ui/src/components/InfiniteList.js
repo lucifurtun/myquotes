@@ -34,8 +34,11 @@ class InfiniteList extends Component {
     }
 
     loadData() {
-        const { dispatch, filters, page } = this.props
-        dispatch(getVerses(filters.book, filters.chapter, filters.search, page ? page + 1 : page))
+        const { dispatch, filters, page, hasMore } = this.props
+
+        if (hasMore) {
+            dispatch(getVerses(filters.book, filters.chapter, filters.search, page ? page + 1 : page))
+        }
     }
 
     render() {
@@ -59,14 +62,16 @@ class InfiniteList extends Component {
 function mapStateToProps(state) {
     const verses = state.verses.data
     const page = state.verses.page
+    const hasMore = state.verses.hasMore
     const filters = state.filters
     const chapters = groupBy(verses, (item) => item.chapter_number)
 
     return {
-        verses: verses,
-        chapters: chapters,
-        page: page,
-        filters: filters
+        verses,
+        chapters,
+        page,
+        hasMore,
+        filters
     }
 }
 

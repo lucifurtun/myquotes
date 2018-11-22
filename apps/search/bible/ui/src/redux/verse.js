@@ -14,7 +14,8 @@ export function reducer(state = initialState, action = {}) {
             return {
                 data: data,
                 count: response.count,
-                page: response.page
+                page: response.page,
+                hasMore: response.has_more
             }
         default:
             return state
@@ -22,7 +23,7 @@ export function reducer(state = initialState, action = {}) {
 }
 
 function isFirstPage(response) {
-    return response.pages.previous === null
+    return response.page === 1
 }
 
 export function getVerses(bookTitle, chapterNumber, search = null, page = null) {
