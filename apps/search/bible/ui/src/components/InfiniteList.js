@@ -58,7 +58,7 @@ class InfiniteList extends Component {
                     )
                 )}
                 {!this.props.verses.length &&
-                <div style={{ marginTop: '10px' }}>No results...</div>
+                <h4 className="no-results">No results...</h4>
                 }
             </div>
         )

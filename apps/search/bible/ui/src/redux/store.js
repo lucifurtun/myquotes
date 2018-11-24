@@ -8,14 +8,13 @@ import { reducer as bookReducer } from './book'
 import { reducer as chapterReducer } from './chapter'
 import { reducer as verseReducer } from './verse'
 import { reducer as filtersReducer } from './filters'
+import { reducer as apiReducer } from './api'
 
-// import { saga as bookSaga } from './book'
 import { saga as filtersSaga } from './filters'
 
 
 function* rootSaga() {
     yield all([
-        // bookSaga(),
         filtersSaga()
     ])
 }
@@ -25,7 +24,8 @@ const rootReducer = combineReducers({
     books: bookReducer,
     chapters: chapterReducer,
     verses: verseReducer,
-    filters: filtersReducer
+    filters: filtersReducer,
+    api: apiReducer
 })
 
 const client = axios.create({
