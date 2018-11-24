@@ -27,10 +27,9 @@ class InfiniteList extends Component {
         super(props)
 
         window.onscroll = () => {
-            let scroll = window.innerHeight + document.documentElement.scrollTop
+            let scrollHeight = document.body.scrollTop || document.documentElement.scrollTop;
+            let scroll = window.innerHeight + scrollHeight
             let offset = document.documentElement.offsetHeight
-
-            console.log(scroll, offset)
 
             if (scroll === offset) {
                 this.loadData()
