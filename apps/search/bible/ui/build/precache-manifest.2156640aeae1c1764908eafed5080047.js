@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/bible/static/js/runtime~main.e39e460e.js"
   },
   {
-    "revision": "7fc8564cd6983c558c4f",
-    "url": "/bible/static/js/main.7fc8564c.chunk.js"
+    "revision": "3134eb055c8886c14ba8",
+    "url": "/bible/static/js/main.3134eb05.chunk.js"
   },
   {
     "revision": "224a0f459bbcac307cb5",
     "url": "/bible/static/js/1.224a0f45.chunk.js"
   },
   {
-    "revision": "7fc8564cd6983c558c4f",
+    "revision": "3134eb055c8886c14ba8",
     "url": "/bible/static/css/main.137463b5.chunk.css"
   },
   {
-    "revision": "7266362dacc550891af098751e1c2f36",
+    "revision": "cdbadfb0fe7b4f76a6f2b21ee46147c8",
     "url": "/bible/index.html"
   }
 ];

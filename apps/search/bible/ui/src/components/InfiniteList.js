@@ -27,7 +27,12 @@ class InfiniteList extends Component {
         super(props)
 
         window.onscroll = () => {
-            if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+            let scroll = window.innerHeight + document.documentElement.scrollTop
+            let offset = document.documentElement.offsetHeight
+
+            console.log(scroll, offset)
+
+            if (scroll === offset) {
                 this.loadData()
             }
         }
@@ -53,6 +58,9 @@ class InfiniteList extends Component {
                         </div>
                     )
                 )}
+                {!this.props.verses.length &&
+                <div style={{ marginTop: '10px' }}>No results...</div>
+                }
             </div>
         )
     }
