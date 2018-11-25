@@ -12,6 +12,8 @@ class App extends Component {
     componentDidMount() {
         const { dispatch } = this.props
 
+        setTimeout(() => document.getElementById('loader').style.display = 'none', 250)
+
         dispatch(getBooks())
         dispatch(getVerses())
     }

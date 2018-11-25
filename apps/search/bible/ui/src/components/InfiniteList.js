@@ -27,7 +27,7 @@ class InfiniteList extends Component {
         super(props)
 
         window.onscroll = () => {
-            let scrollHeight = document.body.scrollTop || document.documentElement.scrollTop;
+            let scrollHeight = document.body.scrollTop || document.documentElement.scrollTop
             let scroll = window.innerHeight + scrollHeight
             let offset = document.documentElement.offsetHeight
 
@@ -47,7 +47,7 @@ class InfiniteList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="verses-wrapper">
                 {this.props.verses.map(
                     (item, i, array) => (
                         <div key={i}>
