@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import Verse from './Verse'
 import { connect } from 'react-redux'
 import { getVerses } from '../redux/verse'
-import { groupBy, isUndefined } from 'lodash'
+import { isUndefined } from 'lodash'
+import { formValueSelector } from 'redux-form'
 
 function isFirstChapterOccurrence(item, index, array) {
     const previousItem = array[index - 1]
@@ -67,15 +68,15 @@ class InfiniteList extends Component {
 
 
 function mapStateToProps(state) {
+    const selector = formValueSelector('filters')
+
     const verses = state.verses.data
     const page = state.verses.page
     const hasMore = state.verses.hasMore
-    const filters = state.filters
-    const chapters = groupBy(verses, (item) => item.chapter_number)
+    const filters = selector(state, 'book', 'chapter', 'search')
 
     return {
         verses,
-        chapters,
         page,
         hasMore,
         filters

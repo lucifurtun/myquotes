@@ -26,7 +26,7 @@ function isFirstPage(response) {
     return response.page === 1
 }
 
-export function getVerses(bookTitle, chapterNumber, search = null, page = null) {
+export function getVerses(bookTitle, chapterNumber = null, search = null, page = null) {
     return {
         type: 'GET_VERSES',
         payload: {

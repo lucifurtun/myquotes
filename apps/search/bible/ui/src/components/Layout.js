@@ -1,10 +1,10 @@
 import React from 'react'
-import Filters from './Filters'
 import InfiniteList from './InfiniteList'
+import FiltersForm from './FiltersForm'
 
 const Layout = () => (
     <div>
-        <Filters/>
+        <FiltersForm/>
         <InfiniteList/>
     </div>
 )

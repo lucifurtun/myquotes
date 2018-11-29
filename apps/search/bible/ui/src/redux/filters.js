@@ -1,71 +1,46 @@
 import { takeEvery, put, select } from 'redux-saga/effects'
 import { getChapters } from './chapter'
 import { getVerses } from './verse'
-
-const initialState = {
-    book: null,
-    chapter: null,
-    verse: null,
-    search: null
-}
-
-export function reducer(state = initialState, action = {}) {
-    switch(action.type) {
-        case 'CHANGE_BOOK':
-            return {
-                ...state,
-                book: action.payload
-            }
-        case 'CHANGE_CHAPTER':
-            return {
-                ...state,
-                chapter: action.payload
-            }
-        case 'CHANGE_VERSE':
-            return {
-                ...state,
-                verse: action.payload
-            }
-        case 'CHANGE_SEARCH':
-            return {
-                ...state,
-                search: action.payload || null
-            }
-        default:
-            return state
-    }
-}
+import { formValueSelector } from 'redux-form'
 
 export function* saga() {
-    yield takeEvery('CHANGE_BOOK', handleChangeBook)
-    yield takeEvery('CHANGE_CHAPTER', handleChangeChapter)
-    yield takeEvery('CHANGE_SEARCH', handleChangeSearch)
+    yield takeEvery('VERSE_SEARCH', handleSearch)
+    yield takeEvery('@@redux-form/CHANGE', handleFormChange)
 }
 
-function* handleChangeBook() {
-    let currentBook = yield select((state) => state.filters.book)
-
-    yield put({ type: 'CHANGE_CHAPTER', payload: null })
-
-    if (currentBook) {
-        yield put(getChapters(currentBook))
+function* handleChangeBook({ book }) {
+    if (book) {
+        yield put(getChapters(book))
     }
 
+    yield put(getVerses(book))
 }
 
-function* handleChangeChapter() {
-    const currentBook = yield select((state) => state.filters.book)
-    let currentChapter = yield select((state) => state.filters.chapter)
-    const currentSearchText = yield select((state) => state.filters.search)
-
-    yield put({ type: 'CHANGE_VERSE', payload: null })
-    yield put(getVerses(currentBook, currentChapter, currentSearchText))
+function* handleChangeChapter({ book, chapter }) {
+    console.log(book, chapter)
+    yield put(getVerses(book, chapter))
 }
 
-function* handleChangeSearch() {
-    const currentBook = yield select((state) => state.filters.book)
-    const currentChapter = yield select((state) => state.filters.chapter)
-    const currentSearchText = yield select((state) => state.filters.search)
+function* handleSearch() {
+    const selector = formValueSelector('filters')
+    const filtersValues = yield  select((state) => selector(state, 'book', 'chapter', 'search'))
 
-    yield put(getVerses(currentBook, currentChapter, currentSearchText))
+    const { book, chapter, search } = filtersValues
+
+    yield put(getVerses(book, chapter, search))
+}
+
+function* handleFormChange(payload) {
+    const formValues = yield select((state) => state.form.filters.values)
+
+    switch(payload.meta.field) {
+        case 'book':
+            yield handleChangeBook(formValues)
+            break
+        case 'chapter':
+            yield handleChangeChapter(formValues)
+            break
+        default:
+            break
+    }
 }

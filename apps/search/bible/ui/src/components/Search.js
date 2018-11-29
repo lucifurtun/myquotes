@@ -29,6 +29,7 @@ class Search extends Component {
                     placeholder="Search..."
                     style={{ height: '38px' }}
                     ref={this.textInput}
+                    {...this.props.input}
                 />
                 <span className="input-group-btn">
                 <button
