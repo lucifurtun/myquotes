@@ -8,17 +8,16 @@ export function* saga() {
     yield takeEvery('@@redux-form/CHANGE', handleFormChange)
 }
 
-function* handleChangeBook({ book }) {
+function* handleChangeBook({ book, search }) {
     if (book) {
         yield put(getChapters(book))
     }
 
-    yield put(getVerses(book))
+    yield put(getVerses(book, null, search))
 }
 
-function* handleChangeChapter({ book, chapter }) {
-    console.log(book, chapter)
-    yield put(getVerses(book, chapter))
+function* handleChangeChapter({ book, chapter, search }) {
+    yield put(getVerses(book, chapter, search))
 }
 
 function* handleSearch() {
