@@ -1,9 +1,7 @@
 from django_elasticsearch_dsl import DocType, Index, fields
-from elasticsearch_dsl import analyzer, connections, token_filter
+from elasticsearch_dsl import analyzer, token_filter
 
 from .models import Verse as VerseModel
-
-connections.create_connection(hosts=['localhost'])
 
 edge_ngram_completion_filter = token_filter(
     'edge_ngram_completion_filter',
