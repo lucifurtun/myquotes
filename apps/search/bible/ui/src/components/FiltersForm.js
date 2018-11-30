@@ -6,7 +6,7 @@ import { isEmpty, values } from 'lodash'
 import DropDown from './Dropdown'
 
 let FiltersForm = props => {
-    const { handleSubmit, book, chapter, dispatch } = props
+    const { handleSubmit, books, chapters, dispatch } = props
     return (
         <form onSubmit={handleSubmit}>
             <div className='row'>
@@ -15,8 +15,7 @@ let FiltersForm = props => {
                         name='book'
                         component={DropDown}
                         placeholder='Book'
-                        options={book.options}
-                        value={book.value}
+                        options={books}
                     />
                 </div>
                 <div className='col-sm-2' style={{ margin: '5px' }}>
@@ -25,8 +24,7 @@ let FiltersForm = props => {
                         component={DropDown}
                         placeholder='Chapter'
                         isClearable
-                        options={chapter.options}
-                        value={chapter.value}
+                        options={chapters}
                     />
                 </div>
                 <div className='col-sm-3' style={{ margin: '5px' }}>
@@ -47,24 +45,24 @@ FiltersForm = reduxForm({
 
 
 function mapStateToProps(state) {
-    const bookOptions = values(state.books.data).map((item) => ({ value: item.title, label: item.title }))
-    const chapterOptions = values(state.chapters.data).map((item) => ({ value: item.number, label: item.number }))
+    const books = values(state.books.data).map((item) => ({ value: item.title, label: item.title }))
+    const chapters = values(state.chapters.data).map((item) => ({ value: item.number, label: item.number }))
 
     const selector = formValueSelector('filters')
     const filtersValues = selector(state, 'book', 'chapter')
 
     if (isEmpty(filtersValues)) {
         return {
-            book: { value: null, options: bookOptions },
-            chapter: { value: null, options: [] },
+            books: books,
+            chapters: [],
         }
     }
 
-    const { book, chapter } = filtersValues
+    const { book } = filtersValues
 
     return {
-        book: { value: book, options: bookOptions },
-        chapter: { value: chapter, options: book ? chapterOptions : [] },
+        book: books,
+        chapters: book ? chapters : []
     }
 }
 

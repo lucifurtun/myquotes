@@ -2,14 +2,15 @@ import React from 'react'
 
 import Select from 'react-select'
 
-const DropDown = ({ options, value, placeholder, input }) => {
-    const { onChange } = input
+const DropDown = ({ options, placeholder, input }) => {
+    const { onChange, value } = input
+    const preparedValue = value ? { value: value, label: value } : null
 
     return (
         <Select
             isClearable
             options={options}
-            value={value}
+            value={preparedValue}
             placeholder={placeholder}
             onChange={(event) => onChange(event ? event.value : null)}
         />

@@ -1,7 +1,7 @@
 import { takeEvery, put, select } from 'redux-saga/effects'
 import { getChapters } from './chapter'
 import { getVerses } from './verse'
-import { formValueSelector } from 'redux-form'
+import { formValueSelector, change } from 'redux-form'
 
 export function* saga() {
     yield takeEvery('VERSE_SEARCH', handleSearch)
@@ -11,6 +11,9 @@ export function* saga() {
 function* handleChangeBook({ book, search }) {
     if (book) {
         yield put(getChapters(book))
+    }
+    else {
+        yield put(change('filters', 'chapter', null))
     }
 
     yield put(getVerses(book, null, search))
