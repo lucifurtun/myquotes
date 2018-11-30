@@ -1,5 +1,6 @@
 from django.db.models import Q
-from django_elasticsearch_dsl_drf.filter_backends import FilteringFilterBackend, DefaultOrderingFilterBackend
+from django_elasticsearch_dsl_drf.filter_backends import FilteringFilterBackend, DefaultOrderingFilterBackend, \
+    HighlightBackend
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from rest_framework.exceptions import APIException
 from rest_framework.generics import ListAPIView
@@ -58,16 +59,31 @@ class VerseView(DocumentViewSet):
         FilteringFilterBackend,
         DefaultOrderingFilterBackend,
         SearchFilterBackend,
+        HighlightBackend
     ]
 
-    search_fields = (
-        'text',
-    )
+    search_fields = {
+        'text': {
+            # 'analyzer': 'standard'
+        }
+    }
 
     filter_fields = {
         'book_title': 'book_title.raw',
         'chapter_number': 'chapter_number',
         'number': 'number',
+    }
+
+    highlight_fields = {
+        'text': {
+            'options': {
+                'pre_tags': ["<b>"],
+                'post_tags': ["</b>"],
+                'fragment_size': 400,
+                'number_of_fragments': 10
+            },
+            'enabled': True,
+        },
     }
 
     ordering = ('book_number', 'chapter_number', 'number')

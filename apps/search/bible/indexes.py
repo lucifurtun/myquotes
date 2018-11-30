@@ -1,14 +1,26 @@
 from django_elasticsearch_dsl import DocType, Index, fields
-from elasticsearch_dsl import analyzer, connections
+from elasticsearch_dsl import analyzer, connections, token_filter
 
 from .models import Verse as VerseModel
 
 connections.create_connection(hosts=['localhost'])
 
+edge_ngram_completion_filter = token_filter(
+    'edge_ngram_completion_filter',
+    type="edge_ngram",
+    min_gram=1,
+    max_gram=20
+)
+
 diacritics = analyzer(
     'diacritics',
     tokenizer="standard",
-    filter=["standard", "lowercase", "asciifolding"]
+    filter=[
+        "standard",
+        "lowercase",
+        "asciifolding"
+        # edge_ngram_completion_filter
+    ]
 )
 
 html_strip = analyzer(

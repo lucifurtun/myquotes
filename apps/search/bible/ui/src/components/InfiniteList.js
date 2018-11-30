@@ -54,13 +54,17 @@ class InfiniteList extends Component {
                         <div key={i}>
                             {isFirstBookOccurrence(item, i, array) && <h2>{item.book_title}</h2>}
                             {isFirstChapterOccurrence(item, i, array) && <h3>{item.chapter_number}</h3>}
-                            <Verse key={i} number={item.number} text={item.text}/>
+                            <Verse
+                                key={i}
+                                number={item.number}
+                                text={item.text_highlight ? item.text_highlight : item.text}
+                            />
                         </div>
                     )
                 )}
-                {!this.props.verses.length &&
-                <h4 className="no-results">No results...</h4>
-                }
+
+                {!this.props.verses.length && <h4 className="no-results">No results...</h4>}
+
             </div>
         )
     }
