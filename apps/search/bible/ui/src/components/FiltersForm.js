@@ -10,7 +10,7 @@ let FiltersForm = props => {
     return (
         <form onSubmit={handleSubmit}>
             <div className='row'>
-                <div className='col-sm-2' style={{ margin: '5px' }}>
+                <div className='col-sm-3' style={{ margin: '5px' }}>
                     <Field
                         name='book'
                         component={DropDown}
@@ -18,7 +18,7 @@ let FiltersForm = props => {
                         options={books}
                     />
                 </div>
-                <div className='col-sm-2' style={{ margin: '5px' }}>
+                <div className='col-sm-3' style={{ margin: '5px' }}>
                     <Field
                         name='chapter'
                         component={DropDown}

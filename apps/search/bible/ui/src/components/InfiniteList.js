@@ -27,14 +27,19 @@ class InfiniteList extends Component {
     constructor(props) {
         super(props)
 
-        window.onscroll = () => {
-            let scrollHeight = document.body.scrollTop || document.documentElement.scrollTop
-            let scroll = window.innerHeight + scrollHeight
-            let offset = document.documentElement.offsetHeight
+        this.verseWrapper = React.createRef()
 
-            if (scroll === offset) {
-                this.loadData()
-            }
+    }
+
+    handleScroll = (event) => {
+        let element = this.verseWrapper.current
+
+        let scrollHeight = element.scrollTop
+        let scroll = element.offsetHeight + scrollHeight
+        let offset = element.scrollHeight
+
+        if (scroll === offset) {
+            this.loadData()
         }
     }
 
@@ -48,7 +53,7 @@ class InfiniteList extends Component {
 
     render() {
         return (
-            <div className="verses-wrapper">
+            <div ref={this.verseWrapper} className="verses-wrapper" onScroll={this.handleScroll}>
                 {this.props.verses.map(
                     (item, i, array) => (
                         <div key={i}>

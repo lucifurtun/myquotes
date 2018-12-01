@@ -234,3 +234,23 @@ input, button {
         transform: rotate(450deg);
     }
 }
+
+.verses-wrapper {
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.translation {
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+}
+
+.translation-wrapper {
+    height: 75vh;
+}
+
+body, html {
+    width: 100%;
+    overflow-y: hidden;
+}
