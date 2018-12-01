@@ -58,11 +58,11 @@ function mapStateToProps(state) {
         }
     }
 
-    const { book } = filtersValues
+    const { book: currentBook } = filtersValues
 
     return {
-        book: books,
-        chapters: book ? chapters : []
+        books: books,
+        chapters: currentBook ? chapters : []
     }
 }
 
