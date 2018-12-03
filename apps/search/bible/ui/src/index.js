@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import createStore from './redux/store'
+import {createStore} from './redux/store'
 
 const store = createStore({})
 store.subscribe(() => {

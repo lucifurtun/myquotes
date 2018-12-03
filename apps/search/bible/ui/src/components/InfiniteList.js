@@ -77,6 +77,7 @@ class InfiniteList extends Component {
 
 
 function mapStateToProps(state) {
+    console.log(state)
     const selector = formValueSelector('filters')
 
     const verses = state.verses.data

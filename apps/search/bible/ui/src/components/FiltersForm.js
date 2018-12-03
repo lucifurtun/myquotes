@@ -45,6 +45,7 @@ FiltersForm = reduxForm({
 
 
 function mapStateToProps(state) {
+    console.log(state)
     const books = values(state.books.data).map((item) => ({ value: item.title, label: item.title }))
     const chapters = values(state.chapters.data).map((item) => ({ value: item.number, label: item.number }))
 

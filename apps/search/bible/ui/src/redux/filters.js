@@ -32,7 +32,11 @@ function* handleSearch() {
     yield put(getVerses(book, chapter, search))
 }
 
-function* handleFormChange(payload) {
+function* handleFormChange(payload, dispatch, getState) {
+    console.log(dispatch)
+    const state = yield select((state) => state)
+    console.log(state)
+
     const formValues = yield select((state) => state.form.filters.values)
 
     switch(payload.meta.field) {

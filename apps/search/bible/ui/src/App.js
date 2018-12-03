@@ -14,8 +14,8 @@ class App extends Component {
 
         setTimeout(() => document.getElementById('loader').style.display = 'none', 250)
 
-        dispatch(getBooks())
-        dispatch(getVerses())
+        // dispatch(getBooks())
+        // dispatch(getVerses())
     }
 
     render() {
