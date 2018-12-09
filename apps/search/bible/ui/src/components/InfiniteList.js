@@ -3,7 +3,6 @@ import Verse from './Verse'
 import { connect } from 'react-redux'
 import { getVerses } from '../redux/verse'
 import { isUndefined } from 'lodash'
-import { formValueSelector } from 'redux-form'
 
 function isFirstChapterOccurrence(item, index, array) {
     const previousItem = array[index - 1]
@@ -28,7 +27,6 @@ class InfiniteList extends Component {
         super(props)
 
         this.verseWrapper = React.createRef()
-
     }
 
     handleScroll = (event) => {
@@ -77,13 +75,10 @@ class InfiniteList extends Component {
 
 
 function mapStateToProps(state) {
-    console.log(state)
-    const selector = formValueSelector('filters')
-
     const verses = state.verses.data
     const page = state.verses.page
     const hasMore = state.verses.hasMore
-    const filters = selector(state, 'book', 'chapter', 'search')
+    const filters = state.filters
 
     return {
         verses,

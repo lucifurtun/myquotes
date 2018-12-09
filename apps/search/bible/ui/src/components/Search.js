@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { formChange } from '../redux/filters'
 
 
 class Search extends Component {
@@ -29,7 +31,7 @@ class Search extends Component {
                     placeholder="Search..."
                     style={{ height: '38px' }}
                     ref={this.textInput}
-                    {...this.props.input}
+                    onChange={() => this.props.dispatch(formChange('search', this.textInput.current.value || null))}
                 />
                 <span className="input-group-btn">
                 <button
@@ -44,4 +46,4 @@ class Search extends Component {
     }
 }
 
-export default Search
+export default connect()(Search)

@@ -4,18 +4,11 @@ import { connect } from 'react-redux'
 
 import './App.css'
 import Layout from './components/Layout'
-import { getBooks } from './redux/book'
-import { getVerses } from './redux/verse'
 import Spinner from './components/Spinner'
 
 class App extends Component {
     componentDidMount() {
-        const { dispatch } = this.props
-
         setTimeout(() => document.getElementById('loader').style.display = 'none', 250)
-
-        // dispatch(getBooks())
-        // dispatch(getVerses())
     }
 
     render() {

@@ -3,13 +3,13 @@ import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 import axios from 'axios'
 import axiosMiddleware from 'redux-axios-middleware'
-import { reducer as formReducer } from 'redux-form'
 
 import { reducer as bookReducer } from './book'
 import { reducer as chapterReducer } from './chapter'
 import { reducer as verseReducer } from './verse'
 import { reducer as versionsReducer } from './versions'
 import { reducer as apiReducer } from './api'
+import { reducer as filtersReducer } from './filters'
 
 import { saga as filtersSaga } from './filters'
 
@@ -30,7 +30,7 @@ const versionReducer = combineReducers({
     books: bookReducer,
     chapters: chapterReducer,
     verses: verseReducer,
-    form: formReducer
+    filters: filtersReducer
 })
 
 const client = axios.create({
@@ -61,7 +61,7 @@ export function createVersionStore(reducer, initialState = {}) {
         applyMiddleware(axiosMiddleware(client), sagaMiddleware)
     )
 
-    sagaMiddleware.run(rootSaga, store.dispatch, store.getState)
+    sagaMiddleware.run(rootSaga)
 
     return store
 }

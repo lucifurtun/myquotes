@@ -1,36 +1,32 @@
 import React from 'react'
-import { Field, formValueSelector, reduxForm } from 'redux-form'
 import Search from './Search'
 import connect from 'react-redux/es/connect/connect'
-import { isEmpty, values } from 'lodash'
+import { values } from 'lodash'
 import DropDown from './Dropdown'
 
 let FiltersForm = props => {
-    const { handleSubmit, books, chapters, dispatch } = props
+    const { handleSubmit, books, book, chapters, chapter, dispatch } = props
     return (
         <form onSubmit={handleSubmit}>
             <div className='row'>
                 <div className='col-sm-3' style={{ margin: '5px' }}>
-                    <Field
+                    <DropDown
                         name='book'
-                        component={DropDown}
                         placeholder='Book'
                         options={books}
+                        value={book}
                     />
                 </div>
                 <div className='col-sm-3' style={{ margin: '5px' }}>
-                    <Field
+                    <DropDown
                         name='chapter'
-                        component={DropDown}
                         placeholder='Chapter'
-                        isClearable
                         options={chapters}
+                        value={chapter}
                     />
                 </div>
                 <div className='col-sm-3' style={{ margin: '5px' }}>
-                    <Field
-                        name='search'
-                        component={Search}
+                    <Search
                         onSearch={(value) => dispatch({ type: 'VERSE_SEARCH', payload: value })}
                     />
                 </div>
@@ -39,31 +35,22 @@ let FiltersForm = props => {
     )
 }
 
-FiltersForm = reduxForm({
-    form: 'filters'
-})(FiltersForm)
 
-
-function mapStateToProps(state) {
-    console.log(state)
+function mapStateToProps(state, props) {
     const books = values(state.books.data).map((item) => ({ value: item.title, label: item.title }))
-    const chapters = values(state.chapters.data).map((item) => ({ value: item.number, label: item.number }))
+    const chapters = values(state.chapters.data).map((item) => ({
+        value: item.number,
+        label: item.number
+    }))
 
-    const selector = formValueSelector('filters')
-    const filtersValues = selector(state, 'book', 'chapter')
-
-    if (isEmpty(filtersValues)) {
-        return {
-            books: books,
-            chapters: [],
-        }
-    }
-
-    const { book: currentBook } = filtersValues
+    const currentBook = state.filters.book
+    const currentChapter = state.filters.chapter
 
     return {
         books: books,
-        chapters: currentBook ? chapters : []
+        book: currentBook,
+        chapters: currentBook ? chapters : [],
+        chapter: currentChapter
     }
 }
 

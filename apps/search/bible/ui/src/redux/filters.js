@@ -1,11 +1,29 @@
 import { takeEvery, put, select } from 'redux-saga/effects'
 import { getChapters } from './chapter'
 import { getVerses } from './verse'
-import { formValueSelector, change } from 'redux-form'
+
+const initialState = {
+    book: null,
+    chapter: null,
+    verse: null,
+    search: null
+}
+
+export function reducer(state = initialState, action = {}) {
+    switch(action.type) {
+        case 'FORM_CHANGE':
+            return {
+                ...state,
+                [action.payload.field]: action.payload.value
+            }
+        default:
+            return state
+    }
+}
 
 export function* saga() {
     yield takeEvery('VERSE_SEARCH', handleSearch)
-    yield takeEvery('@@redux-form/CHANGE', handleFormChange)
+    yield takeEvery('FORM_CHANGE', handleFormChange)
 }
 
 function* handleChangeBook({ book, search }) {
@@ -13,7 +31,7 @@ function* handleChangeBook({ book, search }) {
         yield put(getChapters(book))
     }
     else {
-        yield put(change('filters', 'chapter', null))
+        yield put(formChange('chapter', null))
     }
 
     yield put(getVerses(book, null, search))
@@ -24,22 +42,17 @@ function* handleChangeChapter({ book, chapter, search }) {
 }
 
 function* handleSearch() {
-    const selector = formValueSelector('filters')
-    const filtersValues = yield  select((state) => selector(state, 'book', 'chapter', 'search'))
+    const filtersValues = yield select((state) => state.filters)
 
     const { book, chapter, search } = filtersValues
 
-    yield put(getVerses(book, chapter, search))
+    yield put(getVerses(book, chapter, search, null))
 }
 
-function* handleFormChange(payload, dispatch, getState) {
-    console.log(dispatch)
-    const state = yield select((state) => state)
-    console.log(state)
+function* handleFormChange(payload) {
+    const formValues = yield select((state) => state.filters)
 
-    const formValues = yield select((state) => state.form.filters.values)
-
-    switch(payload.meta.field) {
+    switch(payload.payload.field) {
         case 'book':
             yield handleChangeBook(formValues)
             break
@@ -50,3 +63,8 @@ function* handleFormChange(payload, dispatch, getState) {
             break
     }
 }
+
+export const formChange = (field, value) => ({
+    type: 'FORM_CHANGE',
+    payload: { field, value }
+})

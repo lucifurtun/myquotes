@@ -1,44 +1,22 @@
 import React from 'react'
-import InfiniteList from './InfiniteList'
-import FiltersForm from './FiltersForm'
 import connect from 'react-redux/es/connect/connect'
 import { values } from 'lodash'
 import AddVersionButton from './AddVersionButton'
-import { createVersionStore } from '../redux/store'
-import { getBooks } from '../redux/book'
-import { getVerses } from '../redux/verse'
+import Version from './Version'
 
 
-const getVersion = (item, i, array) => {
-    const store = createVersionStore({})
-    store.subscribe(() => {
-        console.log(item, store.getState())
-    })
-
-    store.dispatch(getBooks())
-    store.dispatch(getVerses())
-
-    return (
-        <div key={i} className='translation'>
-            <FiltersForm store={store}/>
-            <InfiniteList store={store}/>
-        </div>
-    )
-}
-
-
-const Layout = ({ versions, store }) => (
+const Layout = ({ versions, }) => (
     <div>
-        <AddVersionButton store={store}/>
+        <AddVersionButton/>
         <div className='translation-wrapper'>
-            {versions.map(getVersion)}
+            {versions.map((item, i) => <Version key={i} item={item}/>)}
         </div>
     </div>
 
 )
 
 function mapStateToProps(state) {
-    const versions = values(state.versions.selected)
+    const versions = values(state.versions)
     return {
         versions
     }
