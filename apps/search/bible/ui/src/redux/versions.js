@@ -1,13 +1,17 @@
-// const versionOptons = {
-//     vdcc: 'vdcc',
-//     kjv: 'kjv'
-// }
+import { omit, split, keys, max, toInteger, isEmpty } from 'lodash'
+
+const versionOptons = {
+    vdcc: 'VDCC',
+    kjv: 'KJV'
+}
 
 
 const initialState = {
-    vdcc: {
-        label: 'VDCC',
-        store: null
+    vdcc__1: {
+        id: 'vdcc__1',
+        name: 'vdcc',
+        index: 1,
+        label: 'VDCC'
     }
 }
 
@@ -15,7 +19,36 @@ const initialState = {
 export function reducer(state = initialState, action = {}) {
     switch(action.type) {
         case 'ADD_VERSION':
-            return { ...state, ...action.payload }
+            const newVersion = action.payload
+            let version, count
+
+            let indexes = []
+
+            for (let v of keys(state)) {
+                [version, count] = split(v, '__')
+
+                if (version === newVersion) {
+                    indexes.push(toInteger(count))
+                }
+            }
+
+            const nextIndex = isEmpty(indexes) ? 1 : max(indexes) + 1
+
+            const newKey = `${newVersion}__${nextIndex}`
+            console.log(newKey)
+            const newVersionItem = {
+                [newKey]: {
+                    id: newKey,
+                    name: newVersion,
+                    index: nextIndex,
+                    label: versionOptons[newVersion]
+                }
+            }
+
+            return { ...state, ...newVersionItem }
+        case 'REMOVE_VERSION':
+            console.log(action.payload)
+            return omit(state, action.payload)
         default:
             return state
     }
@@ -24,6 +57,13 @@ export function reducer(state = initialState, action = {}) {
 export function addVersion(version) {
     return ({
         type: 'ADD_VERSION',
-        payload: { [version]: version }
+        payload: version
+    })
+}
+
+export function removeVersion(version) {
+    return ({
+        type: 'REMOVE_VERSION',
+        payload: version
     })
 }

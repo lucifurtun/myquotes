@@ -10,6 +10,7 @@ import { reducer as verseReducer } from './verse'
 import { reducer as versionsReducer } from './versions'
 import { reducer as apiReducer } from './api'
 import { reducer as filtersReducer } from './filters'
+import { stores } from './index'
 
 import { saga as filtersSaga } from './filters'
 
@@ -38,7 +39,7 @@ const client = axios.create({
     responseType: 'json'
 })
 
-export function createStore(reducer, initialState = {}) {
+export function createStore(initialState = {}) {
     const sagaMiddleware = createSagaMiddleware()
 
     const store = createReduxStore(
@@ -49,10 +50,17 @@ export function createStore(reducer, initialState = {}) {
 
     sagaMiddleware.run(rootSaga)
 
+    const name = 'root'
+
+    stores[name] = store
+    store.subscribe(() => {
+        console.log(name, store.getState())
+    })
+
     return store
 }
 
-export function createVersionStore(reducer, initialState = {}) {
+export function createVersionStore(name, initialState = {}) {
     const sagaMiddleware = createSagaMiddleware()
 
     const store = createReduxStore(
@@ -62,6 +70,11 @@ export function createVersionStore(reducer, initialState = {}) {
     )
 
     sagaMiddleware.run(rootSaga)
+
+    stores[name] = store
+    store.subscribe(() => {
+        console.log(name, store.getState())
+    })
 
     return store
 }
