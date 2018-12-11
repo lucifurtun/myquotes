@@ -237,7 +237,7 @@ input, button {
 
 .verses-wrapper {
     overflow-y: scroll;
-    height: 500px;
+    height: 55vh;
 }
 
 .translation {
