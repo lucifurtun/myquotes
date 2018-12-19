@@ -31,7 +31,8 @@ const versionReducer = combineReducers({
     books: bookReducer,
     chapters: chapterReducer,
     verses: verseReducer,
-    filters: filtersReducer
+    filters: filtersReducer,
+    api: apiReducer,
 })
 
 const client = axios.create({

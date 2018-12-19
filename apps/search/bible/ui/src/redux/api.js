@@ -1,8 +1,7 @@
 import { has } from 'lodash'
 
 const initialState = {
-    isLoading: false,
-    isVisible: false
+    isLoading: false
 }
 
 export function reducer(state = initialState, action = {}) {

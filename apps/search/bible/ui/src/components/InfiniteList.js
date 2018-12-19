@@ -26,6 +26,10 @@ class InfiniteList extends Component {
     constructor(props) {
         super(props)
 
+        this.state = {
+            isLoading: false
+        }
+
         this.verseWrapper = React.createRef()
     }
 
@@ -36,8 +40,10 @@ class InfiniteList extends Component {
         let scroll = element.offsetHeight + scrollHeight
         let offset = element.scrollHeight
 
-        if (scroll === offset) {
-            this.loadData()
+        if (scroll >= offset - 200) {
+            if (!this.state.isLoading) {
+                this.loadData()
+            }
         }
     }
 
@@ -45,8 +51,19 @@ class InfiniteList extends Component {
         const { dispatch, filters, page, hasMore } = this.props
 
         if (hasMore) {
+            this.setState({ isLoading: true })
             dispatch(getVerses(filters.book, filters.chapter, filters.search, page ? page + 1 : page))
         }
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.isLoading !== prevState.isLoading) {
+            if (nextProps.isLoading === false) {
+                return { isLoading: false }
+            }
+        }
+
+        return null
     }
 
     render() {
@@ -78,12 +95,14 @@ function mapStateToProps(state) {
     const verses = state.verses.data
     const page = state.verses.page
     const hasMore = state.verses.hasMore
+    const isLoading = state.api.isLoading
     const filters = state.filters
 
     return {
         verses,
         page,
         hasMore,
+        isLoading,
         filters
     }
 }
