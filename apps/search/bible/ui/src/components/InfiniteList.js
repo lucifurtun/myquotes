@@ -72,8 +72,14 @@ class InfiniteList extends Component {
                 {this.props.verses.map(
                     (item, i, array) => (
                         <div key={i}>
-                            {isFirstBookOccurrence(item, i, array) && <h2>{item.book_title}</h2>}
-                            {isFirstChapterOccurrence(item, i, array) && <h3>{item.chapter_number}</h3>}
+                            {
+                                isFirstBookOccurrence(item, i, array) &&
+                                <h2 className="verse-book">{item.book_title}</h2>
+                            }
+                            {
+                                isFirstChapterOccurrence(item, i, array) &&
+                                <h3 className="verse-chapter">{item.chapter_number}</h3>
+                            }
                             <Verse
                                 key={i}
                                 number={item.number}

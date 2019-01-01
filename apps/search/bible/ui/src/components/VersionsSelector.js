@@ -6,7 +6,7 @@ import { DropdownButton, MenuItem } from 'react-bootstrap'
 
 const VersionsSelector = ({ versions, dispatch }) => {
     return (
-        <div>
+        <div className="version-selector-wrapper">
             <DropdownButton bsStyle='success' title='Add Version' id='add-version-dropdown'>
                 <MenuItem header><span className="flag-icon flag-icon-ro"/> Romanian</MenuItem>
                 <MenuItem onClick={() => dispatch(addVersion('vdcc'))} eventKey="1">

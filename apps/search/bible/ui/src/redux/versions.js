@@ -1,4 +1,5 @@
 import { omit, split, keys, max, toInteger, isEmpty } from 'lodash'
+import { stores } from '.'
 
 const versionOptons = {
     vdcc: 'VDCC',
@@ -47,7 +48,7 @@ export function reducer(state = initialState, action = {}) {
 
             return { ...state, ...newVersionItem }
         case 'REMOVE_VERSION':
-            console.log(action.payload)
+            delete stores[action.payload]
             return omit(state, action.payload)
         default:
             return state
