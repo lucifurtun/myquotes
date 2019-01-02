@@ -9,6 +9,7 @@ import { reducer as chapterReducer } from './chapter'
 import { reducer as verseReducer } from './verse'
 import { reducer as versionsReducer } from './versions'
 import { reducer as apiReducer } from './api'
+import { reducer as uiReducer } from './ui'
 import { reducer as filtersReducer } from './filters'
 import { stores } from './index'
 
@@ -24,7 +25,7 @@ function* rootSaga() {
 
 const rootReducer = combineReducers({
     versions: versionsReducer,
-    api: apiReducer,
+    ui: uiReducer,
 })
 
 const versionReducer = combineReducers({

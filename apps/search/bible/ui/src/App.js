@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-
 
 import './App.css'
 import Layout from './components/Layout'
@@ -30,10 +28,4 @@ class App extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    const isLoading = state.api.isLoading
-
-    return { isLoading }
-}
-
-export default connect(mapStateToProps)(App)
+export default App

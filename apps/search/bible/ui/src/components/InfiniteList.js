@@ -33,12 +33,25 @@ class InfiniteList extends Component {
         this.verseWrapper = React.createRef()
     }
 
-    handleScroll = (event) => {
-        let element = this.verseWrapper.current
+    componentDidMount() {
+        window.onscroll = () => {
+            this.handleScroll()
+        }
+    }
 
-        let scrollHeight = element.scrollTop
-        let scroll = element.offsetHeight + scrollHeight
-        let offset = element.scrollHeight
+    handleScroll = (event) => {
+        let offset, scroll
+
+        if (this.props.isMobile === true) {
+            let scrollHeight = document.body.scrollTop || document.documentElement.scrollTop
+            scroll = window.innerHeight + scrollHeight
+            offset = document.documentElement.offsetHeight
+        } else {
+            let element = this.verseWrapper.current
+            let scrollHeight = element.scrollTop
+            scroll = element.offsetHeight + scrollHeight
+            offset = element.scrollHeight
+        }
 
         if (scroll >= offset - 200) {
             if (!this.state.isLoading) {
@@ -92,6 +105,7 @@ class InfiniteList extends Component {
                 {!this.props.verses.length && <h4 className="no-results">No results...</h4>}
 
             </div>
+
         )
     }
 }

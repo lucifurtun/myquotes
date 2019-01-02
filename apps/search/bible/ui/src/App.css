@@ -247,16 +247,7 @@ input, button {
 }
 
 .verses-wrapper {
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    height: calc(100vh - 170px);
     position: relative;
-}
-
-@media all and (max-width: 768px) {
-    .verses-wrapper {
-        height: calc(100vh - 320px);
-    }
 }
 
 .translation {
@@ -264,14 +255,28 @@ input, button {
     height: 100%;
 }
 
-.translation-wrapper {
-    height: 100%;
-    position: relative;
+
+@media all and (max-width: 768px) {
+    .verses-wrapper {
+        overflow-y: auto;
+        overflow-x: auto;
+        height: 100%;
+    }
 }
 
-body, html {
-    height: 100%;
-    overflow-y: hidden;
+@media all and (min-width: 769px) {
+    .verses-wrapper {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        height: calc(100vh - 130px);
+        position: relative;
+    }
+
+    body, html {
+        overflow: hidden !important;
+        height: 100%;
+    }
 }
 
 .version-selector-wrapper {
@@ -281,4 +286,9 @@ body, html {
 
 .btn-group {
     vertical-align: inherit !important;
+}
+
+.navbar {
+    margin-bottom: 0 !important;
+    box-shadow: 1px -5px 15px 0 black;
 }
