@@ -3,7 +3,6 @@ import Verse from './Verse'
 import { connect } from 'react-redux'
 import { getVerses } from '../redux/verse'
 import { isUndefined } from 'lodash'
-import { formValueSelector } from 'redux-form'
 
 function isFirstChapterOccurrence(item, index, array) {
     const previousItem = array[index - 1]
@@ -27,12 +26,35 @@ class InfiniteList extends Component {
     constructor(props) {
         super(props)
 
-        window.onscroll = () => {
-            let scrollHeight = document.body.scrollTop || document.documentElement.scrollTop
-            let scroll = window.innerHeight + scrollHeight
-            let offset = document.documentElement.offsetHeight
+        this.state = {
+            isLoading: false
+        }
 
-            if (scroll === offset) {
+        this.verseWrapper = React.createRef()
+    }
+
+    componentDidMount() {
+        window.onscroll = () => {
+            this.handleScroll()
+        }
+    }
+
+    handleScroll = (event) => {
+        let offset, scroll
+
+        if (this.props.isMobile === true) {
+            let scrollHeight = document.body.scrollTop || document.documentElement.scrollTop
+            scroll = window.innerHeight + scrollHeight
+            offset = document.documentElement.offsetHeight
+        } else {
+            let element = this.verseWrapper.current
+            let scrollHeight = element.scrollTop
+            scroll = element.offsetHeight + scrollHeight
+            offset = element.scrollHeight
+        }
+
+        if (scroll >= offset - 200) {
+            if (!this.state.isLoading) {
                 this.loadData()
             }
         }
@@ -42,18 +64,35 @@ class InfiniteList extends Component {
         const { dispatch, filters, page, hasMore } = this.props
 
         if (hasMore) {
+            this.setState({ isLoading: true })
             dispatch(getVerses(filters.book, filters.chapter, filters.search, page ? page + 1 : page))
         }
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (nextProps.isLoading !== prevState.isLoading) {
+            if (nextProps.isLoading === false) {
+                return { isLoading: false }
+            }
+        }
+
+        return null
+    }
+
     render() {
         return (
-            <div className="verses-wrapper">
+            <div ref={this.verseWrapper} className="verses-wrapper" onScroll={this.handleScroll}>
                 {this.props.verses.map(
                     (item, i, array) => (
                         <div key={i}>
-                            {isFirstBookOccurrence(item, i, array) && <h2>{item.book_title}</h2>}
-                            {isFirstChapterOccurrence(item, i, array) && <h3>{item.chapter_number}</h3>}
+                            {
+                                isFirstBookOccurrence(item, i, array) &&
+                                <h2 className="verse-book">{item.book_title}</h2>
+                            }
+                            {
+                                isFirstChapterOccurrence(item, i, array) &&
+                                <h3 className="verse-chapter">{item.chapter_number}</h3>
+                            }
                             <Verse
                                 key={i}
                                 number={item.number}
@@ -66,23 +105,24 @@ class InfiniteList extends Component {
                 {!this.props.verses.length && <h4 className="no-results">No results...</h4>}
 
             </div>
+
         )
     }
 }
 
 
 function mapStateToProps(state) {
-    const selector = formValueSelector('filters')
-
     const verses = state.verses.data
     const page = state.verses.page
     const hasMore = state.verses.hasMore
-    const filters = selector(state, 'book', 'chapter', 'search')
+    const isLoading = state.api.isLoading
+    const filters = state.filters
 
     return {
         verses,
         page,
         hasMore,
+        isLoading,
         filters
     }
 }

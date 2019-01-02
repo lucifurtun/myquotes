@@ -78,7 +78,7 @@ input, button {
 
 @media all and (min-width: 992px) {
     #content-wrapper {
-        margin-top: 110px;
+        margin-top: 70px;
     }
 
     .navbar {
@@ -120,7 +120,7 @@ input, button {
 
 .spinner {
     display: inline-block;
-    margin: 0 15px;
+    margin: 7px 15px;
 }
 
 .spinner svg {
@@ -146,9 +146,20 @@ input, button {
     padding: 0 6px;
 }
 
-.verses-wrapper .verse {
-    margin-bottom: 10px;
+.verses-wrapper .verse-book {
+    margin-bottom: 5px;
+    font-size: 25px;
 }
+
+.verses-wrapper .verse-chapter {
+    margin-top: 10px;
+    font-size: 22px;
+}
+
+.verses-wrapper .verse {
+    margin-bottom: 5px;
+}
+
 
 @-webkit-keyframes spinner-rotation {
     0% {
@@ -233,4 +244,51 @@ input, button {
         -o-transform: rotate(450deg);
         transform: rotate(450deg);
     }
+}
+
+.verses-wrapper {
+    position: relative;
+}
+
+.translation {
+    display: inline-block;
+    height: 100%;
+}
+
+
+@media all and (max-width: 768px) {
+    .verses-wrapper {
+        overflow-y: auto;
+        overflow-x: auto;
+        height: 100%;
+    }
+}
+
+@media all and (min-width: 769px) {
+    .verses-wrapper {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        height: calc(100vh - 130px);
+        position: relative;
+    }
+
+    body, html {
+        overflow: hidden !important;
+        height: 100%;
+    }
+}
+
+.version-selector-wrapper {
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.btn-group {
+    vertical-align: inherit !important;
+}
+
+.navbar {
+    margin-bottom: 0 !important;
+    box-shadow: 1px -5px 15px 0 black;
 }

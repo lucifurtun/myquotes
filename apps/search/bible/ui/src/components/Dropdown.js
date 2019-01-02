@@ -1,9 +1,10 @@
 import React from 'react'
 
 import Select from 'react-select'
+import { connect } from 'react-redux'
+import { formChange } from '../redux/filters'
 
-const DropDown = ({ options, placeholder, input }) => {
-    const { onChange, value } = input
+const DropDown = ({ name, options, placeholder, value, dispatch }) => {
     const preparedValue = value ? { value: value, label: value } : null
 
     return (
@@ -12,9 +13,9 @@ const DropDown = ({ options, placeholder, input }) => {
             options={options}
             value={preparedValue}
             placeholder={placeholder}
-            onChange={(event) => onChange(event ? event.value : null)}
+            onChange={(event) => dispatch(formChange(name, event ? event.value : null))}
         />
     )
 }
 
-export default DropDown
+export default connect()(DropDown)
