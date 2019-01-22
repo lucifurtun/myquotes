@@ -2,7 +2,7 @@ import { has } from 'lodash'
 
 const initialState = {
     isLoading: false,
-    isMobile: window.innerWidth <= 768
+    isMobile: window.innerWidth < 768
 }
 
 console.log(window.innerWidth)

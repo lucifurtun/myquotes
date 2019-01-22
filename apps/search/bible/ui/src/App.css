@@ -26,7 +26,7 @@
 #page-wrapper {
     width: 100%;
     margin: 0;
-    padding-bottom: 10px;
+    padding: 10px 0 30px;
 }
 
 .navbar {
@@ -61,7 +61,7 @@ input, button {
     z-index: 0 !important;
 }
 
-@media all and (max-width: 992px) {
+@media all and (max-width: 991px) {
     .page-header {
         margin: 10px 0 8px;
         font-size: 30px;
@@ -78,7 +78,7 @@ input, button {
 
 @media all and (min-width: 992px) {
     #content-wrapper {
-        margin-top: 70px;
+        margin-top: 60px;
     }
 
     .navbar {
@@ -140,10 +140,6 @@ input, button {
     -webkit-animation: spinner-turn 1.4s ease-in-out infinite;
     -o-animation: spinner-turn 1.4s ease-in-out infinite;
     animation: spinner-turn 1.4s ease-in-out infinite;
-}
-
-.verses-wrapper {
-    padding: 0 6px;
 }
 
 .verses-wrapper .verse-book {
@@ -253,14 +249,32 @@ input, button {
 .translation {
     display: inline-block;
     height: 100%;
+    padding: 0 10px;
 }
 
+
+.filters-form {
+    width: 85%;
+    display: inline-block;
+}
+
+.filter-item {
+    padding: 0 5px;
+}
 
 @media all and (max-width: 768px) {
     .verses-wrapper {
         overflow-y: auto;
         overflow-x: auto;
         height: 100%;
+    }
+
+    .filters-form {
+        width: 100%;
+    }
+
+    .filter-item {
+        margin: 5px 0;
     }
 }
 
@@ -291,4 +305,13 @@ input, button {
 .navbar {
     margin-bottom: 0 !important;
     box-shadow: 1px -5px 15px 0 black;
+}
+
+.row {
+    margin: 0 !important;
+}
+
+.remove-version-button {
+    vertical-align: top;
+    padding: 8px 12px;
 }

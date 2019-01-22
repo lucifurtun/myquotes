@@ -7,9 +7,9 @@ import DropDown from './Dropdown'
 let FiltersForm = props => {
     const { handleSubmit, books, book, chapters, chapter, dispatch } = props
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="filters-form" onSubmit={handleSubmit}>
             <div className='row'>
-                <div className='col-sm-3' style={{ margin: '5px' }}>
+                <div className='col-sm-4 filter-item'>
                     <DropDown
                         name='book'
                         placeholder='Book'
@@ -17,7 +17,7 @@ let FiltersForm = props => {
                         value={book}
                     />
                 </div>
-                <div className='col-sm-3' style={{ margin: '5px' }}>
+                <div className='col-sm-4 filter-item'>
                     <DropDown
                         name='chapter'
                         placeholder='Chapter'
@@ -25,7 +25,7 @@ let FiltersForm = props => {
                         value={chapter}
                     />
                 </div>
-                <div className='col-sm-3' style={{ margin: '5px' }}>
+                <div className='col-sm-4 filter-item'>
                     <Search
                         onSearch={(value) => dispatch({ type: 'VERSE_SEARCH', payload: value })}
                     />

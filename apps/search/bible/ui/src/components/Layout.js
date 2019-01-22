@@ -6,12 +6,13 @@ import { toInteger } from 'lodash'
 
 const Layout = ({ versions }) => {
     const cols = toInteger(12 / versions.length)
+    const layoutClasses = 'col-lg-' + cols + ' col-md-' + cols + ' col-sm-' + cols
 
     return (
         <div style={{ marginTop: '20px' }}>
             <div className='translation-wrapper'>
                 {versions.map((item) => (
-                    <div key={item.id} className={'translation col-lg-' + cols}>
+                    <div key={item.id} className={'translation ' + layoutClasses}>
                         <Version key={item.id} item={item}/>
                     </div>
                 ))}
