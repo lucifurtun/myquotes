@@ -64,7 +64,12 @@ class Command(BaseCommand):
 
                 for verse in chapter['VERS']:
                     verse_number = int(verse['@vnumber'])
-                    text = verse['#text']
+                    try:
+                        text = verse['#text']
+                    except KeyError:
+                        self.stdout.write(
+                            self.style.WARNING('Missing {} {}:{}'.format(book_title, chapter_number, verse_number))
+                        )
 
                     verse_object = models.Verse.objects.create(number=verse_number, text=text, chapter=chapter_obj)
 
