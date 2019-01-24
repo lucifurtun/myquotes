@@ -12,10 +12,10 @@ const VersionsSelector = ({ versions, dispatch }) => {
                 <MenuItem onClick={() => dispatch(addVersion('vdcc'))} eventKey="1">
                     VDCC
                 </MenuItem>
-                {/*<MenuItem header><span className="flag-icon flag-icon-us"/> English</MenuItem>*/}
-                {/*<MenuItem onClick={() => dispatch(addVersion('kjv'))} eventKey="2">*/}
-                    {/*KJV*/}
-                {/*</MenuItem>*/}
+                <MenuItem header><span className="flag-icon flag-icon-us"/> English</MenuItem>
+                <MenuItem onClick={() => dispatch(addVersion('esv'))} eventKey="2">
+                    ESV
+                </MenuItem>
 
             </DropdownButton>
         </div>

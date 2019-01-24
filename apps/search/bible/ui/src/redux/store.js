@@ -1,8 +1,6 @@
 import { createStore as createReduxStore, applyMiddleware, combineReducers } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
-import axios from 'axios'
-import axiosMiddleware from 'redux-axios-middleware'
 
 import { reducer as bookReducer } from './book'
 import { reducer as chapterReducer } from './chapter'
@@ -14,11 +12,13 @@ import { reducer as filtersReducer } from './filters'
 import { stores } from './index'
 
 import { saga as filtersSaga } from './filters'
+import { saga as apiSaga } from './api'
 
 
-function* rootSaga() {
+function* rootSaga(name) {
     yield all([
-        filtersSaga()
+        filtersSaga(name),
+        apiSaga(name)
     ])
 }
 
@@ -36,10 +36,6 @@ const versionReducer = combineReducers({
     api: apiReducer,
 })
 
-const client = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-    responseType: 'json'
-})
 
 export function createStore(initialState = {}) {
     const sagaMiddleware = createSagaMiddleware()
@@ -47,7 +43,7 @@ export function createStore(initialState = {}) {
     const store = createReduxStore(
         rootReducer,
         initialState,
-        applyMiddleware(axiosMiddleware(client), sagaMiddleware)
+        applyMiddleware(sagaMiddleware)
     )
 
     sagaMiddleware.run(rootSaga)
@@ -68,10 +64,10 @@ export function createVersionStore(name, initialState = {}) {
     const store = createReduxStore(
         versionReducer,
         initialState,
-        applyMiddleware(axiosMiddleware(client), sagaMiddleware)
+        applyMiddleware(sagaMiddleware)
     )
 
-    sagaMiddleware.run(rootSaga)
+    sagaMiddleware.run(rootSaga, name)
 
     stores[name] = store
     store.subscribe(() => {

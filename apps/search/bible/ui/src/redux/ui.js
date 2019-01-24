@@ -5,8 +5,6 @@ const initialState = {
     isMobile: window.innerWidth < 768
 }
 
-console.log(window.innerWidth)
-
 export function reducer(state = initialState, action = {}) {
     if (has(action.payload, 'request')) {
         if (has(action.payload, 'status')) {

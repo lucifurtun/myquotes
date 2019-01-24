@@ -3,18 +3,38 @@ from django.core.management.base import BaseCommand
 from elasticsearch_dsl import connections
 
 from apps.search.bible import models
-from apps.search.bible.indexes import Verse
 
 connections.create_connection(hosts=['localhost'], timeout=20)
 
 
 class Command(BaseCommand):
-    help = 'Imports books'
+    help = 'Imports bible data'
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--path',
+            dest='path',
+            required=True
+        )
+
+        parser.add_argument(
+            '--language',
+            dest='language',
+            required=True
+        )
+
+        parser.add_argument(
+            '--translation',
+            dest='version',
+            required=True
+        )
 
     def handle(self, *args, **options):
-        Verse.init()
+        path = options.get('path')
+        version = options.get('version')
+        language = options.get('language')
 
-        with open('sample.xml') as f:
+        with open(path) as f:
             xml_input = f.read()
 
         data = xmltodict.parse(xml_input)
@@ -24,7 +44,13 @@ class Command(BaseCommand):
             book_number = int(book['@bnumber'])
             is_nt = book_number > 39
 
-            book_obj = models.Book.objects.create(number=book_number, title=book_title, is_nt=is_nt)
+            book_obj = models.Book.objects.create(
+                number=book_number,
+                title=book_title,
+                is_nt=is_nt,
+                language=language,
+                version=version
+            )
 
             if isinstance(book['CHAPTER'], list):
                 chapters = book['CHAPTER']

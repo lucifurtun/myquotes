@@ -26,12 +26,15 @@ function isFirstPage(response) {
     return response.page === 1
 }
 
+
 export function getVerses(bookTitle, chapterNumber = null, search = null, page = null) {
+    const url = '/verses/'
+
     return {
         type: 'GET_VERSES',
         payload: {
             request: {
-                url: '/verses/',
+                url: url,
                 params: {
                     book_title: bookTitle,
                     chapter_number: chapterNumber,

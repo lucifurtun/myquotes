@@ -2,12 +2,21 @@ from django.db import models
 
 
 class Book(models.Model):
-    number = models.IntegerField()
-    title = models.CharField(max_length=255)
+    number = models.IntegerField(db_index=True)
+    title = models.CharField(max_length=255, db_index=True)
+    version = models.CharField(max_length=10, db_index=True)
+    language = models.CharField(max_length=10)
+
     is_nt = models.BooleanField()
 
     class Meta:
         ordering = ('number',)
+        unique_together = ('title', 'version')
+
+    def save(self, *args, **kwargs):
+        self.language = self.language.lower()
+        self.version = self.version.lower()
+        super().save(*args, **kwargs)
 
 
 class Chapter(models.Model):
