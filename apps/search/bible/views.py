@@ -108,7 +108,8 @@ class VerseView(DocumentViewSet):
     ordering = ('book_number', 'chapter_number', 'number')
     document_mapping = {
         Versions.VDCC: indexes.VerseVDCC,
-        Versions.ESV: indexes.VerseESV
+        Versions.ESV: indexes.VerseESV,
+        Versions.NTR: indexes.VerseNTR
     }
 
     def __init__(self, request, *args, **kwargs):

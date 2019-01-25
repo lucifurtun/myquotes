@@ -5,4 +5,5 @@ class ChoicesMeta(type):
 
 class Versions(metaclass=ChoicesMeta):
     VDCC = 'vdcc'
+    NTR = 'ntr'
     ESV = 'esv'

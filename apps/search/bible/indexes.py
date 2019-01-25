@@ -77,3 +77,17 @@ class VerseESV(Verse):
 
     def get_queryset(self):
         return VerseModel.objects.filter(chapter__book__version=choices.Versions.ESV)
+
+
+index_ntr = Index('verses_ntr')
+index_ntr.settings(number_of_shards=1, number_of_replicas=0)
+
+
+@index_ntr.doc_type
+class VerseNTR(Verse):
+    class Meta:
+        model = VerseModel
+        ignore_signals = True  # True is used because there are some issues.
+
+    def get_queryset(self):
+        return VerseModel.objects.filter(chapter__book__version=choices.Versions.NTR)
