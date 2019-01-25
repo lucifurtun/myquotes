@@ -7,6 +7,7 @@ import { getBooks } from '../redux/book'
 import { getVerses } from '../redux/verse'
 import { removeVersion } from '../redux/versions'
 import { connect } from 'react-redux'
+import VersionInfos from './VersionInfos'
 
 
 class Version extends Component {
@@ -14,7 +15,7 @@ class Version extends Component {
         super(props)
 
         const store = createVersionStore(this.props.item.id)
-
+        store.dispatch({ type: 'SET_VERSION', payload: this.props.item })
         store.dispatch(getBooks())
         store.dispatch(getVerses())
         this.store = store
@@ -25,16 +26,19 @@ class Version extends Component {
             <Provider store={this.store}>
                 <div>
                     <div className="version-controls">
-                        {
-                            !this.props.isMobile &&
-                            <button
-                                className='btn btn-danger remove-version-button'
-                                onClick={() => this.props.dispatch(removeVersion(this.props.item.id))}
-                            >
-                                <span className="glyphicon glyphicon-remove" aria-hidden="true"/>
-                            </button>
-                        }
-                        <FiltersForm/>
+                        <VersionInfos/>
+                        <div>
+                            {
+                                !this.props.isMobile &&
+                                <button
+                                    className='btn btn-danger remove-version-button'
+                                    onClick={() => this.props.dispatch(removeVersion(this.props.item.id))}
+                                >
+                                    <span className="glyphicon glyphicon-remove" aria-hidden="true"/>
+                                </button>
+                            }
+                            <FiltersForm/>
+                        </div>
                     </div>
 
                     <InfiniteList isMobile={this.props.isMobile}/>

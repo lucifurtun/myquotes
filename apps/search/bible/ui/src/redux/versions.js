@@ -3,7 +3,8 @@ import { stores } from '.'
 
 const versionOptons = {
     vdcc: 'VDCC',
-    kjv: 'KJV'
+    ntr: 'NTR',
+    esv: 'ESV'
 }
 
 
@@ -36,7 +37,6 @@ export function reducer(state = initialState, action = {}) {
             const nextIndex = isEmpty(indexes) ? 1 : max(indexes) + 1
 
             const newKey = `${newVersion}__${nextIndex}`
-            console.log(newKey)
             const newVersionItem = {
                 [newKey]: {
                     id: newKey,
@@ -47,9 +47,11 @@ export function reducer(state = initialState, action = {}) {
             }
 
             return { ...state, ...newVersionItem }
+
         case 'REMOVE_VERSION':
             delete stores[action.payload]
             return omit(state, action.payload)
+
         default:
             return state
     }

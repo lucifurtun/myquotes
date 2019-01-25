@@ -6,6 +6,7 @@ import { reducer as bookReducer } from './book'
 import { reducer as chapterReducer } from './chapter'
 import { reducer as verseReducer } from './verse'
 import { reducer as versionsReducer } from './versions'
+import { reducer as currentVersionReducer } from './version'
 import { reducer as apiReducer } from './api'
 import { reducer as uiReducer } from './ui'
 import { reducer as filtersReducer } from './filters'
@@ -34,6 +35,7 @@ const versionReducer = combineReducers({
     verses: verseReducer,
     filters: filtersReducer,
     api: apiReducer,
+    version: currentVersionReducer,
 })
 
 
