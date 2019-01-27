@@ -24,24 +24,18 @@ class Version extends Component {
     render() {
         return (
             <Provider store={this.store}>
-                <div>
-                    <div className="version-controls">
-                        <VersionInfos/>
-                        <div>
-                            {
-                                !this.props.isMobile &&
-                                <button
-                                    className='btn btn-danger remove-version-button'
-                                    onClick={() => this.props.dispatch(removeVersion(this.props.item.id))}
-                                >
-                                    <span className="glyphicon glyphicon-remove" aria-hidden="true"/>
-                                </button>
-                            }
-                            <FiltersForm/>
-                        </div>
-                    </div>
+                <div className="panel panel-default">
+                    <div className="version-controls panel-heading">
+                        <VersionInfos
+                            isMobile={this.props.isMobile}
+                            onRemove={() => this.props.dispatch(removeVersion(this.props.item.id))}
+                        />
 
-                    <InfiniteList isMobile={this.props.isMobile}/>
+                    </div>
+                    <div className="panel-body">
+                        <FiltersForm/>
+                        <InfiniteList isMobile={this.props.isMobile}/>
+                    </div>
                 </div>
             </Provider>
         )

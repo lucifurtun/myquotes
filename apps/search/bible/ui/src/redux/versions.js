@@ -1,10 +1,19 @@
 import { omit, split, keys, max, toInteger, isEmpty } from 'lodash'
 import { stores } from '.'
 
-const versionOptons = {
-    vdcc: 'VDCC',
-    ntr: 'NTR',
-    esv: 'ESV'
+const versionOptions = {
+    vdcc: {
+        short: 'VDCC',
+        long: 'Versiunea Dumitru Cornilescu Corectată'
+    },
+    ntr: {
+        short: 'NTR',
+        long: 'Noua Traducere Românească'
+    },
+    esv: {
+        short: 'ESV',
+        long: 'English Standard Version'
+    }
 }
 
 
@@ -13,7 +22,8 @@ const initialState = {
         id: 'vdcc__1',
         name: 'vdcc',
         index: 1,
-        label: 'VDCC'
+        label_short: versionOptions['vdcc'].short,
+        label_long: versionOptions['vdcc'].long
     }
 }
 
@@ -42,7 +52,8 @@ export function reducer(state = initialState, action = {}) {
                     id: newKey,
                     name: newVersion,
                     index: nextIndex,
-                    label: versionOptons[newVersion]
+                    label_short: versionOptions[newVersion].short,
+                    label_long: versionOptions[newVersion].long
                 }
             }
 

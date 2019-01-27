@@ -15,8 +15,8 @@ class App extends Component {
                 <Header/>
                 <div id="page-wrapper">
                     <div className="row">
-                        <div id="content-wrapper">
-                            <div className="App">
+                        <div id="content-wrapper" className="clearfix">
+                            <div className="App clearfix">
                                 <Layout/>
                             </div>
                         </div>

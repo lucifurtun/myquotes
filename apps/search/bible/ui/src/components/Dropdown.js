@@ -9,6 +9,20 @@ const DropDown = ({ name, options, placeholder, value, dispatch }) => {
 
     return (
         <Select
+            styles={{
+                clearIndicator: (provided, state) => ({
+                        ...provided,
+                        paddingLeft: '0',
+                        paddingRight: '0',
+                    }
+                ),
+                dropdownIndicator: (provided, state) => ({
+                        ...provided,
+                        paddingLeft: '0',
+                        paddingRight: '0',
+                    }
+                )
+            }}
             isClearable
             options={options}
             value={preparedValue}

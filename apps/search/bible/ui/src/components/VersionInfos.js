@@ -1,9 +1,17 @@
 import React from 'react'
 import connect from 'react-redux/es/connect/connect'
 
-const VersionInfos = ({ version }) => {
+const VersionInfos = ({ isMobile, onRemove, version }) => {
     return (
-        <div>{version.label}</div>
+        <div className="infos-wrapper">
+            {
+                !isMobile &&
+                <button onClick={onRemove} className="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            }
+            <span>{version.label_short} ({version.label_long})</span>
+        </div>
     )
 }
 

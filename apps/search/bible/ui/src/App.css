@@ -249,17 +249,16 @@ input, button {
 .translation {
     display: inline-block;
     height: 100%;
-    padding: 0 10px;
+    padding: 0 5px;
 }
 
 
 .filters-form {
-    width: 85%;
     display: inline-block;
 }
 
 .filter-item {
-    padding: 0 5px;
+    padding: 0 2px;
 }
 
 @media all and (max-width: 768px) {
@@ -298,6 +297,12 @@ input, button {
     margin-top: 8px;
 }
 
+.infos-wrapper {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .btn-group {
     vertical-align: inherit !important;
 }
@@ -309,6 +314,14 @@ input, button {
 
 .row {
     margin: 0 !important;
+}
+
+.panel-body {
+    padding: 10px;
+}
+
+.panel-heading {
+    padding: 10px 10px;
 }
 
 .remove-version-button {

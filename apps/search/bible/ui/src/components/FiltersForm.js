@@ -7,31 +7,33 @@ import DropDown from './Dropdown'
 let FiltersForm = props => {
     const { handleSubmit, books, book, chapters, chapter, dispatch } = props
     return (
-        <form className="filters-form" onSubmit={handleSubmit}>
-            <div className='row'>
-                <div className='col-sm-4 filter-item'>
-                    <DropDown
-                        name='book'
-                        placeholder='Book'
-                        options={books}
-                        value={book}
-                    />
+        <div>
+            <form className="filters-form" onSubmit={handleSubmit}>
+                <div className='row'>
+                    <div className='col-sm-5 filter-item'>
+                        <DropDown
+                            name='book'
+                            placeholder='Book'
+                            options={books}
+                            value={book}
+                        />
+                    </div>
+                    <div className='col-sm-3 filter-item'>
+                        <DropDown
+                            name='chapter'
+                            placeholder='Chapter'
+                            options={chapters}
+                            value={chapter}
+                        />
+                    </div>
+                    <div className='col-sm-4 filter-item'>
+                        <Search
+                            onSearch={(value) => dispatch({ type: 'VERSE_SEARCH', payload: value })}
+                        />
+                    </div>
                 </div>
-                <div className='col-sm-4 filter-item'>
-                    <DropDown
-                        name='chapter'
-                        placeholder='Chapter'
-                        options={chapters}
-                        value={chapter}
-                    />
-                </div>
-                <div className='col-sm-4 filter-item'>
-                    <Search
-                        onSearch={(value) => dispatch({ type: 'VERSE_SEARCH', payload: value })}
-                    />
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     )
 }
 
