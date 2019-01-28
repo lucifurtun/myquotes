@@ -78,7 +78,7 @@ input, button {
 
 @media all and (min-width: 992px) {
     #content-wrapper {
-        margin-top: 60px;
+        margin-top: 55px;
     }
 
     .navbar {
@@ -282,7 +282,7 @@ input, button {
         overflow-y: scroll;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
-        height: calc(100vh - 130px);
+        height: calc(100vh - 175px);
         position: relative;
     }
 
