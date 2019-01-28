@@ -9,16 +9,14 @@ const Layout = ({ versions }) => {
     const layoutClasses = 'col-lg-' + cols + ' col-md-' + cols + ' col-sm-' + cols
 
     return (
-        <div style={{ marginTop: '20px' }}>
-            <div className='translation-wrapper'>
-                {versions.map((item) => (
-                    <div key={item.id} className={'translation ' + layoutClasses}>
-                        <Version key={item.id} item={item}/>
-                    </div>
-                ))}
+        <div className='translation-wrapper clearfix'>
+            {versions.map((item) => (
+                <div key={item.id} className={'translation ' + layoutClasses}>
+                    <Version key={item.id} item={item}/>
+                </div>
+            ))}
 
-                {!versions.length && <h4 className="no-results">No version selected. Please select one!</h4>}
-            </div>
+            {!versions.length && <h4 className="no-results">No version selected. Please select one!</h4>}
         </div>
     )
 }
