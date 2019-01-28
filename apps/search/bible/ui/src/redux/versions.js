@@ -1,4 +1,4 @@
-import { omit, split, keys, max, toInteger, isEmpty } from 'lodash'
+import { isEmpty, keys, max, omit, split, toInteger } from 'lodash'
 import { stores } from '.'
 
 const versionOptions = {
@@ -16,52 +16,60 @@ const versionOptions = {
     }
 }
 
+function addNewVersion(existingItems, newVersionName) {
+    let version, index
 
-const initialState = {
-    vdcc__1: {
-        id: 'vdcc__1',
-        name: 'vdcc',
-        index: 1,
-        label_short: versionOptions['vdcc'].short,
-        label_long: versionOptions['vdcc'].long
+    let indexes = []
+
+    for (let v of keys(existingItems)) {
+        [version, index] = split(v, '__')
+
+        if (version === newVersionName) {
+            indexes.push(toInteger(index))
+        }
+    }
+
+    const nextIndex = isEmpty(indexes) ? 1 : max(indexes) + 1
+    const newKey = `${newVersionName}__${nextIndex}`
+
+    return {
+        [newKey]: {
+            id: newKey,
+            name: newVersionName,
+            index: nextIndex,
+            label_short: versionOptions[newVersionName].short,
+            label_long: versionOptions[newVersionName].long
+        }
     }
 }
 
 
+const initialState = { ...addNewVersion({}, 'vdcc') }
+
+
 export function reducer(state = initialState, action = {}) {
+    let newVersionName, newVersionItem
+
     switch(action.type) {
         case 'ADD_VERSION':
-            const newVersion = action.payload
-            let version, count
-
-            let indexes = []
-
-            for (let v of keys(state)) {
-                [version, count] = split(v, '__')
-
-                if (version === newVersion) {
-                    indexes.push(toInteger(count))
-                }
-            }
-
-            const nextIndex = isEmpty(indexes) ? 1 : max(indexes) + 1
-
-            const newKey = `${newVersion}__${nextIndex}`
-            const newVersionItem = {
-                [newKey]: {
-                    id: newKey,
-                    name: newVersion,
-                    index: nextIndex,
-                    label_short: versionOptions[newVersion].short,
-                    label_long: versionOptions[newVersion].long
-                }
-            }
+            newVersionName = action.payload
+            newVersionItem = addNewVersion(state, newVersionName)
 
             return { ...state, ...newVersionItem }
 
         case 'REMOVE_VERSION':
             delete stores[action.payload]
             return omit(state, action.payload)
+
+        case 'SET_VERSION':
+            for (let store in keys(stores)) {
+                delete stores[store]
+            }
+
+            newVersionName = action.payload
+            newVersionItem = addNewVersion(state, newVersionName)
+
+            return { ...newVersionItem }
 
         default:
             return state
@@ -78,6 +86,13 @@ export function addVersion(version) {
 export function removeVersion(version) {
     return ({
         type: 'REMOVE_VERSION',
+        payload: version
+    })
+}
+
+export function setVersion(version) {
+    return ({
+        type: 'SET_VERSION',
         payload: version
     })
 }

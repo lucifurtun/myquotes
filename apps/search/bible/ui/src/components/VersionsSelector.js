@@ -1,25 +1,36 @@
 import React from 'react'
 import connect from 'react-redux/es/connect/connect'
 import { values } from 'lodash'
-import { addVersion } from '../redux/versions'
+import { addVersion, setVersion } from '../redux/versions'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
 
-const VersionsSelector = ({ versions, dispatch }) => {
+const VersionsSelector = ({ versions, isMobile, dispatch }) => {
+    let action, buttonStyle, buttonText
+
+    if (isMobile) {
+        action = setVersion
+        buttonStyle = 'primary'
+        buttonText = 'Set Version'
+    } else {
+        action = addVersion
+        buttonStyle = 'success'
+        buttonText = 'Add Version'
+    }
+
     return (
         <div className="version-selector-wrapper">
-            <DropdownButton bsStyle='success' title='Add Version' id='add-version-dropdown'>
+            <DropdownButton bsStyle={buttonStyle} title={buttonText} id='add-version-dropdown'>
                 <MenuItem header><span className="flag-icon flag-icon-ro"/> Romanian</MenuItem>
-                <MenuItem onClick={() => dispatch(addVersion('vdcc'))} eventKey="1">
+                <MenuItem onClick={() => dispatch(action('vdcc'))} eventKey="1">
                     VDCC
                 </MenuItem>
-                <MenuItem onClick={() => dispatch(addVersion('ntr'))} eventKey="2">
+                <MenuItem onClick={() => dispatch(action('ntr'))} eventKey="2">
                     NTR
                 </MenuItem>
                 <MenuItem header><span className="flag-icon flag-icon-us"/> English</MenuItem>
-                <MenuItem onClick={() => dispatch(addVersion('esv'))} eventKey="3">
+                <MenuItem onClick={() => dispatch(action('esv'))} eventKey="3">
                     ESV
                 </MenuItem>
-
             </DropdownButton>
         </div>
     )
@@ -27,9 +38,11 @@ const VersionsSelector = ({ versions, dispatch }) => {
 
 function mapStateToProps(state) {
     const versions = values(state.versions).map((item) => ({ value: item, label: item }))
+    const isMobile = state.ui.isMobile
 
     return {
-        versions
+        versions,
+        isMobile
     }
 }
 

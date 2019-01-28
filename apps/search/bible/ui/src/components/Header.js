@@ -7,7 +7,7 @@ const Header = ({ isLoading, isMobile }) => {
     return (
         <nav className="navbar navbar-default navbar-static-top" role="navigation">
             <a style={{ fontSize: '20px' }} className="navbar-brand" target="_self" href="/">Bible</a>
-            {!isMobile && <VersionsSelector/>}
+            <VersionsSelector/>
             <Spinner show={isLoading}/>
         </nav>
     )
@@ -15,11 +15,9 @@ const Header = ({ isLoading, isMobile }) => {
 
 function mapStateToProps(state) {
     const isLoading = state.ui.isLoading
-    const isMobile = state.ui.isMobile
 
     return {
-        isLoading,
-        isMobile
+        isLoading
     }
 }
 
