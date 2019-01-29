@@ -10,6 +10,8 @@ import { reducer as currentVersionReducer } from './version'
 import { reducer as apiReducer } from './api'
 import { reducer as uiReducer } from './ui'
 import { reducer as filtersReducer } from './filters'
+import storage from 'redux-persist/lib/storage'
+import { persistReducer } from 'redux-persist'
 import { stores } from './index'
 
 import { saga as filtersSaga } from './filters'
@@ -23,11 +25,19 @@ function* rootSaga(name) {
     ])
 }
 
+const persistConfig = {
+    key: 'root',
+    storage,
+    whitelist: ['versions']
+}
+
 
 const rootReducer = combineReducers({
     versions: versionsReducer,
     ui: uiReducer,
 })
+
+const persistedRootReducer = persistReducer(persistConfig, rootReducer)
 
 const versionReducer = combineReducers({
     books: bookReducer,
@@ -43,7 +53,7 @@ export function createStore(initialState = {}) {
     const sagaMiddleware = createSagaMiddleware()
 
     const store = createReduxStore(
-        rootReducer,
+        persistedRootReducer,
         initialState,
         applyMiddleware(sagaMiddleware)
     )

@@ -13,6 +13,7 @@
     "react-scripts": "2.1.1",
     "react-select": "^2.1.1",
     "redux": "^4.0.1",
+    "redux-persist": "^5.10.0",
     "redux-saga": "^0.16.2"
   },
   "scripts": {
