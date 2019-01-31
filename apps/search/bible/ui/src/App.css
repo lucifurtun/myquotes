@@ -154,6 +154,11 @@ input, button {
 
 .verses-wrapper .verse {
     margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.verses-wrapper .verse:hover {
+    background-color: #eee;
 }
 
 
@@ -295,6 +300,14 @@ input, button {
 .version-selector-wrapper {
     display: inline-block;
     margin-top: 8px;
+}
+
+.version-selector-wrapper .dropdown-header {
+    font-size: 14px
+}
+
+.version-selector-wrapper a {
+    font-size: 16px
 }
 
 .infos-wrapper {
