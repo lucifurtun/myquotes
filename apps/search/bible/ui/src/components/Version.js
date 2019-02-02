@@ -34,7 +34,10 @@ class Version extends Component {
                     </div>
                     <div className="panel-body">
                         <FiltersForm/>
-                        <InfiniteList isMobile={this.props.isMobile}/>
+                        <InfiniteList
+                            isMobile={this.props.isMobile}
+                            verseOptionsDisplayed={this.props.verseOptionsDisplayed}
+                        />
                     </div>
                 </div>
             </Provider>
@@ -44,8 +47,9 @@ class Version extends Component {
 
 function mapStateToProps(state) {
     const isMobile = state.ui.isMobile
+    const verseOptionsDisplayed = state.ui.verseOptions.display
 
-    return { isMobile }
+    return { isMobile, verseOptionsDisplayed }
 }
 
 export default connect(mapStateToProps)(Version)

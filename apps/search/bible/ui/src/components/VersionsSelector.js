@@ -27,7 +27,7 @@ const VersionsSelector = ({ versions, isMobile, dispatch }) => {
                 <MenuItem onClick={() => dispatch(action('ntr'))} eventKey="2">
                     NTR
                 </MenuItem>
-                <MenuItem header><span className="flag-icon flag-icon-us"/> English</MenuItem>
+                <MenuItem header><span className="flag-icon flag-icon-gb"/> English</MenuItem>
                 <MenuItem onClick={() => dispatch(action('esv'))} eventKey="3">
                     ESV
                 </MenuItem>

@@ -1,6 +1,9 @@
 const initialState = {
     data: [],
-    count: null
+    count: null,
+    page: null,
+    hasMore: null,
+    selected: null
 }
 
 
@@ -12,10 +15,16 @@ export function reducer(state = initialState, action = {}) {
             let data = isFirstPage(response) ? response.results : [...state.data, ...response.results]
 
             return {
+                ...state,
                 data: data,
                 count: response.count,
                 page: response.page,
                 hasMore: response.has_more
+            }
+        case 'SET_SELECTED_VERSE':
+            return {
+                ...state,
+                selected: action.payload
             }
         default:
             return state

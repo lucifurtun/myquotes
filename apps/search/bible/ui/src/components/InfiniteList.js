@@ -3,6 +3,7 @@ import Verse from './Verse'
 import { connect } from 'react-redux'
 import { getVerses } from '../redux/verse'
 import { isUndefined } from 'lodash'
+import { stores } from '../redux'
 
 function isFirstChapterOccurrence(item, index, array) {
     const previousItem = array[index - 1]
@@ -42,6 +43,10 @@ class InfiniteList extends Component {
     handleScroll = (event) => {
         let offset, scroll
 
+        if (this.props.verseOptionsDisplayed) {
+            stores.root.dispatch({ type: 'HIDE_VERSE_OPTIONS' })
+        }
+
         if (this.props.isMobile === true) {
             let scrollHeight = document.body.scrollTop || document.documentElement.scrollTop
             scroll = window.innerHeight + scrollHeight
@@ -53,7 +58,7 @@ class InfiniteList extends Component {
             offset = element.scrollHeight
         }
 
-        if (scroll >= offset - 200) {
+        if (scroll >= offset - 450) {
             if (!this.state.isLoading) {
                 this.loadData()
             }
@@ -83,29 +88,26 @@ class InfiniteList extends Component {
         return (
             <div ref={this.verseWrapper} className="verses-wrapper" onScroll={this.handleScroll}>
                 {this.props.verses.map(
-                    (item, i, array) => (
-                        <div key={i}>
-                            {
-                                isFirstBookOccurrence(item, i, array) &&
-                                <h2 className="verse-book">{item.book_title}</h2>
-                            }
-                            {
-                                isFirstChapterOccurrence(item, i, array) &&
-                                <h3 className="verse-chapter">{item.chapter_number}</h3>
-                            }
-                            <Verse
-                                key={i}
-                                number={item.number}
-                                text={item.text_highlight ? item.text_highlight : item.text}
-                            />
-                        </div>
-                    )
+                    (item, i, array) => {
+                        const isSelected = item.identifier === this.props.selected
+                        return (
+                            <div key={i}>
+                                {
+                                    isFirstBookOccurrence(item, i, array) &&
+                                    <h2 className="verse-book">{item.book_title}</h2>
+                                }
+                                {
+                                    isFirstChapterOccurrence(item, i, array) &&
+                                    <h3 className="verse-chapter">{item.chapter_number}</h3>
+                                }
+                                <Verse item={item} isSelected={isSelected}/>
+                            </div>
+                        )
+                    }
                 )}
 
                 {!this.props.verses.length && <h4 className="no-results">No results...</h4>}
-
             </div>
-
         )
     }
 }
@@ -115,6 +117,7 @@ function mapStateToProps(state) {
     const verses = state.verses.data
     const page = state.verses.page
     const hasMore = state.verses.hasMore
+    const selected = state.verses.selected
     const isLoading = state.api.isLoading
     const filters = state.filters
 
@@ -122,6 +125,7 @@ function mapStateToProps(state) {
         verses,
         page,
         hasMore,
+        selected,
         isLoading,
         filters
     }
