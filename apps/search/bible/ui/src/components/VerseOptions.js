@@ -9,7 +9,9 @@ const VerseOptions = ({ options }) => {
 
     return (
         <ul className="dropdown-menu" style={{ left: `${options.x}px`, top: `${options.y}px` }} id="verse-options">
-            <li onClick={() => {
+            <li onClick={(event) => {
+                event.preventDefault()
+
                 const v = options.verse
                 const content = `[${v.book_title} ${v.chapter_number}:${v.number}] ${v.text}`
 
