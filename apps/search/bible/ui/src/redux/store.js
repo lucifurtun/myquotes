@@ -49,7 +49,7 @@ const versionReducer = combineReducers({
 })
 
 
-export function createStore(initialState = {}) {
+export function createRootStore(initialState = {}) {
     const sagaMiddleware = createSagaMiddleware()
 
     const store = createReduxStore(
