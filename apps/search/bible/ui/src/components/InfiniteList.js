@@ -32,6 +32,7 @@ class InfiniteList extends Component {
         }
 
         this.verseWrapper = React.createRef()
+        this.verseElements = {}
     }
 
     componentDidMount() {
@@ -84,6 +85,12 @@ class InfiniteList extends Component {
         return null
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.scrolledTo && (this.props.scrolledTo !== prevProps.scrolledTo)) {
+            this.verseWrapper.current.scrollTo(0, this.verseElements[this.props.scrolledTo].offsetTop)
+        }
+    }
+
     render() {
         return (
             <div ref={this.verseWrapper} className="verses-wrapper" onScroll={this.handleScroll}>
@@ -91,7 +98,7 @@ class InfiniteList extends Component {
                     (item, i, array) => {
                         const isSelected = item.identifier === this.props.selected
                         return (
-                            <div key={i}>
+                            <div ref={(element) => this.verseElements[item.identifier] = element} key={i}>
                                 {
                                     isFirstBookOccurrence(item, i, array) &&
                                     <h2 className="verse-book">{item.book_title}</h2>
@@ -118,6 +125,7 @@ function mapStateToProps(state) {
     const page = state.verses.page
     const hasMore = state.verses.hasMore
     const selected = state.verses.selected
+    const scrolledTo = state.verses.scrolledTo
     const isLoading = state.api.isLoading
     const filters = state.filters
 
@@ -126,6 +134,7 @@ function mapStateToProps(state) {
         page,
         hasMore,
         selected,
+        scrolledTo,
         isLoading,
         filters
     }

@@ -9,10 +9,18 @@ class Command(BaseCommand):
     help = 'Generates zefania xml from different formats'
 
     def handle(self, *args, **options):
-        with open('NTR.json') as f:
+        with open('/Users/lucifurtun/Documents/bibles/NTR.json') as f:
             data = json.load(f)
 
-        grouped_books = groupby(data, lambda item: item['book_number'])
+        current_b_number = 0
+
+        for item in data:
+            if item['chapter'] == 1 and item['verse'] == 1:
+                current_b_number += 1
+
+            item['b_number'] = current_b_number
+
+        grouped_books = groupby(data, lambda item: item['b_number'])
         books_list = []
 
         for book_grouper, chapters in grouped_books:
@@ -26,7 +34,7 @@ class Command(BaseCommand):
 
             books_list.append({
                 'title': chapters_list[0]['items'][0]['long_name'],
-                'number': int(book_grouper / 10),
+                'number': int(book_grouper),
                 'items': chapters_list
             })
 

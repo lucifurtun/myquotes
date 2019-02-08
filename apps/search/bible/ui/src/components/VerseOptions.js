@@ -29,9 +29,13 @@ const VerseOptions = ({ options, versions }) => {
                         onClick={(event) => {
                             event.preventDefault()
                             const store = stores[version.id]
-                            const payload = { book: verse.book_title, chapter: verse.chapter_number }
-                            store.dispatch({ type: 'SET_FILTERS', payload })
-                            store.dispatch({ type: 'SET_SELECTED_VERSE', payload: verse.identifier })
+                            const payload = {
+                                book: verse.book_title,
+                                chapter: verse.chapter_number,
+                                verse: verse.identifier
+                            }
+
+                            store.dispatch({ type: 'SET_HIGHLIGHTED_ELEMENT', payload })
                         }}
                     >
                         <a href="#">Open in {version.label_short}</a>

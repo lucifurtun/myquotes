@@ -5,7 +5,7 @@ import Provider from 'react-redux/es/components/Provider'
 import { createVersionStore } from '../redux/store'
 import { getBooks } from '../redux/book'
 import { getVerses } from '../redux/verse'
-import { removeVersion } from '../redux/versions'
+import { removeVersion } from '../redux/root/versions'
 import { connect } from 'react-redux'
 import VersionInfos from './VersionInfos'
 

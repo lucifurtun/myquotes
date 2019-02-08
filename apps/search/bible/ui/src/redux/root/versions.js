@@ -1,5 +1,5 @@
 import { isEmpty, keys, max, omit, split, toInteger } from 'lodash'
-import { stores } from '.'
+import { stores } from '..'
 
 const versionOptions = {
     vdcc: {

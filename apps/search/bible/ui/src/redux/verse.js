@@ -3,9 +3,13 @@ const initialState = {
     count: null,
     page: null,
     hasMore: null,
-    selected: null
+    selected: null,
+    scrolledTo: null
 }
 
+function isFirstPage(response) {
+    return response.page === 1
+}
 
 export function reducer(state = initialState, action = {}) {
     switch(action.type) {
@@ -26,13 +30,14 @@ export function reducer(state = initialState, action = {}) {
                 ...state,
                 selected: action.payload
             }
+        case 'SET_SCROLLED_TO':
+            return {
+                ...state,
+                scrolledTo: action.payload
+            }
         default:
             return state
     }
-}
-
-function isFirstPage(response) {
-    return response.page === 1
 }
 
 
