@@ -6,8 +6,8 @@ const html = (text) => ({ __html: text })
 
 const handleOnClick = (event, item, dispatch) => {
     const payload = {
-        x: event.clientX,
-        y: event.clientY,
+        x: event.pageX,
+        y: event.pageY,
         verse: item
     }
 
