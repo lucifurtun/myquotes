@@ -88,6 +88,7 @@ class VerseView(DocumentViewSet):
 
     filter_fields = {
         'book_title': 'book_title.raw',
+        'book_number': 'book_number',
         'chapter_number': 'chapter_number',
         'number': 'number',
     }
