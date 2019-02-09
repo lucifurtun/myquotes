@@ -20,7 +20,7 @@ function isFirstBookOccurrence(item, index, array) {
         return true
     }
 
-    return previousItem.book_title !== item.book_title
+    return previousItem.book_number !== item.book_number
 }
 
 class InfiniteList extends Component {
@@ -86,8 +86,10 @@ class InfiniteList extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        console.log(this.verseElements)
+
         if (this.props.scrolledTo && (this.props.scrolledTo !== prevProps.scrolledTo)) {
-            this.verseWrapper.current.scrollTo(0, this.verseElements[this.props.scrolledTo].offsetTop)
+            this.verseWrapper.current.scrollTo(0, this.verseElements[this.props.scrolledTo].offsetTop - 300)
         }
     }
 

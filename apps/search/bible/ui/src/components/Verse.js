@@ -32,7 +32,7 @@ const Verse = ({ item, isSelected, dispatch }) => {
     return (
         <div
             onClick={(event) => handleOnClick(event, item, dispatch)}
-            onBlur={(event) => handleOnBlur(event, item, dispatch)}
+            // onBlur={(event) => handleOnBlur(event, item, dispatch)}
             tabIndex={0}
             className={'verse' + (isSelected ? ' selected' : '')}
         >

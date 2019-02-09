@@ -3,47 +3,59 @@ import { connect } from 'react-redux'
 import { values } from 'lodash'
 import { stores } from '../redux'
 
-const VerseOptions = ({ options, versions }) => {
-    if (!options.display) {
-        return null
+
+class VerseOptions extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.element = React.createRef()
     }
 
-    const verse = options.verse
+    render() {
+        if (!this.props.options.display) {
+            return null
+        }
 
-    return (
-        <ul className="dropdown-menu" style={{ left: `${options.x}px`, top: `${options.y}px` }} id="verse-options">
-            <li onClick={(event) => {
-                event.preventDefault()
-                const content = `[${verse.book_title} ${verse.chapter_number}:${verse.number}] ${verse.text}`
+        const verse = this.props.options.verse
 
-                navigator.clipboard.writeText(content)
-                stores.root.dispatch({ type: 'HIDE_VERSE_OPTIONS' })
+        return (
+            <ul ref={this.element} id="verse-options"> className="dropdown-menu" style={{
+                left: `${this.props.options.x}px`,
+                top: `${this.props.options.y - 110}px`
             }}
-            >
-                <a href="#">Copy</a>
-            </li>
-            <li role="separator" className="divider"/>
-            {
-                versions.map((version, i) => (
-                    <li key={i}
-                        onClick={(event) => {
-                            event.preventDefault()
-                            const store = stores[version.id]
-                            const payload = {
-                                book: verse.book_title,
-                                chapter: verse.chapter_number,
-                                verse: verse.identifier
-                            }
+                <li onClick={(event) => {
+                    event.preventDefault()
+                    const content = `[${verse.book_title} ${verse.chapter_number}:${verse.number}] ${verse.text}`
 
-                            store.dispatch({ type: 'SET_HIGHLIGHTED_ELEMENT', payload })
-                        }}
-                    >
-                        <a href="#">Open in {version.label_short}</a>
-                    </li>
-                ))
-            }
-        </ul>
-    )
+                    navigator.clipboard.writeText(content)
+                    stores.root.dispatch({ type: 'HIDE_VERSE_OPTIONS' })
+                }}
+                >
+                    <a href="#">Copy</a>
+                </li>
+                <li role="separator" className="divider"/>
+                {
+                    this.props.versions.map((version, i) => (
+                        <li key={i}
+                            onClick={(event) => {
+                                event.preventDefault()
+                                const store = stores[version.id]
+                                const payload = {
+                                    book: verse.book_number,
+                                    chapter: verse.chapter_number,
+                                    verse: verse.identifier
+                                }
+
+                                store.dispatch({ type: 'SET_HIGHLIGHTED_ELEMENT', payload })
+                            }}
+                        >
+                            <a href="#">Open in {version.label_short}</a>
+                        </li>
+                    ))
+                }
+            </ul>
+        )
+    }
 }
 
 function mapStateToProps(state) {

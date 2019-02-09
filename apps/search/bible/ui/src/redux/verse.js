@@ -41,7 +41,7 @@ export function reducer(state = initialState, action = {}) {
 }
 
 
-export function getVerses(bookTitle, chapterNumber = null, search = null, page = null) {
+export function getVerses(bookNumber, chapterNumber = null, search = null, page = null) {
     const url = '/verses/'
 
     return {
@@ -50,7 +50,7 @@ export function getVerses(bookTitle, chapterNumber = null, search = null, page =
             request: {
                 url: url,
                 params: {
-                    book_title: bookTitle,
+                    book_number: bookNumber,
                     chapter_number: chapterNumber,
                     search: search,
                     page: page,
