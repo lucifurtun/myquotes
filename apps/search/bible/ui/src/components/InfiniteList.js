@@ -86,10 +86,8 @@ class InfiniteList extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log(this.verseElements)
-
         if (this.props.scrolledTo && (this.props.scrolledTo !== prevProps.scrolledTo)) {
-            this.verseWrapper.current.scrollTo(0, this.verseElements[this.props.scrolledTo].offsetTop - 300)
+            this.verseWrapper.current.scrollTo(0, this.verseElements[this.props.scrolledTo].offsetTop)
         }
     }
 

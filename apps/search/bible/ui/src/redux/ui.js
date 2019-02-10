@@ -19,10 +19,13 @@ export function reducer(state = initialState, action = {}) {
 
 
 function* handleSetHighlightedElement(payload) {
-    yield put({ type: 'SET_FILTERS', payload: payload.payload })
+    const verse = payload.payload
+    const filters = { book: verse.book_number, chapter: verse.chapter_number, search: null }
+
+    yield put({ type: 'SET_FILTERS', payload: filters })
     yield take('GET_VERSES_SUCCESS')
-    yield put({ type: 'SET_SELECTED_VERSE', payload: payload.payload.verse })
-    yield put({ type: 'SET_SCROLLED_TO', payload: payload.payload.verse })
+    yield put({ type: 'SET_SELECTED_VERSE', payload: verse.identifier })
+    yield put({ type: 'SET_SCROLLED_TO', payload: verse.identifier })
 }
 
 export function* saga() {

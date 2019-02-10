@@ -5,7 +5,6 @@ import { getVerses } from './verse'
 const initialState = {
     book: null,
     chapter: null,
-    verse: null,
     search: null
 }
 
@@ -17,6 +16,8 @@ export function reducer(state = initialState, action = {}) {
                 [action.payload.field]: action.payload.value
             }
         case 'SET_FILTERS':
+            console.log(action.payload)
+
             return {
                 ...state,
                 ...action.payload

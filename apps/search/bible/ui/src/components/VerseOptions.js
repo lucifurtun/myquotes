@@ -9,20 +9,27 @@ class VerseOptions extends React.Component {
         super(props)
 
         this.element = React.createRef()
+        this.height = null
+    }
+
+    componentDidMount() {
+        this.height = this.element.current.clientHeight
+    }
+
+    componentDidUpdate() {
+        this.height = this.element.current.clientHeight
     }
 
     render() {
-        if (!this.props.options.display) {
-            return null
-        }
-
         const verse = this.props.options.verse
 
         return (
-            <ul ref={this.element} id="verse-options"> className="dropdown-menu" style={{
+            <ul ref={this.element} id="verse-options" className="dropdown-menu" style={{
                 left: `${this.props.options.x}px`,
-                top: `${this.props.options.y - 110}px`
+                top: `${this.props.options.y - this.height}px`,
+                visibility: this.props.options.display ? 'initial' : 'hidden'
             }}
+            >
                 <li onClick={(event) => {
                     event.preventDefault()
                     const content = `[${verse.book_title} ${verse.chapter_number}:${verse.number}] ${verse.text}`
@@ -40,13 +47,7 @@ class VerseOptions extends React.Component {
                             onClick={(event) => {
                                 event.preventDefault()
                                 const store = stores[version.id]
-                                const payload = {
-                                    book: verse.book_number,
-                                    chapter: verse.chapter_number,
-                                    verse: verse.identifier
-                                }
-
-                                store.dispatch({ type: 'SET_HIGHLIGHTED_ELEMENT', payload })
+                                store.dispatch({ type: 'SET_HIGHLIGHTED_ELEMENT', payload: verse })
                             }}
                         >
                             <a href="#">Open in {version.label_short}</a>

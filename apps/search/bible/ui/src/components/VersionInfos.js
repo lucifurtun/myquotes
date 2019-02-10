@@ -1,5 +1,5 @@
 import React from 'react'
-import connect from 'react-redux/es/connect/connect'
+import { connect } from 'react-redux'
 
 const VersionInfos = ({ isMobile, onRemove, version }) => {
     return (

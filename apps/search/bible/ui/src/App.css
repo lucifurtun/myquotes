@@ -172,7 +172,7 @@ input, button {
     right: auto;
     bottom: auto;
     z-index: 1000;
-    display: inline-block !important;
+    display: inline-block;
     float: left;
     min-width: 160px;
     padding: 5px 0;

@@ -25,6 +25,7 @@ class Search extends Component {
         return (
             <div className="input-group">
                 <input
+                    value={this.props.value}
                     type="text"
                     onKeyPress={this.handleKeyPress}
                     className="form-control"
@@ -46,4 +47,12 @@ class Search extends Component {
     }
 }
 
-export default connect()(Search)
+function mapStateToProps(state) {
+    const value = state.filters.search || ''
+
+    return {
+        value
+    }
+}
+
+export default connect(mapStateToProps)(Search)
