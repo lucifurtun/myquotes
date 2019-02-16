@@ -59,7 +59,7 @@ class InfiniteList extends Component {
             offset = element.scrollHeight
         }
 
-        if (scroll >= offset - 450) {
+        if (scroll >= offset - 550) {
             if (!this.state.isLoading) {
                 this.loadData()
             }

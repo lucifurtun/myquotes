@@ -1,8 +1,7 @@
 import React from 'react'
 import connect from 'react-redux/es/connect/connect'
-import { values } from 'lodash'
+import { values, toInteger } from 'lodash'
 import Version from './Version'
-import { toInteger } from 'lodash'
 
 const Layout = ({ versions }) => {
     const cols = toInteger(12 / versions.length)
@@ -12,7 +11,7 @@ const Layout = ({ versions }) => {
         <div className='translation-wrapper clearfix'>
             {versions.map((item) => (
                 <div key={item.id} className={'translation ' + layoutClasses}>
-                    <Version key={item.id} item={item}/>
+                    <Version key={item.id} item={item} smartIndex={item.smartIndex}/>
                 </div>
             ))}
 
