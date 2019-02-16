@@ -1,6 +1,7 @@
 import { has } from 'lodash'
 
 const initialState = {
+    displayVersionIndex: false,
     isLoading: false,
     isMobile: window.innerWidth < 768,
     verseOptions: {

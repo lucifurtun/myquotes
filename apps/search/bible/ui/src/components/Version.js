@@ -27,6 +27,7 @@ class Version extends Component {
                 <div className="panel panel-default">
                     <div className="version-controls panel-heading">
                         <VersionInfos
+                            displayIndex={true}
                             isMobile={this.props.isMobile}
                             onRemove={() => this.props.dispatch(removeVersion(this.props.item.id))}
                         />
