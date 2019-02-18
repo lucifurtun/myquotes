@@ -1,22 +1,28 @@
+import { keyBy, values } from 'lodash'
+
 const initialState = {
     data: [],
     count: null,
     page: null,
     hasMore: null,
-    selected: null
+    selected: null,
+    scrolledTo: null
 }
 
+function isFirstPage(response) {
+    return response.page === 1
+}
 
 export function reducer(state = initialState, action = {}) {
-    switch(action.type) {
+    switch (action.type) {
         case 'GET_VERSES_SUCCESS':
             let response = action.payload.data
 
-            let data = isFirstPage(response) ? response.results : [...state.data, ...response.results]
+            let data = isFirstPage(response) ? response.results : [...values(state.data), ...response.results]
 
             return {
                 ...state,
-                data: data,
+                data: keyBy(data, 'identifier'),
                 count: response.count,
                 page: response.page,
                 hasMore: response.has_more
@@ -26,17 +32,18 @@ export function reducer(state = initialState, action = {}) {
                 ...state,
                 selected: action.payload
             }
+        case 'SET_SCROLLED_TO':
+            return {
+                ...state,
+                scrolledTo: action.payload
+            }
         default:
             return state
     }
 }
 
-function isFirstPage(response) {
-    return response.page === 1
-}
 
-
-export function getVerses(bookTitle, chapterNumber = null, search = null, page = null) {
+export function getVerses(bookNumber, chapterNumber = null, search = null, page = null) {
     const url = '/verses/'
 
     return {
@@ -45,7 +52,7 @@ export function getVerses(bookTitle, chapterNumber = null, search = null, page =
             request: {
                 url: url,
                 params: {
-                    book_title: bookTitle,
+                    book_number: bookNumber,
                     chapter_number: chapterNumber,
                     search: search,
                     page: page,

@@ -39,13 +39,20 @@ let FiltersForm = props => {
 
 
 function mapStateToProps(state, props) {
-    const books = values(state.books.data).map((item) => ({ value: item.title, label: item.title }))
+    const books = values(state.books.data).map((item) => ({
+        value: item.number,
+        label: item.title
+    }))
     const chapters = values(state.chapters.data).map((item) => ({
         value: item.number,
         label: item.number
     }))
 
-    const currentBook = state.filters.book
+    const currentBook = state.filters.book ? {
+        value: state.filters.book,
+        label: state.books.data[state.filters.book].title
+    } : null
+
     const currentChapter = state.filters.chapter
 
     return {

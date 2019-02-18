@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Verse from './Verse'
 import { connect } from 'react-redux'
 import { getVerses } from '../redux/verse'
-import { isUndefined } from 'lodash'
+import { isUndefined, values } from 'lodash'
 import { stores } from '../redux'
 
 function isFirstChapterOccurrence(item, index, array) {
@@ -20,7 +20,7 @@ function isFirstBookOccurrence(item, index, array) {
         return true
     }
 
-    return previousItem.book_title !== item.book_title
+    return previousItem.book_number !== item.book_number
 }
 
 class InfiniteList extends Component {
@@ -32,6 +32,7 @@ class InfiniteList extends Component {
         }
 
         this.verseWrapper = React.createRef()
+        this.verseElements = {}
     }
 
     componentDidMount() {
@@ -58,7 +59,7 @@ class InfiniteList extends Component {
             offset = element.scrollHeight
         }
 
-        if (scroll >= offset - 450) {
+        if (scroll >= offset - 550) {
             if (!this.state.isLoading) {
                 this.loadData()
             }
@@ -84,6 +85,12 @@ class InfiniteList extends Component {
         return null
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.scrolledTo && (this.props.scrolledTo !== prevProps.scrolledTo)) {
+            this.verseWrapper.current.scrollTo(0, this.verseElements[this.props.scrolledTo].offsetTop)
+        }
+    }
+
     render() {
         return (
             <div ref={this.verseWrapper} className="verses-wrapper" onScroll={this.handleScroll}>
@@ -91,7 +98,7 @@ class InfiniteList extends Component {
                     (item, i, array) => {
                         const isSelected = item.identifier === this.props.selected
                         return (
-                            <div key={i}>
+                            <div ref={(element) => this.verseElements[item.identifier] = element} key={i}>
                                 {
                                     isFirstBookOccurrence(item, i, array) &&
                                     <h2 className="verse-book">{item.book_title}</h2>
@@ -114,10 +121,11 @@ class InfiniteList extends Component {
 
 
 function mapStateToProps(state) {
-    const verses = state.verses.data
+    const verses = values(state.verses.data)
     const page = state.verses.page
     const hasMore = state.verses.hasMore
     const selected = state.verses.selected
+    const scrolledTo = state.verses.scrolledTo
     const isLoading = state.api.isLoading
     const filters = state.filters
 
@@ -126,6 +134,7 @@ function mapStateToProps(state) {
         page,
         hasMore,
         selected,
+        scrolledTo,
         isLoading,
         filters
     }

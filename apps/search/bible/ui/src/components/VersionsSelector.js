@@ -1,7 +1,7 @@
 import React from 'react'
 import connect from 'react-redux/es/connect/connect'
 import { values } from 'lodash'
-import { addVersion, setVersion } from '../redux/versions'
+import { addVersion, setVersion } from '../redux/root/versions'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
 
 const VersionsSelector = ({ versions, isMobile, dispatch }) => {

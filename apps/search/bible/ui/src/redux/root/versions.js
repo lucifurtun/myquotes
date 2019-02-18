@@ -1,5 +1,5 @@
-import { isEmpty, keys, max, omit, split, toInteger } from 'lodash'
-import { stores } from '.'
+import { isEmpty, keys, max, omit, split, toInteger, includes, values } from 'lodash'
+import { stores } from '..'
 
 const versionOptions = {
     vdcc: {
@@ -37,8 +37,9 @@ function addNewVersion(existingItems, newVersionName) {
             id: newKey,
             name: newVersionName,
             index: nextIndex,
-            label_short: versionOptions[newVersionName].short,
-            label_long: versionOptions[newVersionName].long
+            smartIndex: null,
+            labelShort: versionOptions[newVersionName].short,
+            labelLong: versionOptions[newVersionName].long
         }
     }
 }
@@ -49,17 +50,20 @@ const initialState = { ...addNewVersion({}, 'vdcc') }
 
 export function reducer(state = initialState, action = {}) {
     let newVersionName, newVersionItem
+    let newState
 
     switch(action.type) {
         case 'ADD_VERSION':
             newVersionName = action.payload
             newVersionItem = addNewVersion(state, newVersionName)
 
-            return { ...state, ...newVersionItem }
+            newState = { ...state, ...newVersionItem }
+            break
 
         case 'REMOVE_VERSION':
             delete stores[action.payload]
-            return omit(state, action.payload)
+            newState = omit(state, action.payload)
+            break
 
         case 'SET_VERSION':
             for (let store in keys(stores)) {
@@ -69,11 +73,27 @@ export function reducer(state = initialState, action = {}) {
             newVersionName = action.payload
             newVersionItem = addNewVersion(state, newVersionName)
 
-            return { ...newVersionItem }
+            newState = { ...newVersionItem }
+            break
 
         default:
-            return state
+            newState = state
+            break
     }
+
+    if (includes(['ADD_VERSION', 'REMOVE_VERSION', 'SET_VERSION', 'persist/REHYDRATE'], action.type)) {
+        let smartIndexMap = {}
+        for (let version of values(newState)) {
+            smartIndexMap[version.name] = 0
+        }
+
+        for (let version of values(newState)) {
+            version.smartIndex = ++smartIndexMap[version.name]
+        }
+    }
+
+
+    return newState
 }
 
 export function addVersion(version) {

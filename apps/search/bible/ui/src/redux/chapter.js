@@ -15,14 +15,14 @@ export function reducer(state = initialState, action = {}) {
     }
 }
 
-export function getChapters(bookTitle) {
+export function getChapters(bookNumber) {
     return {
         type: 'GET_CHAPTERS',
         payload: {
             request: {
                 url: '/chapters/',
                 params: {
-                    book_title: bookTitle,
+                    book_number: bookNumber,
                     page_size: 1000
                 }
             }

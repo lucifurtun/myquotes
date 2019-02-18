@@ -5,7 +5,6 @@ import { getVerses } from './verse'
 const initialState = {
     book: null,
     chapter: null,
-    verse: null,
     search: null
 }
 
@@ -16,6 +15,13 @@ export function reducer(state = initialState, action = {}) {
                 ...state,
                 [action.payload.field]: action.payload.value
             }
+        case 'SET_FILTERS':
+            console.log(action.payload)
+
+            return {
+                ...state,
+                ...action.payload
+            }
         default:
             return state
     }
@@ -24,13 +30,13 @@ export function reducer(state = initialState, action = {}) {
 export function* saga() {
     yield takeEvery('VERSE_SEARCH', handleSearch)
     yield takeEvery('FORM_CHANGE', handleFormChange)
+    yield takeEvery('SET_FILTERS', handleSetFilters)
 }
 
 function* handleChangeBook({ book, search }) {
     if (book) {
         yield put(getChapters(book))
-    }
-    else {
+    } else {
         yield put(formChange('chapter', null))
     }
 
@@ -62,6 +68,10 @@ function* handleFormChange(payload) {
         default:
             break
     }
+}
+
+function* handleSetFilters(payload) {
+    yield handleChangeChapter(payload.payload)
 }
 
 export const formChange = (field, value) => ({

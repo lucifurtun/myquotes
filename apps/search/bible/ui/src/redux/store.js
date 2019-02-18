@@ -2,31 +2,36 @@ import { createStore as createReduxStore, applyMiddleware, combineReducers } fro
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 
+import storage from 'redux-persist/lib/storage'
+import { persistReducer } from 'redux-persist'
+
 import { reducer as bookReducer } from './book'
 import { reducer as chapterReducer } from './chapter'
 import { reducer as verseReducer } from './verse'
-import { reducer as versionsReducer } from './versions'
+import { reducer as versionsReducer } from './root/versions'
 import { reducer as currentVersionReducer } from './version'
 import { reducer as apiReducer } from './api'
-import { reducer as uiReducer } from './ui'
+import { reducer as uiReducer } from './root/ui'
+import { reducer as uiVersionReducer } from './ui'
 import { reducer as filtersReducer } from './filters'
-import storage from 'redux-persist/lib/storage'
-import { persistReducer } from 'redux-persist'
+
 import { stores } from './index'
 
 import { saga as filtersSaga } from './filters'
 import { saga as apiSaga } from './api'
+import { saga as uiSaga } from './ui'
 
 
 function* rootSaga(name) {
     yield all([
         filtersSaga(name),
-        apiSaga(name)
+        apiSaga(name),
+        uiSaga()
     ])
 }
 
 const persistConfig = {
-    key: 'root',
+    key: 'base',
     storage,
     whitelist: ['versions']
 }
@@ -46,10 +51,11 @@ const versionReducer = combineReducers({
     filters: filtersReducer,
     api: apiReducer,
     version: currentVersionReducer,
+    ui: uiVersionReducer,
 })
 
 
-export function createStore(initialState = {}) {
+export function createRootStore(initialState = {}) {
     const sagaMiddleware = createSagaMiddleware()
 
     const store = createReduxStore(
