@@ -48,7 +48,6 @@ class VerseOptions extends React.Component {
                                 event.preventDefault()
                                 const store = stores[version.id]
                                 store.dispatch({ type: 'SET_HIGHLIGHTED_ELEMENT', payload: verse })
-                                stores.root.dispatch({ type: 'HIDE_VERSE_OPTIONS' })
                             }}
                         >
                             <a href="#">Open in {version.labelShort} [{version.smartIndex}]</a>

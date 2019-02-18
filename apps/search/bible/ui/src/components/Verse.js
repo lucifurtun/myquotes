@@ -5,6 +5,12 @@ import { connect } from 'react-redux'
 const html = (text) => ({ __html: text })
 
 const handleOnClick = (event, item, dispatch) => {
+    event.preventDefault()
+    dispatch({ type: 'SET_SELECTED_VERSE', payload: item.identifier })
+}
+
+const handleOnContextMenu = (event, item, dispatch) => {
+    event.preventDefault()
     const payload = {
         x: event.pageX,
         y: event.pageY,
@@ -13,17 +19,6 @@ const handleOnClick = (event, item, dispatch) => {
 
     stores.root.dispatch({ type: 'SHOW_VERSE_OPTIONS', payload: payload })
     dispatch({ type: 'SET_SELECTED_VERSE', payload: item.identifier })
-
-}
-
-const handleOnBlur = (event, item, dispatch) => {
-    // FIXME: Hackish workaround for verse options.
-    const verseOptions = document.getElementById('verse-options')
-
-    if (verseOptions === null || !verseOptions.contains(event.relatedTarget)) {
-        stores.root.dispatch({ type: 'HIDE_VERSE_OPTIONS' })
-        dispatch({ type: 'SET_SELECTED_VERSE', payload: null })
-    }
 }
 
 const Verse = ({ item, isSelected, dispatch }) => {
@@ -31,13 +26,13 @@ const Verse = ({ item, isSelected, dispatch }) => {
 
     return (
         <div
-            onClick={(event) => handleOnClick(event, item, dispatch)}
-            onBlur={(event) => handleOnBlur(event, item, dispatch)}
-            tabIndex={0}
-            className={'verse' + (isSelected ? ' selected' : '')}
+            onClick={ (event) => handleOnClick(event, item, dispatch) }
+            onContextMenu={ (event) => handleOnContextMenu(event, item, dispatch) }
+            tabIndex={ 0 }
+            className={ 'verse' + (isSelected ? ' selected' : '') }
         >
-            <span className="verse-number" style={{ marginRight: '2px' }}>{item.number}.</span>
-            <span className="verse-text" dangerouslySetInnerHTML={html(text)}/>
+            <span className="verse-number" style={ { marginRight: '2px' } }>{ item.number }.</span>
+            <span className="verse-text" dangerouslySetInnerHTML={ html(text) }/>
         </div>
     )
 }
