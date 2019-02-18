@@ -37,6 +37,7 @@ function addNewVersion(existingItems, newVersionName) {
             id: newKey,
             name: newVersionName,
             index: nextIndex,
+            smartIndex: null,
             labelShort: versionOptions[newVersionName].short,
             labelLong: versionOptions[newVersionName].long
         }
@@ -80,7 +81,7 @@ export function reducer(state = initialState, action = {}) {
             break
     }
 
-    if (includes(['ADD_VERSION', 'REMOVE_VERSION', 'SET_VERSION'], action.type)) {
+    if (includes(['ADD_VERSION', 'REMOVE_VERSION', 'SET_VERSION', 'persist/REHYDRATE'], action.type)) {
         let smartIndexMap = {}
         for (let version of values(newState)) {
             smartIndexMap[version.name] = 0
