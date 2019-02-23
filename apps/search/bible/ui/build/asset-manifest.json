@@ -1,13 +1,13 @@
 {
-  "main.css": "/bible/static/css/main.ff989826.chunk.css",
-  "main.js": "/bible/static/js/main.8023a637.chunk.js",
-  "main.js.map": "/bible/static/js/main.8023a637.chunk.js.map",
-  "static/js/1.b22f1e96.chunk.js": "/bible/static/js/1.b22f1e96.chunk.js",
-  "static/js/1.b22f1e96.chunk.js.map": "/bible/static/js/1.b22f1e96.chunk.js.map",
+  "main.css": "/bible/static/css/main.b8256e99.chunk.css",
+  "main.js": "/bible/static/js/main.ffd29dad.chunk.js",
+  "main.js.map": "/bible/static/js/main.ffd29dad.chunk.js.map",
+  "static/js/1.ba845040.chunk.js": "/bible/static/js/1.ba845040.chunk.js",
+  "static/js/1.ba845040.chunk.js.map": "/bible/static/js/1.ba845040.chunk.js.map",
   "runtime~main.js": "/bible/static/js/runtime~main.e39e460e.js",
   "runtime~main.js.map": "/bible/static/js/runtime~main.e39e460e.js.map",
-  "static/css/main.ff989826.chunk.css.map": "/bible/static/css/main.ff989826.chunk.css.map",
+  "static/css/main.b8256e99.chunk.css.map": "/bible/static/css/main.b8256e99.chunk.css.map",
   "index.html": "/bible/index.html",
-  "precache-manifest.97e2503423876131344f6c8ecf20fe81.js": "/bible/precache-manifest.97e2503423876131344f6c8ecf20fe81.js",
+  "precache-manifest.f4481447e0b2dfc99490301a752aa7b3.js": "/bible/precache-manifest.f4481447e0b2dfc99490301a752aa7b3.js",
   "service-worker.js": "/bible/service-worker.js"
 }

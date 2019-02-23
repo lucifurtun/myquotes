@@ -8,7 +8,7 @@ let FiltersForm = props => {
     const { handleSubmit, books, book, chapters, chapter, dispatch } = props
     return (
         <div>
-            <form className="filters-form" onSubmit={handleSubmit}>
+            <div className="filters-form">
                 <div className='row'>
                     <div className='col-sm-5 filter-item'>
                         <DropDown
@@ -32,7 +32,7 @@ let FiltersForm = props => {
                         />
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     )
 }

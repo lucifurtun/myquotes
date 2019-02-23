@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { values } from 'lodash'
 import { stores } from '../redux'
+import onClickOutside from 'react-onclickoutside'
 
 
 class VerseOptions extends React.Component {
@@ -10,6 +11,10 @@ class VerseOptions extends React.Component {
 
         this.element = React.createRef()
         this.height = null
+    }
+
+    handleClickOutside() {
+        this.props.dispatch({ type: 'HIDE_VERSE_OPTIONS' })
     }
 
     componentDidMount() {
@@ -66,4 +71,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(VerseOptions)
+export default connect(mapStateToProps)(onClickOutside(VerseOptions))

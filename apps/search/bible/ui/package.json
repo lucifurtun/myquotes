@@ -9,6 +9,7 @@
     "react": "^16.6.1",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.6.1",
+    "react-onclickoutside": "^6.8.0",
     "react-redux": "^5.1.1",
     "react-scripts": "2.1.1",
     "react-select": "^2.1.1",

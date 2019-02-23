@@ -6,7 +6,13 @@ import VersionsSelector from './VersionsSelector'
 const Header = ({ isLoading, isMobile }) => {
     return (
         <nav className="navbar navbar-default navbar-static-top" role="navigation">
-            <a style={{ fontSize: '20px' }} className="navbar-brand" target="_self" href="/">Bible</a>
+            <a style={{ fontSize: '20px' }}
+               className="navbar-brand"
+               target="_self"
+               href={process.env.PUBLIC_URL}
+            >
+                Bible
+            </a>
             <VersionsSelector/>
             <Spinner show={isLoading}/>
         </nav>
