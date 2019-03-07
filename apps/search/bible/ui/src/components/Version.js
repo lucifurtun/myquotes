@@ -5,7 +5,7 @@ import Provider from 'react-redux/es/components/Provider'
 import { createVersionStore } from '../redux/store'
 import { getBooks } from '../redux/book'
 import { getVerses } from '../redux/verse'
-import { removeVersion } from '../redux/root/versions'
+import { removeVersion, setVersion } from '../redux/root/versions'
 import { connect } from 'react-redux'
 import VersionInfos from './VersionInfos'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
@@ -16,7 +16,7 @@ class Version extends Component {
         super(props)
 
         const store = createVersionStore(this.props.item.id)
-        store.dispatch({ type: 'SET_VERSION', payload: this.props.item })
+        store.dispatch(setVersion(this.props.item))
         store.dispatch(getBooks())
         store.dispatch(getVerses())
         this.store = store
@@ -35,7 +35,7 @@ class Version extends Component {
                         >
                             <div className="version-controls panel-heading">
                                 <VersionInfos
-                                    isMobile={ this.props.isMobile }
+                                    displayIndex={true}isMobile={ this.props.isMobile }
                                     onRemove={ () => this.props.dispatch(removeVersion(this.props.item.id)) }
                                 />
 

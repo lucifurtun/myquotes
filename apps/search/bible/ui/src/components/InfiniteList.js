@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Verse from './Verse'
 import { connect } from 'react-redux'
 import { getVerses } from '../redux/verse'
-import { isUndefined } from 'lodash'
+import { isUndefined, values } from 'lodash'
 import { stores } from '../redux'
 
 function isFirstChapterOccurrence(item, index, array) {
@@ -59,7 +59,7 @@ class InfiniteList extends Component {
             offset = element.scrollHeight
         }
 
-        if (scroll >= offset - 450) {
+        if (scroll >= offset - 550) {
             if (!this.state.isLoading) {
                 this.loadData()
             }
@@ -121,7 +121,7 @@ class InfiniteList extends Component {
 
 
 function mapStateToProps(state) {
-    const verses = state.verses.data
+    const verses = values(state.verses.data)
     const page = state.verses.page
     const hasMore = state.verses.hasMore
     const selected = state.verses.selected

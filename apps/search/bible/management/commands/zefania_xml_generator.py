@@ -9,7 +9,7 @@ class Command(BaseCommand):
     help = 'Generates zefania xml from different formats'
 
     def handle(self, *args, **options):
-        with open('/Users/lucifurtun/Documents/bibles/NTR.json') as f:
+        with open('NTR.json') as f:
             data = json.load(f)
 
         current_b_number = 0

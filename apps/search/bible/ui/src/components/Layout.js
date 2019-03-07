@@ -1,8 +1,7 @@
 import React from 'react'
 import connect from 'react-redux/es/connect/connect'
-import { values } from 'lodash'
+import { values, toInteger } from 'lodash'
 import Version from './Version'
-import { toInteger } from 'lodash'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
 
@@ -23,7 +22,7 @@ const Layout = ({ versions }) => {
                         >
                             { versions.map((item, index) => (
                                 <div key={ item.id } className={ 'translation ' + layoutClasses }>
-                                    <Version index={index} provided={ provided } key={ item.id } item={ item }/>
+                                    <Version index={index} provided={ provided } key={ item.id } item={ item } smartIndex={item.smartIndex}/>
                                 </div>
                             )) }
 

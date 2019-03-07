@@ -1,3 +1,5 @@
+import { keyBy, values } from 'lodash'
+
 const initialState = {
     data: [],
     count: null,
@@ -12,15 +14,15 @@ function isFirstPage(response) {
 }
 
 export function reducer(state = initialState, action = {}) {
-    switch(action.type) {
+    switch (action.type) {
         case 'GET_VERSES_SUCCESS':
             let response = action.payload.data
 
-            let data = isFirstPage(response) ? response.results : [...state.data, ...response.results]
+            let data = isFirstPage(response) ? response.results : [...values(state.data), ...response.results]
 
             return {
                 ...state,
-                data: data,
+                data: keyBy(data, 'identifier'),
                 count: response.count,
                 page: response.page,
                 hasMore: response.has_more
