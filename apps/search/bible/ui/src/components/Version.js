@@ -8,7 +8,7 @@ import { getVerses } from '../redux/verse'
 import { removeVersion, setVersion } from '../redux/root/versions'
 import { connect } from 'react-redux'
 import VersionInfos from './VersionInfos'
-import { Droppable, Draggable } from 'react-beautiful-dnd'
+import { Draggable } from 'react-beautiful-dnd'
 
 
 class Version extends Component {
@@ -24,31 +24,26 @@ class Version extends Component {
 
     render() {
         return (
-            <Provider store={ this.store }>
-                <Draggable  key={ this.props.key } draggableId={ this.props.item.id } index={ this.props.index }>
-                    { (provided, snapshot) => (
-                        <div className="panel panel-default"
-                             style={{...provided.draggableProps.style}}
-                             ref={ provided.innerRef }
-                             { ...provided.draggableProps }
-                             { ...provided.dragHandleProps }
-                        >
-                            <div className="version-controls panel-heading">
+            <Provider store={this.store}>
+                <Draggable key={this.props.key} draggableId={this.props.item.id} index={this.props.index}>
+                    {(provided, snapshot) => (
+                        <div className="panel panel-default" ref={provided.innerRef} {...provided.draggableProps}>
+                            <div className="version-controls panel-heading" {...provided.dragHandleProps}>
                                 <VersionInfos
-                                    displayIndex={true}isMobile={ this.props.isMobile }
-                                    onRemove={ () => this.props.dispatch(removeVersion(this.props.item.id)) }
+                                    displayIndex={true} isMobile={this.props.isMobile}
+                                    onRemove={() => this.props.dispatch(removeVersion(this.props.item.id))}
                                 />
 
                             </div>
-                            <div className="panel-body">
+                            < div className='panel-body'>
                                 <FiltersForm/>
                                 <InfiniteList
-                                    isMobile={ this.props.isMobile }
-                                    verseOptionsDisplayed={ this.props.verseOptionsDisplayed }
+                                    isMobile={this.props.isMobile}
+                                    verseOptionsDisplayed={this.props.verseOptionsDisplayed}
                                 />
                             </div>
                         </div>
-                    ) }
+                    )}
                 </Draggable>
             </Provider>
         )
