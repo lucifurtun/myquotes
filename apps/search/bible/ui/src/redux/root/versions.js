@@ -20,8 +20,9 @@ function addNewVersion(existingItems, newVersionName) {
     let version, index
 
     let indexes = []
+    const existingKeys = keys(existingItems)
 
-    for (let v of keys(existingItems)) {
+    for (let v of existingKeys) {
         [version, index] = split(v, '__')
 
         if (version === newVersionName) {
@@ -34,6 +35,7 @@ function addNewVersion(existingItems, newVersionName) {
 
     return {
         [newKey]: {
+            ordering: existingKeys.length + 1,
             id: newKey,
             name: newVersionName,
             index: nextIndex,
@@ -74,6 +76,32 @@ export function reducer(state = initialState, action = {}) {
             newVersionItem = addNewVersion(state, newVersionName)
 
             newState = { ...newVersionItem }
+            break
+
+        case 'REORDER_VERSIONS':
+            const source = action.payload.source
+            const sourceOrdering = state[source].ordering
+            const destination = action.payload.destination
+            const destinationOrdering = state[destination].ordering
+
+            const toLeft = sourceOrdering > destinationOrdering
+
+            newState = state
+            const newOrdering = newState[destination].ordering
+
+            for (let item of values(newState)) {
+                if (toLeft) {
+                    if (newState[item.id].ordering >= newState[destination].ordering) {
+                        newState[item.id].ordering++
+                    }
+                } else {
+                    if (newState[item.id].ordering <= newState[destination].ordering) {
+                        newState[item.id].ordering--
+                    }
+                }
+            }
+
+            newState[source].ordering = newOrdering
             break
 
         default:

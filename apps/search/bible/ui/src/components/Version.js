@@ -7,19 +7,25 @@ import { getBooks } from '../redux/book'
 import { getVerses } from '../redux/verse'
 import { removeVersion, setVersion } from '../redux/root/versions'
 import { connect } from 'react-redux'
+import { has } from 'lodash'
 import VersionInfos from './VersionInfos'
 import { Draggable } from 'react-beautiful-dnd'
+import { stores } from '../redux'
 
 
 class Version extends Component {
     constructor(props) {
         super(props)
 
-        const store = createVersionStore(this.props.item.id)
-        store.dispatch(setVersion(this.props.item))
-        store.dispatch(getBooks())
-        store.dispatch(getVerses())
-        this.store = store
+        if (has(stores, this.props.item.id)) {
+            this.store = stores[this.props.item.id]
+        } else {
+            const store = createVersionStore(this.props.item.id)
+            store.dispatch(setVersion(this.props.item))
+            store.dispatch(getBooks())
+            store.dispatch(getVerses())
+            this.store = store
+        }
     }
 
     render() {
@@ -35,7 +41,7 @@ class Version extends Component {
                                 />
 
                             </div>
-                            < div className='panel-body'>
+                            <div className='panel-body'>
                                 <FiltersForm/>
                                 <InfiniteList
                                     isMobile={this.props.isMobile}
