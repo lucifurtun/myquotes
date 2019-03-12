@@ -7,7 +7,7 @@ import { getBooks } from '../redux/book'
 import { getVerses } from '../redux/verse'
 import { removeVersion, setVersion } from '../redux/root/versions'
 import { connect } from 'react-redux'
-import { has } from 'lodash'
+import { has, keys } from 'lodash'
 import VersionInfos from './VersionInfos'
 import { Draggable } from 'react-beautiful-dnd'
 import { stores } from '../redux'
@@ -31,7 +31,11 @@ class Version extends Component {
     render() {
         return (
             <Provider store={this.store}>
-                <Draggable key={this.props.key} draggableId={this.props.item.id} index={this.props.index}>
+                <Draggable
+                    isDragDisabled={this.props.isDragDisabled}
+                    draggableId={this.props.item.id}
+                    index={this.props.index}
+                >
                     {(provided, snapshot) => (
                         <div className="panel panel-default" ref={provided.innerRef} {...provided.draggableProps}>
                             <div className="version-controls panel-heading" {...provided.dragHandleProps}>
@@ -59,8 +63,13 @@ class Version extends Component {
 function mapStateToProps(state) {
     const isMobile = state.ui.isMobile
     const verseOptionsDisplayed = state.ui.verseOptions.display
+    const isDragDisabled = keys(state.versions).length === 1
 
-    return { isMobile, verseOptionsDisplayed }
+    return {
+        isMobile,
+        verseOptionsDisplayed,
+        isDragDisabled
+    }
 }
 
 export default connect(mapStateToProps)(Version)

@@ -292,7 +292,7 @@ input, button {
 }
 
 .translation .version-controls {
-    cursor: move;
+    /*cursor: move;*/
 }
 
 .filter-item {

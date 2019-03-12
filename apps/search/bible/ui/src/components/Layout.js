@@ -1,12 +1,16 @@
 import React from 'react'
 import connect from 'react-redux/es/connect/connect'
-import { values, toInteger, orderBy } from 'lodash'
+import { values, toInteger, orderBy, isNull } from 'lodash'
 import Version from './Version'
 import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
 
 class Layout extends React.Component {
     handleVersionReorder = (result) => {
+        if (isNull(result.destination)) {
+            return
+        }
+
         const source = this.props.versions[result.source.index]
         const destination = this.props.versions[result.destination.index]
         const payload = {

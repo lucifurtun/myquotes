@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { values } from 'lodash'
+import { orderBy, values } from 'lodash'
 import { stores } from '../redux'
 import onClickOutside from 'react-onclickoutside'
 
@@ -67,7 +67,7 @@ class VerseOptions extends React.Component {
 function mapStateToProps(state) {
     return {
         options: state.ui.verseOptions,
-        versions: values(state.versions)
+        versions: orderBy(values(state.versions), ['ordering', 'asc'])
     }
 }
 

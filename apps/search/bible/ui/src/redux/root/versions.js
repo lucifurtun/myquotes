@@ -54,6 +54,8 @@ export function reducer(state = initialState, action = {}) {
     let newVersionName, newVersionItem
     let newState
 
+    console.log(state, action)
+
     switch(action.type) {
         case 'ADD_VERSION':
             newVersionName = action.payload
