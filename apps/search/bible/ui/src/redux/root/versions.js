@@ -88,7 +88,7 @@ export function reducer(state = initialState, action = {}) {
 
             const toLeft = sourceOrdering > destinationOrdering
 
-            newState = state
+            newState = {...state}
             const newOrdering = newState[destination].ordering
 
             for (let item of values(newState)) {

@@ -18,7 +18,6 @@ class Layout extends React.Component {
             destination: destination.id
         }
         this.props.dispatch({ type: 'REORDER_VERSIONS', payload: payload })
-        this.props.dispatch({ type: 'HIDE_VERSE_OPTIONS' })
     }
 
     render() {
