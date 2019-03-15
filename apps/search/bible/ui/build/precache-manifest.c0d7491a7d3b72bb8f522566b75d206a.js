@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "b5f6948816128256676a",
+    "revision": "a36326ce2af757db421d",
     "url": "/bible/static/css/main.5c2f38b6.chunk.css"
   },
   {
-    "revision": "b5f6948816128256676a",
-    "url": "/bible/static/js/main.b5f69488.chunk.js"
+    "revision": "a36326ce2af757db421d",
+    "url": "/bible/static/js/main.a36326ce.chunk.js"
   },
   {
     "revision": "c1bf4ca79580329f9128",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/bible/static/js/runtime~main.e39e460e.js"
   },
   {
-    "revision": "ff0f0d276956757c3074c4e61e7c6d4f",
+    "revision": "11df71be0665122b4cc4a0dd36f02aa0",
     "url": "/bible/index.html"
   }
 ];

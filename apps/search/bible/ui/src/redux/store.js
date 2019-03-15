@@ -31,7 +31,7 @@ function* rootSaga(name) {
 }
 
 const persistConfig = {
-    key: 'base',
+    key: 'cache',
     storage,
     whitelist: ['versions']
 }
