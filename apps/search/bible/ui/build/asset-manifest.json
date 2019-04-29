@@ -1,13 +1,13 @@
 {
   "main.css": "/bible/static/css/main.5c2f38b6.chunk.css",
-  "main.js": "/bible/static/js/main.927c1e4a.chunk.js",
-  "main.js.map": "/bible/static/js/main.927c1e4a.chunk.js.map",
+  "main.js": "/bible/static/js/main.bfb10a3b.chunk.js",
+  "main.js.map": "/bible/static/js/main.bfb10a3b.chunk.js.map",
   "static/js/1.ad58c1b9.chunk.js": "/bible/static/js/1.ad58c1b9.chunk.js",
   "static/js/1.ad58c1b9.chunk.js.map": "/bible/static/js/1.ad58c1b9.chunk.js.map",
   "runtime~main.js": "/bible/static/js/runtime~main.e39e460e.js",
   "runtime~main.js.map": "/bible/static/js/runtime~main.e39e460e.js.map",
   "static/css/main.5c2f38b6.chunk.css.map": "/bible/static/css/main.5c2f38b6.chunk.css.map",
   "index.html": "/bible/index.html",
-  "precache-manifest.45fb93455cd7102fdca54b1992fa8d2b.js": "/bible/precache-manifest.45fb93455cd7102fdca54b1992fa8d2b.js",
+  "precache-manifest.407da041ffd94a782c927715143ad2e1.js": "/bible/precache-manifest.407da041ffd94a782c927715143ad2e1.js",
   "service-worker.js": "/bible/service-worker.js"
 }

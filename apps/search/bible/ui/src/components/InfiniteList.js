@@ -96,7 +96,7 @@ class InfiniteList extends Component {
 
         const noResultsBookText = filtersSnapshot.book ? <span> in <i>{books[filtersSnapshot.book].title}</i></span> : ''
         const noResultsChapterText = filtersSnapshot.chapter ? <i> {filtersSnapshot.chapter}</i> : ''
-        const noResultsSearchText = filtersSnapshot.search ? <span>for "${filtersSnapshot.search}"</span> : ''
+        const noResultsSearchText = filtersSnapshot.search ? <span>for "{filtersSnapshot.search}"</span> : ''
         const noResultsFiltersText = <span>{noResultsSearchText}{noResultsBookText}{noResultsChapterText}</span>
 
         return (
