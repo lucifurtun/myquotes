@@ -110,7 +110,8 @@ class VerseView(DocumentViewSet):
     document_mapping = {
         Versions.VDCC: indexes.VerseVDCC,
         Versions.ESV: indexes.VerseESV,
-        Versions.NTR: indexes.VerseNTR
+        Versions.NTR: indexes.VerseNTR,
+        Versions.KJV: indexes.VerseKJV
     }
 
     def __init__(self, request, *args, **kwargs):
