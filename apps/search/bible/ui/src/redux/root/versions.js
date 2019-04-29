@@ -13,6 +13,10 @@ const versionOptions = {
     esv: {
         short: 'ESV',
         long: 'English Standard Version'
+    },
+    kjv: {
+        short: 'KJV',
+        long: 'King James Version'
     }
 }
 

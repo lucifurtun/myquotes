@@ -31,6 +31,9 @@ const VersionsSelector = ({ versions, isMobile, dispatch }) => {
                 <MenuItem onClick={() => dispatch(action('esv'))} eventKey="3">
                     ESV
                 </MenuItem>
+                <MenuItem onClick={() => dispatch(action('kjv'))} eventKey="3">
+                    KJV
+                </MenuItem>
             </DropdownButton>
         </div>
     )
