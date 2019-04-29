@@ -5,7 +5,7 @@ import { values } from 'lodash'
 import DropDown from './Dropdown'
 
 let FiltersForm = props => {
-    const { handleSubmit, books, book, chapters, chapter, dispatch } = props
+    const {  books, book, chapters, chapter, dispatch } = props
     return (
         <div>
             <div className="filters-form">
