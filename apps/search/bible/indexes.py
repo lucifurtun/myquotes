@@ -101,7 +101,7 @@ index_kjv.settings(number_of_shards=1, number_of_replicas=0)
 class VerseKJV(Verse):
     class Meta:
         model = VerseModel
-        ignore_signals = False  # True is used because there are some issues.
+        ignore_signals = True  # True is used because there are some issues.
 
     def get_queryset(self):
         return VerseModel.objects.filter(chapter__book__version=choices.Versions.KJV)
