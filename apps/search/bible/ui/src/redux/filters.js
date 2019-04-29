@@ -1,11 +1,12 @@
-import { takeEvery, put, select } from 'redux-saga/effects'
+import { takeEvery, put, select, take } from 'redux-saga/effects'
 import { getChapters } from './chapter'
 import { getVerses } from './verse'
 
 const initialState = {
     book: null,
     chapter: null,
-    search: null
+    search: null,
+    snapshot: { book: null, chapter: null, search: null }
 }
 
 export function reducer(state = initialState, action = {}) {
@@ -16,12 +17,16 @@ export function reducer(state = initialState, action = {}) {
                 [action.payload.field]: action.payload.value
             }
         case 'SET_FILTERS':
-            console.log(action.payload)
-
             return {
                 ...state,
                 ...action.payload
             }
+        case 'SEARCH_FILTERS_SNAPSHOT':
+            return {
+                ...state,
+                snapshot: action.payload
+            }
+
         default:
             return state
     }
@@ -41,10 +46,14 @@ function* handleChangeBook({ book, search }) {
     }
 
     yield put(getVerses(book, null, search))
+    yield take('GET_VERSES_SUCCESS')
+    yield put({type: 'SEARCH_FILTERS_SNAPSHOT', payload: {book, chapter: null, search}})
 }
 
 function* handleChangeChapter({ book, chapter, search }) {
     yield put(getVerses(book, chapter, search))
+    yield take('GET_VERSES_SUCCESS')
+    yield put({type: 'SEARCH_FILTERS_SNAPSHOT', payload: {book, chapter, search}})
 }
 
 function* handleSearch() {
@@ -53,6 +62,8 @@ function* handleSearch() {
     const { book, chapter, search } = filtersValues
 
     yield put(getVerses(book, chapter, search, null))
+    yield take('GET_VERSES_SUCCESS')
+    yield put({type: 'SEARCH_FILTERS_SNAPSHOT', payload: {book, chapter, search}})
 }
 
 function* handleFormChange(payload) {

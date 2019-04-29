@@ -92,6 +92,13 @@ class InfiniteList extends Component {
     }
 
     render() {
+        const { filtersSnapshot, books } = this.props
+
+        const noResultsBookText = filtersSnapshot.book ? <span> in <i>{books[filtersSnapshot.book].title}</i></span> : ''
+        const noResultsChapterText = filtersSnapshot.chapter ? <i> {filtersSnapshot.chapter}</i> : ''
+        const noResultsSearchText = filtersSnapshot.search ? <span>for "${filtersSnapshot.search}"</span> : ''
+        const noResultsFiltersText = <span>{noResultsSearchText}{noResultsBookText}{noResultsChapterText}</span>
+
         return (
             <div ref={this.verseWrapper} className="verses-wrapper" onScroll={this.handleScroll}>
                 {this.props.verses.map(
@@ -113,7 +120,7 @@ class InfiniteList extends Component {
                     }
                 )}
 
-                {!this.props.verses.length && <h4 className="no-results">No results...</h4>}
+                {!this.props.verses.length && <h4 className="no-results">No results {noResultsFiltersText}.</h4>}
             </div>
         )
     }
@@ -122,21 +129,25 @@ class InfiniteList extends Component {
 
 function mapStateToProps(state) {
     const verses = values(state.verses.data)
+    const books = state.books.data
     const page = state.verses.page
     const hasMore = state.verses.hasMore
     const selected = state.verses.selected
     const scrolledTo = state.verses.scrolledTo
     const isLoading = state.api.isLoading
     const filters = state.filters
+    const filtersSnapshot = state.filters.snapshot
 
     return {
         verses,
+        books,
         page,
         hasMore,
         selected,
         scrolledTo,
         isLoading,
-        filters
+        filters,
+        filtersSnapshot
     }
 }
 
