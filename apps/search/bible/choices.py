@@ -7,3 +7,4 @@ class Versions(metaclass=ChoicesMeta):
     VDCC = 'vdcc'
     NTR = 'ntr'
     ESV = 'esv'
+    KJV = 'kjv'

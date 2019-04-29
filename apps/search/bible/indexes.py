@@ -65,6 +65,20 @@ class VerseVDCC(Verse):
         return VerseModel.objects.filter(chapter__book__version=choices.Versions.VDCC)
 
 
+index_ntr = Index('verses_ntr')
+index_ntr.settings(number_of_shards=1, number_of_replicas=0)
+
+
+@index_ntr.doc_type
+class VerseNTR(Verse):
+    class Meta:
+        model = VerseModel
+        ignore_signals = True  # True is used because there are some issues.
+
+    def get_queryset(self):
+        return VerseModel.objects.filter(chapter__book__version=choices.Versions.NTR)
+
+
 index_esv = Index('verses_esv')
 index_esv.settings(number_of_shards=1, number_of_replicas=0)
 
@@ -79,15 +93,15 @@ class VerseESV(Verse):
         return VerseModel.objects.filter(chapter__book__version=choices.Versions.ESV)
 
 
-index_ntr = Index('verses_ntr')
-index_ntr.settings(number_of_shards=1, number_of_replicas=0)
+index_kjv = Index('verses_kjv')
+index_kjv.settings(number_of_shards=1, number_of_replicas=0)
 
 
-@index_ntr.doc_type
-class VerseNTR(Verse):
+@index_kjv.doc_type
+class VerseKJV(Verse):
     class Meta:
         model = VerseModel
-        ignore_signals = True  # True is used because there are some issues.
+        ignore_signals = False  # True is used because there are some issues.
 
     def get_queryset(self):
-        return VerseModel.objects.filter(chapter__book__version=choices.Versions.NTR)
+        return VerseModel.objects.filter(chapter__book__version=choices.Versions.KJV)
