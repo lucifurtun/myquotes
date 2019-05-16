@@ -2,6 +2,7 @@ import { keyBy, values } from 'lodash'
 
 const initialState = {
     data: [],
+    errors: [],
     count: null,
     page: null,
     hasMore: null,
@@ -23,10 +24,23 @@ export function reducer(state = initialState, action = {}) {
             return {
                 ...state,
                 data: keyBy(data, 'identifier'),
+                errors: [],
                 count: response.count,
                 page: response.page,
                 hasMore: response.has_more
             }
+        case 'GET_VERSES_FAIL':
+            return {
+                ...state,
+                errors: action.payload.error.response.data,
+                data: [],
+                count: null,
+                page: null,
+                hasMore: null,
+                selected: null,
+                scrolledTo: null
+            }
+
         case 'SET_SELECTED_VERSE':
             return {
                 ...state,

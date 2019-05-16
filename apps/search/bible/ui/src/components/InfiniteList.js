@@ -99,6 +99,8 @@ class InfiniteList extends Component {
         const noResultsSearchText = filtersSnapshot.search ? <span>for "{filtersSnapshot.search}"</span> : ''
         const noResultsFiltersText = <span>{noResultsSearchText}{noResultsBookText}{noResultsChapterText}</span>
 
+        const noResultsMessage = <span>No results {noResultsFiltersText}</span>
+
         return (
             <div ref={this.verseWrapper} className="verses-wrapper" onScroll={this.handleScroll}>
                 {this.props.verses.map(
@@ -120,7 +122,15 @@ class InfiniteList extends Component {
                     }
                 )}
 
-                {!this.props.verses.length && <h4 className="no-results">No results {noResultsFiltersText}.</h4>}
+                {
+                    this.props.errors &&
+                    <h4 className="no-results">{this.props.errors}</h4>
+                }
+
+                {
+                    !this.props.verses.length && !this.props.errors.length &&
+                    <h4 className="no-results">{noResultsMessage}.</h4>
+                }
             </div>
         )
     }
@@ -128,6 +138,7 @@ class InfiniteList extends Component {
 
 
 function mapStateToProps(state) {
+    const errors = values(state.verses.errors)
     const verses = values(state.verses.data)
     const books = state.books.data
     const page = state.verses.page
@@ -139,6 +150,7 @@ function mapStateToProps(state) {
     const filtersSnapshot = state.filters.snapshot
 
     return {
+        errors,
         verses,
         books,
         page,

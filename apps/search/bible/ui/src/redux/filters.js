@@ -62,7 +62,7 @@ function* handleSearch() {
     const { book, chapter, search } = filtersValues
 
     yield put(getVerses(book, chapter, search, null))
-    yield take('GET_VERSES_SUCCESS')
+    yield take(['GET_VERSES_SUCCESS', 'GET_VERSES_FAIL'])
     yield put({type: 'SEARCH_FILTERS_SNAPSHOT', payload: {book, chapter, search}})
 }
 
