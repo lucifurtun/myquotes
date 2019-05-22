@@ -14,5 +14,7 @@ class QuotesResultsSetPagination(PageNumberPagination):
                 'previous': self.page.previous_page_number() if self.page.has_previous() else None
             },
             'count': self.page.paginator.count,
+            'page': self.page.number,
+            'has_more': self.page.has_next(),
             'results': data
         })
