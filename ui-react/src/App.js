@@ -14,14 +14,12 @@ const Home = () => (
 
 function App() {
     return (
-        <Router>
-            <div>
-                <Route exact path="/" component={ Home }/>
-                <Route path="/quotes" component={ Quotes }/>
-                <Route path="/login" component={ Login }/>
-                <Route path="/signup" component={ Signup }/>
-            </div>
-        </Router>
+        <HashRouter>
+            <Route exact path="/" component={ Home }/>
+            <Route path="/quotes" component={ Quotes }/>
+            <Route path="/login" component={ Login }/>
+            <Route path="/signup" component={ Signup }/>
+        </HashRouter>
     )
 }
 

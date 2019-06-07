@@ -3,6 +3,7 @@ import { FaPlus } from 'react-icons/fa'
 import QuotesSidebar from '../components/QuotesSidebar'
 import QuotesList from '../components/QuotesList'
 import React from 'react'
+import { withRouter } from '../redux/routing'
 
 export const Quotes = () => (
     <div className="App">
@@ -38,4 +39,4 @@ export const Quotes = () => (
     </div>
 )
 
-export default Quotes
+export default withRouter(Quotes)

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Quote from './Quote'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import { getQuotes } from '../redux/quotes'
+import { withRouter } from '../redux/routing'
 
 class QuotesList extends React.Component {
     componentDidMount() {
@@ -15,7 +16,7 @@ class QuotesList extends React.Component {
                 <div>
                     {
                         this.props.quotes.map((item => (
-                            <Quote quote={item} key={ item.id }/>
+                            <Quote quote={ item } key={ item.id }/>
                         )))
                     }
 
@@ -48,4 +49,4 @@ function mapStateToProps(state) {
     return { quotes }
 }
 
-export default connect(mapStateToProps)(QuotesList)
+export default withRouter(connect(mapStateToProps)(QuotesList))

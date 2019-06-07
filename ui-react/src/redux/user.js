@@ -1,6 +1,7 @@
-import { takeEvery, put } from 'redux-saga/effects'
-import { push } from 'connected-react-router'
-
+import { takeEvery, call, select, put } from 'redux-saga/effects'
+import { push } from './routing'
+import { setHeaders } from './api'
+import { getQuotes } from './quotes'
 
 
 const initialState = {
@@ -21,14 +22,24 @@ export function reducer(state = initialState, action = {}) {
     }
 }
 
-function* handleLoginSuccess() {
-    console.log('Happened')
-    yield put(push('quotes'))
-    // push('/quotes')
+function* handleLoginSuccess(payload) {
+    console.log(payload)
+    yield call(setHeaders, { Authorization: payload.payload.data.token })
+    yield call(push, 'quotes')
+}
+
+function* handleExistingToken() {
+    const existingToken = yield select((state) => {console.log(state.user.token); return state.user.token})
+    if(existingToken) {
+        yield call(setHeaders, { Authorization: existingToken })
+        yield put(getQuotes())
+    }
+
 }
 
 export function* saga() {
     yield takeEvery('LOGIN_SUCCESS', handleLoginSuccess)
+    // yield takeEvery(REHYDRATE, handleExistingToken)
 }
 
 
@@ -45,7 +56,7 @@ export const login = (history) => {
                     method: 'POST',
                     data  : {
                         'email'   : 'lucianfurtun@gmail.com',
-                        'password': 'some-password'
+                        'password': 'apollo'
                     }
                 }
             }

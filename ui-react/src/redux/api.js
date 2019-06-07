@@ -1,5 +1,6 @@
 import { has } from 'lodash'
 import { call, takeEvery, put, select } from 'redux-saga/effects'
+import { forEach } from 'lodash'
 import axios from 'axios'
 
 const initialState = {
@@ -32,9 +33,15 @@ export const SUCCESS_SUFFIX = '_SUCCESS'
 export const ERROR_SUFFIX = '_FAIL'
 
 const client = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL     : process.env.REACT_APP_API_URL,
     responseType: 'json'
 })
+
+export function setHeaders(headers) {
+    forEach(headers, (value, name) => {
+        axios.defaults.headers.common[name] = value
+    })
+}
 
 function* handleRequest(action) {
     const { type, payload: { request } } = action
@@ -45,7 +52,7 @@ function* handleRequest(action) {
 
     const userToken = yield select((state => state.user.token))
     if (userToken) {
-        headers['Authorization'] = `JWT ${userToken}`
+        headers['Authorization'] = `JWT ${ userToken }`
     }
 
     try {
