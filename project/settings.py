@@ -185,7 +185,8 @@ LOGIN_REDIRECT_URL = '/'
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2),
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
-    'JWT_ALLOW_REFRESH': True
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'apps.api.utils.jwt_response_payload_handler'
 }
 
 CKEDITOR_CONFIGS = {
