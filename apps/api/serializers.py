@@ -32,6 +32,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 class QuoteSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault(), write_only=True)
+    user_id = serializers.PrimaryKeyRelatedField(source='user', read_only=True)
     tags_name = fields.CreatableSlugRelatedField(required=False, queryset=models.Tag.objects.all(), many=True,
                                                  allow_null=True, slug_field='name', source='tags')
     author_name = fields.AuthorCreatableSlugRelatedField(required=False, queryset=models.Author.objects.all(),
