@@ -4,6 +4,16 @@ import QuotesSidebar from '../components/QuotesSidebar'
 import QuotesList from '../components/QuotesList'
 import React from 'react'
 import { withRouter } from '../redux/routing'
+import { showModal } from '../redux/ui'
+import QuoteForm from '../components/QuoteForm'
+import {store} from '..'
+
+const getQuoteModal = (quote) => {
+    return {
+        title  : 'New Quote',
+        content: <QuoteForm/>
+    }
+}
 
 export const Quotes = () => (
     <div className="App">
@@ -19,11 +29,10 @@ export const Quotes = () => (
             </div>
 
             <div className="row">
-                <div id="quotes-list" className="row" ng-controller="filterController"
-                     ng-init="init({{ object.id }}, {{ request.user.id }})">
-                    <a href="" className="add-quote-icon" ng-click="setEditItem()">
-                        <FaPlus size='2em'/>
-                    </a>
+                <div id="quotes-list" className="row">
+                    <span className="add-quote-icon" onClick={(event) => store.dispatch(showModal(getQuoteModal()))}>
+                        <FaPlus color='#337ab7' size='2em'/>
+                    </span>
                     <div id="filters" className="col-xs-12 col-md-3">
                         <QuotesSidebar/>
                     </div>

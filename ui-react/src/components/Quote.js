@@ -2,19 +2,42 @@ import React from 'react'
 
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa'
 import { connect } from 'react-redux'
+import { showModal } from '../redux/ui'
+import QuoteForm from './QuoteForm'
 
 const html = (text) => ({ __html: text })
 
 
-const Quote = ({ quote, user }) => (
+
+const getQuoteModal = (quote) => {
+    return {
+        title  : 'Edit Quote',
+        content: <QuoteForm quote={quote}/>
+    }
+}
+
+const Quote = ({ quote, user, dispatch }) => (
     <div className="list-group">
         <div className="list-group-item">
-            { (quote.author.id === user.id) &&
-            <span className="quote-actions" ng-if="!readOnly">
-                <a href="" id="edit-button" className="visible-on-hover" ng-click="setEditItem(quote.id)">
+            { (quote.user_id === user.id) &&
+            <span className="quote-actions">
+                <a
+                    href=""
+                    id="edit-button"
+                    className="visible-on-hover"
+                    onClick={ (event) => {
+                        event.preventDefault()
+                        dispatch(showModal(getQuoteModal(quote)))
+                    } }
+
+                >
                     <FaPencilAlt/>
                 </a>
                 <a href="" id="delete-button" className="visible-on-hover"
+                   onClick={ (event) => {
+                       event.preventDefault()
+                       dispatch(showModal({ title: 'Are you sure?', content: 'The quote will be deleted' }))
+                   } }
                    ng-click="setDeleteItem(quote.id, quote.title)">
                     <FaTrashAlt/>
                 </a>

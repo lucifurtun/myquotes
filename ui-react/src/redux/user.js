@@ -5,7 +5,9 @@ import { getQuotes } from './quotes'
 
 
 const initialState = {
-    token: null
+    token: null,
+    email: null,
+    id: null
 }
 
 
@@ -14,7 +16,7 @@ export function reducer(state = initialState, action = {}) {
         case 'LOGIN_SUCCESS':
             return {
                 ...state,
-                token: action.payload.data.token
+                ...action.payload.data
             }
 
         default:

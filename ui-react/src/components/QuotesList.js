@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { orderBy } from 'lodash'
 import Quote from './Quote'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import { getQuotes } from '../redux/quotes'
@@ -45,7 +46,7 @@ class QuotesList extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const quotes = state.quotes.data
+    const quotes = orderBy(state.quotes.data, 'id', 'desc')
     return { quotes }
 }
 

@@ -1,3 +1,5 @@
+import { keyBy } from 'lodash'
+
 const initialState = {
     data: []
 }
@@ -8,7 +10,7 @@ export function reducer(state = initialState, action = {}) {
             let response = action.payload.data
 
             return {
-                data: response
+                data: keyBy(response, 'id')
             }
         default:
             return state

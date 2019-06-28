@@ -1,26 +1,50 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, HashRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Quotes } from './screens/Quotes'
 import Login from './screens/Login'
 import Signup from './screens/Signup'
+import { history, updateRoute } from './redux/routing'
+import { connect } from 'react-redux'
+import Modal from './components/Modal'
+import './App.css'
 
+export class Router extends React.Component {
+    componentDidMount() {
+        const { dispatch } = this.props
+        history.listen((route) => dispatch(updateRoute(route)))
+        dispatch(updateRoute(history.location))
+    }
 
-const Home = () => (
-    <div>
-        <h1>Test</h1>
-    </div>
-)
+    render() {
+        return (
+            <BrowserRouter>
+                <Switch>
+                    <Route path="/quotes" component={ Quotes }/>
+                    <Route path="/login" component={ Login }/>
+                    <Route path="/signup" component={ Signup }/>
+                </Switch>
+            </BrowserRouter>
 
+        )
+    }
+}
 
-function App() {
+Router = connect()(Router)
+
+function App({ modal }) {
     return (
-        <HashRouter>
-            <Route exact path="/" component={ Home }/>
-            <Route path="/quotes" component={ Quotes }/>
-            <Route path="/login" component={ Login }/>
-            <Route path="/signup" component={ Signup }/>
-        </HashRouter>
+        <div>
+            <Router/>
+            { modal && <Modal { ...modal } /> }
+        </div>
     )
 }
 
-export default App
+function mapStateToProps(state) {
+    return {
+        modal: state.ui.modal
+    }
+}
+
+export default connect(mapStateToProps)(App)
+

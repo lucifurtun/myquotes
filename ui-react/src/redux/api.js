@@ -32,7 +32,7 @@ export function reducer(state = initialState, action = {}) {
 export const SUCCESS_SUFFIX = '_SUCCESS'
 export const ERROR_SUFFIX = '_FAIL'
 
-const client = axios.create({
+export const client = axios.create({
     baseURL     : process.env.REACT_APP_API_URL,
     responseType: 'json'
 })
@@ -63,6 +63,20 @@ function* handleRequest(action) {
     }
 }
 
+const API_ACTIONS = [
+    'GET_QUOTES',
+    'GET_QUOTE',
+    'CREATE_QUOTE',
+    'UPDATE_QUOTE',
+    'GET_AUTHORS',
+    'GET_AUTHOR',
+    'GET_CATEGORIES',
+    'GET_CATEGORY',
+    'GET_TAGS',
+    'GET_TAG',
+    'LOGIN'
+]
+
 export function* saga() {
-    yield takeEvery(['GET_QUOTES', 'GET_AUTHORS', 'GET_CATEGORIES', 'GET_TAGS', 'LOGIN'], handleRequest)
+    yield takeEvery(API_ACTIONS, handleRequest)
 }

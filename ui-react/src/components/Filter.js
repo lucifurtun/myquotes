@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaPlus, FaTimes } from 'react-icons/fa'
 import { Collapse } from 'react-bootstrap'
+import { values } from 'lodash'
 import { getAuthors } from '../redux/authors'
 import { getCategories } from '../redux/categories'
 import { getTags } from '../redux/tags'
@@ -36,7 +37,13 @@ class Item extends React.Component {
                                            }
                                        } }/>
                 }
-                <FaTimes color='red'/>
+                <span
+                    className='remove-filter-button visible-on-hover'
+                    onClick={(event) => console.log('Clicked')}
+                    style={{verticalAlign: 'middle', marginLeft: '5px'}}
+                >
+                    <FaTimes color='red'/>
+                </span>
         <div className="material-switch pull-right">
             <input
                 id={`filter-switch-${ this.props.type }-${ this.props.item.id }`}
@@ -106,9 +113,9 @@ Filter.defaultProps = {
 
 function mapStateToProps(state) {
     return {
-        authors   : state.authors.data,
-        categories: state.categories.data,
-        tags      : state.tags.data
+        authors   : values(state.authors.data),
+        categories: values(state.categories.data),
+        tags      : values(state.tags.data)
     }
 }
 

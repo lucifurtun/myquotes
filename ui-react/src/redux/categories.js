@@ -1,3 +1,5 @@
+import { keyBy } from 'lodash'
+
 const initialState = {
     data: []
 }
@@ -8,7 +10,14 @@ export function reducer(state = initialState, action = {}) {
             let response = action.payload.data
 
             return {
-                data: response
+                data: keyBy(response, 'id')
+            }
+        case 'GET_CATEGORY_SUCCESS':
+            return {
+                data: {
+                    ...state.data,
+                    [action.payload.data.id]: action.payload.data
+                }
             }
         default:
             return state
@@ -22,6 +31,22 @@ export const getCategories = () => {
     return (
         {
             type   : 'GET_CATEGORIES',
+            payload: {
+                request: {
+                    url   : url,
+                    method: 'GET'
+                }
+            }
+        }
+    )
+}
+
+export const getCategory = (id) => {
+    const url = `/categories/${id}`
+
+    return (
+        {
+            type   : 'GET_CATEGORY',
             payload: {
                 request: {
                     url   : url,
