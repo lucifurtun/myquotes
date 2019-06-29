@@ -1,15 +1,20 @@
+from typing import Any
+
 from django.db.models import Q
 from django.http import Http404
 from django.utils.decorators import classonlymethod
 from django_elasticsearch_dsl_drf.filter_backends import FilteringFilterBackend, DefaultOrderingFilterBackend, \
     HighlightBackend
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
+from elasticsearch import TransportError
+from rest_framework import status
 from rest_framework.exceptions import APIException
 from rest_framework.generics import ListAPIView
+from rest_framework.request import Request
 from rest_framework.response import Response
 
 from apps.common.paginators import CustomPageNumberPagination
-from apps.search.bible.backends import SearchFilterBackend
+from apps.search.bible.backends import SearchFilterBackend, SpanSearchFilterBackend
 from apps.search.bible.choices import Versions
 from . import indexes
 from .models import Book, Chapter
@@ -76,7 +81,8 @@ class VerseView(DocumentViewSet):
     filter_backends = [
         FilteringFilterBackend,
         DefaultOrderingFilterBackend,
-        SearchFilterBackend,
+        # SearchFilterBackend,
+        SpanSearchFilterBackend,
         HighlightBackend
     ]
 
@@ -85,6 +91,8 @@ class VerseView(DocumentViewSet):
             # 'analyzer': 'standard'
         }
     }
+
+    span_search_field = 'text'
 
     filter_fields = {
         'book_title': 'book_title.raw',
@@ -117,6 +125,15 @@ class VerseView(DocumentViewSet):
     def __init__(self, request, *args, **kwargs):
         self.document = self.get_document(request)
         super().__init__(*args, **kwargs)
+
+    def list(self, request: Request, *args: Any, **kwargs: Any) -> Response:
+        try:
+            return super().list(request, *args, **kwargs)
+        except TransportError as err:
+            if err.error == 'search_phase_execution_exception':
+                return Response({'search': 'Invalid search query.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            return Response({'non_field_errors': str(err)}, status=status.HTTP_400_BAD_REQUEST)
 
     def get_document(self, request):
         kwargs = request.resolver_match.kwargs
