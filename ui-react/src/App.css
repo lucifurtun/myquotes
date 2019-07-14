@@ -1,0 +1,19 @@
+
+.tags-select {
+  display: inline-block;
+  width: 70%;
+}
+
+.author-select, .category-select {
+  display: inline-block;
+  width: 205px;
+}
+
+.remove-filter-button {
+  cursor: pointer;
+}
+
+
+.add-quote-icon {
+  cursor: pointer;
+}
