@@ -11,7 +11,7 @@ const VersionInfos = ({ displayIndex, isMobile, onRemove, version}) => {
                 </button>
             }
             { displayIndex && <span>[{ version.smartIndex }]</span> }
-            <span> { version.labelShort } ({ version.labelLong })</span>
+            <span> { version.labelShort }  {!isMobile && <span>({ version.labelLong })</span>}</span>
         </div>
     )
 }
