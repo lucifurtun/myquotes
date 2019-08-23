@@ -35,10 +35,16 @@ class Layout extends React.Component {
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
                             >
-                                {this.props.versions.map((item, index) => (
+                                {this.props.versions.map((item, index, array) => (
                                     <div key={index} className={'translation ' + layoutClasses}>
-                                        <Version index={index} provided={provided} key={item.id} item={item}
-                                                 smartIndex={item.smartIndex}/>
+                                        <Version
+                                            index={index}
+                                            provided={provided}
+                                            key={item.id}
+                                            version={item}
+                                            previousVersion={array[index-1] ? array[index-1] : null}
+                                            smartIndex={item.smartIndex}
+                                        />
                                     </div>
                                 ))}
 

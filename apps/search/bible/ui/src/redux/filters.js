@@ -81,8 +81,11 @@ function* handleFormChange(payload) {
     }
 }
 
-function* handleSetFilters(payload) {
-    yield handleChangeChapter(payload.payload)
+function* handleSetFilters({payload}) {
+    yield handleChangeChapter(payload)
+    if (payload.book) {
+        yield put(getChapters(payload.book))
+    }
 }
 
 export const formChange = (field, value) => ({

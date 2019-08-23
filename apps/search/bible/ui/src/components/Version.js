@@ -3,27 +3,25 @@ import FiltersForm from './FiltersForm'
 import InfiniteList from './InfiniteList'
 import Provider from 'react-redux/es/components/Provider'
 import { createVersionStore } from '../redux/store'
-import { getBooks } from '../redux/book'
-import { getVerses } from '../redux/verse'
-import { removeVersion, setVersion } from '../redux/root/versions'
+import { removeVersion } from '../redux/root/versions'
 import { connect } from 'react-redux'
 import { has, keys } from 'lodash'
 import VersionInfos from './VersionInfos'
 import { Draggable } from 'react-beautiful-dnd'
 import { stores } from '../redux'
+import { setupVersion } from '../redux/version'
 
 
 class Version extends Component {
     constructor(props) {
         super(props)
 
-        if (has(stores, this.props.item.id)) {
-            this.store = stores[this.props.item.id]
+        if (has(stores, this.props.version.id)) {
+            this.store = stores[this.props.version.id]
         } else {
-            const store = createVersionStore(this.props.item.id)
-            store.dispatch(setVersion(this.props.item))
-            store.dispatch(getBooks())
-            store.dispatch(getVerses())
+            const store = createVersionStore(this.props.version.id)
+            store.dispatch(setupVersion(this.props))
+
             this.store = store
         }
     }
@@ -33,7 +31,7 @@ class Version extends Component {
             <Provider store={this.store}>
                 <Draggable
                     isDragDisabled={this.props.isDragDisabled}
-                    draggableId={this.props.item.id}
+                    draggableId={this.props.version.id}
                     index={this.props.index}
                 >
                     {(provided, snapshot) => (
@@ -41,7 +39,7 @@ class Version extends Component {
                             <div className="version-controls panel-heading" {...provided.dragHandleProps}>
                                 <VersionInfos
                                     displayIndex={true} isMobile={this.props.isMobile}
-                                    onRemove={() => this.props.dispatch(removeVersion(this.props.item.id))}
+                                    onRemove={() => this.props.dispatch(removeVersion(this.props.version.id))}
                                 />
 
                             </div>

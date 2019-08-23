@@ -20,13 +20,15 @@ import { stores } from './index'
 import { saga as filtersSaga } from './filters'
 import { saga as apiSaga } from './api'
 import { saga as uiSaga } from './ui'
+import { saga as versionSaga } from './version'
 
 
 function* rootSaga(name) {
     yield all([
         filtersSaga(name),
         apiSaga(name),
-        uiSaga()
+        uiSaga(),
+        versionSaga()
     ])
 }
 
