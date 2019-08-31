@@ -1,7 +1,6 @@
 import React from 'react'
 import Search from './Search'
-import { FaUser } from 'react-icons/fa'
-import { DropdownButton, MenuItem } from 'react-bootstrap'
+import CurrentUser from './CurrentUser'
 
 
 const TopBar = () => (
@@ -16,24 +15,9 @@ const TopBar = () => (
             <a className="navbar-brand" target="_self" href="/">MyQuotes</a>
             <Search/>
         </div>
-
-        <ul className="nav navbar-top-links navbar-right" style={ { padding: '9px' } }>
-            <li>
-                John Doe
-            </li>
-            <li className="dropdown">
-                <DropdownButton title={ <FaUser/> } id='add-version-dropdown'>
-                    <MenuItem onClick={ () => console.log('clicked') } eventKey="1">
-                        My Profile
-                    </MenuItem>
-                    <MenuItem onClick={ () => console.log('clicked') } eventKey="2">
-                        Settings
-                    </MenuItem>
-                    <MenuItem onClick={ () => console.log('clicked') } eventKey="3">
-                        Logout
-                    </MenuItem>
-                </DropdownButton>
-            </li>
+        
+        <ul className="nav navbar-top-links navbar-right" style={{padding: '9px'}}>
+            <CurrentUser/>
         </ul>
     </div>
 )

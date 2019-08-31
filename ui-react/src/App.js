@@ -1,5 +1,6 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
+import { Router as ReactRouter } from 'react-router'
 import { Quotes } from './screens/Quotes'
 import Login from './screens/Login'
 import Signup from './screens/Signup'
@@ -10,32 +11,31 @@ import './App.css'
 
 export class Router extends React.Component {
     componentDidMount() {
-        const { dispatch } = this.props
+        const {dispatch} = this.props
         history.listen((route) => dispatch(updateRoute(route)))
         dispatch(updateRoute(history.location))
     }
 
     render() {
         return (
-            <BrowserRouter>
+            <ReactRouter history={history}>
                 <Switch>
-                    <Route path="/quotes" component={ Quotes }/>
-                    <Route path="/login" component={ Login }/>
-                    <Route path="/signup" component={ Signup }/>
+                    <Route path="/quotes" component={Quotes}/>
+                    <Route path="/login" component={Login}/>
+                    <Route path="/signup" component={Signup}/>
                 </Switch>
-            </BrowserRouter>
-
+            </ReactRouter>
         )
     }
 }
 
 Router = connect()(Router)
 
-function App({ modal }) {
+function App({modal}) {
     return (
         <div>
             <Router/>
-            { modal && <Modal { ...modal } /> }
+            {modal && <Modal {...modal} />}
         </div>
     )
 }

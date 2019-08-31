@@ -23,10 +23,10 @@ export const getTags = () => {
 
     return (
         {
-            type   : 'GET_TAGS',
+            type: 'GET_TAGS',
             payload: {
                 request: {
-                    url   : url,
+                    url: url,
                     method: 'GET'
                 }
             }

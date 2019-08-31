@@ -23,6 +23,7 @@ import { saga as quotesSaga } from './quotes'
 import { saga as apiSaga } from './api'
 import { saga as uiSaga } from './ui'
 import { saga as routingSaga } from './routing'
+import thunk from 'redux-thunk'
 
 
 function* rootSaga() {
@@ -36,7 +37,7 @@ function* rootSaga() {
 }
 
 const persistConfig = {
-    key      : 'cache',
+    key: 'cache',
     storage,
     whitelist: ['user']
 }
@@ -45,8 +46,8 @@ const persistConfig = {
 // export const { push, replace } = history
 
 const rootReducer = combineReducers({
-    api : apiReducer,
-    ui : uiReducer,
+    api: apiReducer,
+    ui: uiReducer,
     user: userReducer,
     routing: routingReducer,
     quotes: quotesReducer,
@@ -66,6 +67,7 @@ export function createRootStore(initialState = {}) {
         initialState,
         applyMiddleware(
             // routerMiddleware(history),
+            thunk,
             sagaMiddleware
         )
     )

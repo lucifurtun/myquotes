@@ -33,7 +33,7 @@ export const SUCCESS_SUFFIX = '_SUCCESS'
 export const ERROR_SUFFIX = '_FAIL'
 
 export const client = axios.create({
-    baseURL     : process.env.REACT_APP_API_URL,
+    baseURL: process.env.REACT_APP_API_URL,
     responseType: 'json'
 })
 
@@ -44,22 +44,23 @@ export function setHeaders(headers) {
 }
 
 function* handleRequest(action) {
-    const { type, payload: { request } } = action
+    const {type, payload: {request}} = action
     const url = request.url
     const method = request.method ? request.method : 'GET'
     const data = request.data ? request.data : null
+    const params = request.params ? request.params : {}
     let headers = {}
 
     const userToken = yield select((state => state.user.token))
     if (userToken) {
-        headers['Authorization'] = `JWT ${ userToken }`
+        headers['Authorization'] = `JWT ${userToken}`
     }
 
     try {
-        const response = yield call(client, url, { params: request.params, method, data, headers })
-        yield put({ type: type + SUCCESS_SUFFIX, payload: response })
+        const response = yield call(client, url, {params, method, data, headers})
+        yield put({type: type + SUCCESS_SUFFIX, payload: response})
     } catch (errorResponse) {
-        yield put({ type: type + ERROR_SUFFIX, payload: { error: errorResponse } })
+        yield put({type: type + ERROR_SUFFIX, payload: {error: errorResponse}})
     }
 }
 
@@ -68,6 +69,7 @@ const API_ACTIONS = [
     'GET_QUOTE',
     'CREATE_QUOTE',
     'UPDATE_QUOTE',
+    'DELETE_QUOTE',
     'GET_AUTHORS',
     'GET_AUTHOR',
     'GET_CATEGORIES',

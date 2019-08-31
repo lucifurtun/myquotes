@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { login } from '../redux/user'
 
 
-const Login = ({ history, dispatch }) => (
+const Login = ({history, dispatch}) => (
     <div className="container">
         <div className="row">
             <div className="col-md-4 col-md-offset-4">
@@ -29,10 +29,10 @@ const Login = ({ history, dispatch }) => (
                             </div>
 
                             <button
-                                onClick={ (e) => {
+                                onClick={(e) => {
                                     e.preventDefault()
-                                    dispatch(login(history))
-                                } }
+                                    dispatch(login())
+                                }}
                                 className="btn btn-lg btn-success btn-block"
                             >
                                 Sign In
@@ -45,4 +45,4 @@ const Login = ({ history, dispatch }) => (
     </div>
 )
 
-export default connect()(Login)
+export default connect()(withRouter(Login))

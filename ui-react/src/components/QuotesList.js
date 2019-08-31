@@ -10,21 +10,21 @@ class QuotesList extends React.Component {
     componentDidMount() {
         this.props.dispatch(getQuotes())
     }
-
+    
     render() {
         return (
             <div>
                 <div>
                     {
                         this.props.quotes.map((item => (
-                            <Quote quote={ item } key={ item.id }/>
+                            <Quote quote={item} key={item.id}/>
                         )))
                     }
-
+                    
                     {
                         this.props.quotes.length === 0 && <span>There are no quotes!</span>
                     }
-
+                
                 </div>
                 <div className="pagination-wrapper">
                     <ul className="pagination">
@@ -47,7 +47,7 @@ class QuotesList extends React.Component {
 
 function mapStateToProps(state) {
     const quotes = orderBy(state.quotes.data, 'id', 'desc')
-    return { quotes }
+    return {quotes}
 }
 
 export default withRouter(connect(mapStateToProps)(QuotesList))

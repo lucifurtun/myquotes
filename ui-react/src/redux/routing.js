@@ -8,7 +8,7 @@ import { takeEvery, put, call, select } from 'redux-saga/effects'
 
 export const ROUTE_CHANGED = '@ routing / ROUTE_CHANGED'
 
-export const updateRoute = (route) => ({ type: ROUTE_CHANGED, payload: route })
+export const updateRoute = (route) => ({type: ROUTE_CHANGED, payload: route})
 
 
 //
@@ -34,16 +34,10 @@ export function* saga() {
     // yield takeEvery('LOGIN_SUCCESS', redirectToLogin)
 }
 
-
-function* redirectToLogin() {
-    yield call(push, 'quotes')
-}
-
 //
 //   HELPERS and UTILITIES
-
 export const history = process.env.NODE_ENV === 'test' ? createMemoryHistory() : createBrowserHistory()
-const { push, replace } = history
+const {push, replace} = history
 export { push, replace }
 
 

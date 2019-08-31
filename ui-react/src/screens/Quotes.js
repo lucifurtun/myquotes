@@ -6,18 +6,18 @@ import React from 'react'
 import { withRouter } from '../redux/routing'
 import { showModal } from '../redux/ui'
 import QuoteForm from '../components/QuoteForm'
-import {store} from '..'
+import { store } from '..'
 
-const getQuoteModal = (quote) => {
+const getNewQuoteModal = (quote) => {
     return {
-        title  : 'New Quote',
+        title: 'New Quote',
         content: <QuoteForm/>
     }
 }
 
 export const Quotes = () => (
     <div className="App">
-        <nav className="navbar navbar-default navbar-static-top" role="navigation" style={ { marginBottom: 0 } }>
+        <nav className="navbar navbar-default navbar-static-top" role="navigation" style={{marginBottom: 0}}>
             <TopBar/>
         </nav>
 
@@ -30,7 +30,7 @@ export const Quotes = () => (
 
             <div className="row">
                 <div id="quotes-list" className="row">
-                    <span className="add-quote-icon" onClick={(event) => store.dispatch(showModal(getQuoteModal()))}>
+                    <span className="add-quote-icon" onClick={(event) => store.dispatch(showModal(getNewQuoteModal()))}>
                         <FaPlus color='#337ab7' size='2em'/>
                     </span>
                     <div id="filters" className="col-xs-12 col-md-3">
@@ -38,7 +38,7 @@ export const Quotes = () => (
                     </div>
 
                     <div id="filtered-content" className="col-xs-12 col-sm-12 col-md-8">
-                        <QuotesList quotes={ [{}] }/>
+                        <QuotesList quotes={[{}]}/>
                     </div>
                 </div>
 

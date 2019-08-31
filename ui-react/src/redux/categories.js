@@ -30,10 +30,10 @@ export const getCategories = () => {
 
     return (
         {
-            type   : 'GET_CATEGORIES',
+            type: 'GET_CATEGORIES',
             payload: {
                 request: {
-                    url   : url,
+                    url: url,
                     method: 'GET'
                 }
             }
@@ -46,10 +46,10 @@ export const getCategory = (id) => {
 
     return (
         {
-            type   : 'GET_CATEGORY',
+            type: 'GET_CATEGORY',
             payload: {
                 request: {
-                    url   : url,
+                    url: url,
                     method: 'GET'
                 }
             }

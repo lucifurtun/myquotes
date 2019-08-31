@@ -23,10 +23,10 @@ export const getAuthors = () => {
 
     return (
         {
-            type   : 'GET_AUTHORS',
+            type: 'GET_AUTHORS',
             payload: {
                 request: {
-                    url   : url,
+                    url: url,
                     method: 'GET'
                 }
             }
