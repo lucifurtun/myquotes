@@ -37,7 +37,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                 }) }>
                     <div id="title" className="form-group">
                         <div className="form-inline">
-                            <label htmlFor="id_title">Title:</label>
+                            <label htmlFor="id_title">Title</label>
                             <input name="title"
                                    style={ { width: '50%' } }
                                    maxLength="400"
@@ -77,7 +77,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                              style={ { display: 'inline-block', width: '50%', paddingRight: '10px' } }
                         >
                             <div className="form-inline">
-                                <label htmlFor="id_author">Author:</label>
+                                <label htmlFor="id_author">Author</label>
                                 <AsyncCreatableSelect
                                     cacheOptions
                                     isClearable
@@ -103,7 +103,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                              style={ { display: 'inline-block', width: '50%', paddingLeft: '10px' } }
                         >
                             <div className="form-inline">
-                                <label htmlFor="id_category">Category:</label>
+                                <label htmlFor="id_category">Category</label>
                                 <CreatableSelect
                                     isClearable
                                     className={ 'category-select' }
@@ -129,7 +129,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                              style={ { display: 'inline-block', width: '50%', paddingRight: '10px' } }
                         >
                             <div className="form-inline">
-                                <label htmlFor="id_source">Source:</label>
+                                <label htmlFor="id_source">Source</label>
                                 <input name="source"
                                        maxLength="400"
                                        className="form-control"
@@ -153,7 +153,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                              style={ { display: 'inline-block', width: '50%', paddingLeft: '10px' } }
                         >
                             <div className="form-inline">
-                                <label htmlFor="id_reference">Reference:</label>
+                                <label htmlFor="id_reference">Reference</label>
                                 <input name="reference"
                                        maxLength="400"
                                        className="form-control"
@@ -179,7 +179,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                              style={ { display: 'inline-block', width: '100%' } }
                         >
                             <div className="form-inline">
-                                <label htmlFor="id_tags">Tags:</label>
+                                <label htmlFor="id_tags">Tags</label>
                                 <CreatableSelect
                                     isMulti
                                     value={ map(inputs.tags_name, (item) => ({ value: item, label: item })) }

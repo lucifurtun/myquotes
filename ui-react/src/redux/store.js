@@ -16,6 +16,7 @@ import { reducer as categoriesReducer } from './categories'
 import { reducer as authorsReducer } from './authors'
 import { reducer as tagsReducer } from './tags'
 import { reducer as uiReducer } from './ui'
+import { reducer as filtersReducer } from './filters'
 
 
 import { saga as userSaga } from './user'
@@ -23,6 +24,7 @@ import { saga as quotesSaga } from './quotes'
 import { saga as apiSaga } from './api'
 import { saga as uiSaga } from './ui'
 import { saga as routingSaga } from './routing'
+import { saga as filtersSaga } from './filters'
 import thunk from 'redux-thunk'
 
 
@@ -32,7 +34,8 @@ function* rootSaga() {
         quotesSaga(),
         apiSaga(),
         uiSaga(),
-        routingSaga()
+        routingSaga(),
+        filtersSaga()
     ])
 }
 
@@ -54,6 +57,7 @@ const rootReducer = combineReducers({
     authors: authorsReducer,
     categories: categoriesReducer,
     tags: tagsReducer,
+    filters: filtersReducer,
 })
 
 const persistedRootReducer = persistReducer(persistConfig, rootReducer)

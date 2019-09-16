@@ -2,6 +2,7 @@ import { has } from 'lodash'
 import { call, takeEvery, put, select } from 'redux-saga/effects'
 import { forEach } from 'lodash'
 import axios from 'axios'
+import * as qs from 'qs'
 
 const initialState = {
     isLoading: false
@@ -34,7 +35,10 @@ export const ERROR_SUFFIX = '_FAIL'
 
 export const client = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
-    responseType: 'json'
+    responseType: 'json',
+    paramsSerializer: function (params) {
+        return qs.stringify(params, {arrayFormat: 'repeat'})
+    },
 })
 
 export function setHeaders(headers) {
