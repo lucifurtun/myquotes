@@ -1,6 +1,5 @@
 import { keyBy, omit } from 'lodash'
 import { takeEvery, put } from 'redux-saga/effects'
-import { getCategory } from './categories'
 import { hideModal } from './ui'
 import { client } from './api'
 
@@ -17,18 +16,18 @@ function isFirstPage(response) {
 }
 
 export function reducer(state = initialState, action = {}) {
-    console.log(action)
     let quote
 
     switch (action.type) {
         case 'GET_QUOTES_SUCCESS':
             let response = action.payload.data
 
-            let data = isFirstPage(response) ? response.results : [...state.data, ...response.results]
+            const resultByKey = keyBy(response.results, 'id');
+            const data = isFirstPage(response) ? resultByKey : {...state.data, ...resultByKey}
 
             return {
                 ...state,
-                data: keyBy(data, 'id'),
+                data: data,
                 count: response.count,
                 page: response.page,
                 hasMore: response.has_more
@@ -63,13 +62,6 @@ export function reducer(state = initialState, action = {}) {
             }
         default:
             return state
-    }
-}
-
-function* fetchRelatedResources(payload) {
-    console.log(payload)
-    if (payload.payload.data.category) {
-        yield put(getCategory(payload.payload.data.category))
     }
 }
 

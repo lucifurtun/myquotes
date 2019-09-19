@@ -3,11 +3,9 @@ import Filter from './Filter'
 
 const Sidebar = () => (
     <div>
-        <Filter items={[]} type='categories'/>
-        
-        <Filter items={[]} type='authors'/>
-        
-        <Filter items={[]} type='tags'/>
+        <Filter type='categories'/>
+        <Filter type='authors'/>
+        <Filter type='tags'/>
     </div>
 )
 

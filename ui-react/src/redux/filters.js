@@ -1,6 +1,9 @@
-import { takeEvery, put, select, take } from 'redux-saga/effects'
+import { put, select, takeEvery } from 'redux-saga/effects'
 import { getQuotes } from './quotes'
 import { toArray } from 'lodash'
+import { createAuthor, removeAuthor } from "./authors";
+import { createCategory, removeCategory } from "./categories";
+import { createTag, removeTag } from "./tags";
 
 const FILTER_CHANGED = 'FILTER_CHANGED'
 const SEARCH_CHANGED = 'SEARCH_CHANGED'
@@ -19,7 +22,7 @@ const initialState = {
 }
 
 export function reducer(state = initialState, action = {}) {
-    switch(action.type) {
+    switch (action.type) {
         case FILTER_CHANGED:
             const id = action.payload.value
             const field = action.payload.field
@@ -61,7 +64,7 @@ export function reducer(state = initialState, action = {}) {
     }
 }
 
-function* handleFilterChange({ payload }) {
+function* handleFilterChange({payload}) {
     const filters = yield select((state) => state.filters)
 
     console.log(filters)
@@ -83,11 +86,38 @@ export function* saga() {
 
 export const changeFilter = (field, value, checked) => ({
     type: FILTER_CHANGED,
-    payload: { field, value, checked }
+    payload: {field, value, checked}
 })
 
 
 export const changeSearch = (value) => ({
     type: SEARCH_CHANGED,
-    payload: { value }
+    payload: {value}
 })
+
+export const createFilter = (type, data) => {
+    switch (type) {
+        case 'authors':
+            return createAuthor(data)
+        case 'categories':
+            return createCategory(data)
+        case 'tags':
+            return createTag(data)
+        default:
+            return null
+    }
+}
+
+export const removeFilter = (type, data) => {
+    switch (type) {
+        case 'authors':
+            return removeAuthor(data)
+        case 'categories':
+            return removeCategory(data)
+        case 'tags':
+            return removeTag(data)
+        default:
+            return null
+    }
+}
+

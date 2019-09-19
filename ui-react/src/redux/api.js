@@ -76,10 +76,16 @@ const API_ACTIONS = [
     'DELETE_QUOTE',
     'GET_AUTHORS',
     'GET_AUTHOR',
+    'CREATE_AUTHOR',
+    'DELETE_AUTHOR',
     'GET_CATEGORIES',
     'GET_CATEGORY',
+    'CREATE_CATEGORY',
+    'DELETE_CATEGORY',
     'GET_TAGS',
     'GET_TAG',
+    'CREATE_TAG',
+    'DELETE_TAG',
     'LOGIN'
 ]
 

@@ -1,16 +1,31 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { orderBy } from 'lodash'
+import { orderBy, toArray } from 'lodash'
 import Quote from './Quote'
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import { getQuotes } from '../redux/quotes'
 import { withRouter } from '../redux/routing'
 
 class QuotesList extends React.Component {
+    loadData() {
+        const {dispatch, filters, page, hasMore} = this.props
+
+        if (hasMore) {
+            this.setState({isLoading: true})
+            const params = {
+                author: toArray(filters.authors),
+                category: toArray(filters.categories),
+                tags: toArray(filters.tags),
+                page: page ? page + 1 : page
+            }
+
+            dispatch(getQuotes(params))
+        }
+    }
+
     componentDidMount() {
         this.props.dispatch(getQuotes())
     }
-    
+
     render() {
         return (
             <div>
@@ -20,25 +35,21 @@ class QuotesList extends React.Component {
                             <Quote quote={item} key={item.id}/>
                         )))
                     }
-                    
+
                     {
                         this.props.quotes.length === 0 && <span>There are no quotes!</span>
                     }
-                
+
                 </div>
                 <div className="pagination-wrapper">
-                    <ul className="pagination">
-                        <li ng-if="pages.previous">
-                            <a href="" ng-click="updatePage('previous')">
-                                <FaArrowLeft/>
-                            </a>
-                        </li>
-                        <li ng-if="pages.next">
-                            <a href="" ng-click="updatePage('next')">
-                                <FaArrowRight/>
-                            </a>
-                        </li>
-                    </ul>
+                    {
+                        this.props.hasMore &&
+                        <button className="btn btn-default" onClick={(event) => this.loadData()}>
+                            Load More
+                        </button>
+                    }
+
+
                 </div>
             </div>
         )
@@ -47,7 +58,17 @@ class QuotesList extends React.Component {
 
 function mapStateToProps(state) {
     const quotes = orderBy(state.quotes.data, 'id', 'desc')
-    return {quotes}
+    const filters = state.filters
+
+    const page = state.quotes.page
+    const hasMore = state.quotes.hasMore
+
+    return {
+        quotes,
+        filters,
+        page,
+        hasMore
+    }
 }
 
 export default withRouter(connect(mapStateToProps)(QuotesList))
