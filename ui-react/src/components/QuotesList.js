@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { orderBy, toArray } from 'lodash'
 import Quote from './Quote'
 import { getQuotes } from '../redux/quotes'
-import { withRouter } from '../redux/routing'
+import { withRouter } from 'react-router-dom'
 
 class QuotesList extends React.Component {
     loadData() {
@@ -41,15 +41,17 @@ class QuotesList extends React.Component {
                     }
 
                 </div>
-                <div className="pagination-wrapper">
+                <div className="pagination-wrapper" style={{textAlign: 'center', marginBottom: '30px', float: 'none'}}>
                     {
                         this.props.hasMore &&
-                        <button className="btn btn-default" onClick={(event) => this.loadData()}>
+                        <button
+                            style={{minWidth: '150px', maxWidth: '200px'}}
+                            className="btn btn-primary"
+                            onClick={(event) => this.loadData()}
+                        >
                             Load More
                         </button>
                     }
-
-
                 </div>
             </div>
         )

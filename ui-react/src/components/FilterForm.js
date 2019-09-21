@@ -22,6 +22,7 @@ const FilterForm = ({dispatch, errors, type}) => {
                             <div className="form-inline">
                                 <label htmlFor="id_source">Title</label>
                                 <input
+                                    style={{width: '80%'}}
                                     name="name"
                                     className="form-control"
                                     id="id_name"

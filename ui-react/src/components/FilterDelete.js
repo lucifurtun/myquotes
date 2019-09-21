@@ -1,20 +1,17 @@
 import React from 'react'
 import { Button, Modal as BootstrapModal } from 'react-bootstrap'
 import { hideModal } from '../redux/ui'
-import { removeQuote } from '../redux/quotes'
 import { connect } from 'react-redux'
+import { removeFilter } from "../redux/filters";
 
-const QuoteDelete = ({quote, dispatch}) => {
+const FilterDelete = ({type, filter, dispatch}) => {
     return (
         <React.Fragment>
             <BootstrapModal.Body>
-                The quote "<b>{quote.title}</b>" will be deleted.
+                "<b>{filter.name}</b>" will be deleted.
             </BootstrapModal.Body>
             <BootstrapModal.Footer>
-                <Button
-                    bsStyle="danger"
-                    onClick={() => dispatch(removeQuote(quote))}
-                >
+                <Button bsStyle="danger" onClick={() => dispatch(removeFilter(type, filter))}>
                     Delete
                 </Button>
                 <Button onClick={() => dispatch(hideModal())}>Close</Button>
@@ -23,4 +20,4 @@ const QuoteDelete = ({quote, dispatch}) => {
     )
 }
 
-export default connect()(QuoteDelete)
+export default connect()(FilterDelete)

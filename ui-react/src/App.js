@@ -4,18 +4,17 @@ import { Router as ReactRouter } from 'react-router'
 import { Quotes } from './screens/Quotes'
 import Login from './screens/Login'
 import Signup from './screens/Signup'
-import { history, updateRoute } from './redux/routing'
+import { createBrowserHistory, createMemoryHistory } from 'history'
+
 import { connect } from 'react-redux'
 import Modal from './components/Modal'
 import './App.css'
 
-export class Router extends React.Component {
-    componentDidMount() {
-        const {dispatch} = this.props
-        history.listen((route) => dispatch(updateRoute(route)))
-        dispatch(updateRoute(history.location))
-    }
 
+export const history = process.env.NODE_ENV === 'test' ? createMemoryHistory() : createBrowserHistory()
+export const {push, replace} = history
+
+export class Router extends React.Component {
     render() {
         return (
             <ReactRouter history={history}>

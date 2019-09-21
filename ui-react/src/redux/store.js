@@ -1,7 +1,6 @@
 import { createStore as createReduxStore, applyMiddleware, combineReducers } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
-// import { createBrowserHistory } from 'history'
 
 
 import storage from 'redux-persist/lib/storage'
@@ -9,7 +8,6 @@ import { persistReducer } from 'redux-persist'
 
 import { reducer as apiReducer } from './api'
 import { reducer as userReducer } from './user'
-import { reducer as routingReducer } from './routing'
 
 import { reducer as quotesReducer } from './quotes'
 import { reducer as categoriesReducer } from './categories'
@@ -23,7 +21,6 @@ import { saga as userSaga } from './user'
 import { saga as quotesSaga } from './quotes'
 import { saga as apiSaga } from './api'
 import { saga as uiSaga } from './ui'
-import { saga as routingSaga } from './routing'
 import { saga as filtersSaga } from './filters'
 import thunk from 'redux-thunk'
 
@@ -34,7 +31,6 @@ function* rootSaga() {
         quotesSaga(),
         apiSaga(),
         uiSaga(),
-        routingSaga(),
         filtersSaga()
     ])
 }
@@ -45,14 +41,10 @@ const persistConfig = {
     whitelist: ['user']
 }
 
-// export const history = createBrowserHistory()
-// export const { push, replace } = history
-
 const rootReducer = combineReducers({
     api: apiReducer,
     ui: uiReducer,
     user: userReducer,
-    routing: routingReducer,
     quotes: quotesReducer,
     authors: authorsReducer,
     categories: categoriesReducer,
@@ -70,7 +62,6 @@ export function createRootStore(initialState = {}) {
         persistedRootReducer,
         initialState,
         applyMiddleware(
-            // routerMiddleware(history),
             thunk,
             sagaMiddleware
         )

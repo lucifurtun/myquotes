@@ -1,7 +1,16 @@
 import React from "react";
-import { FaTimes } from "react-icons/fa";
 import { connect } from "react-redux";
-import { removeFilter } from "../redux/filters";
+import FilterDelete from "./FilterDelete";
+import { showModal } from "../redux/ui";
+import { FaTrashAlt } from "react-icons/fa";
+
+
+const getDeleteFilterModal = (type, filter) => {
+    return {
+        title: 'Are you sure?',
+        content: <FilterDelete type={type} filter={filter}/>
+    }
+}
 
 export class FilterItem extends React.Component {
     constructor(props) {
@@ -15,6 +24,8 @@ export class FilterItem extends React.Component {
     }
 
     render() {
+        const {type, item} = this.props
+
         return (
             <span className="list-group-item">
                 <span className="text" onDoubleClick={() => this.setState({editMode: true})}>
@@ -37,10 +48,10 @@ export class FilterItem extends React.Component {
                 }
                 <span
                     className='remove-filter-button visible-on-hover'
-                    onClick={(event) => this.props.dispatch(removeFilter(this.props.type, this.props.item))}
+                    onClick={(event) => this.props.dispatch(showModal(getDeleteFilterModal(type, item)))}
                     style={{verticalAlign: 'middle', marginLeft: '5px'}}
                 >
-                    <FaTimes color='red'/>
+                    <FaTrashAlt color='red'/>
                 </span>
                 <div className="material-switch pull-right">
                     <input

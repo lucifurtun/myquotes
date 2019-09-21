@@ -67,8 +67,6 @@ export function reducer(state = initialState, action = {}) {
 function* handleFilterChange({payload}) {
     const filters = yield select((state) => state.filters)
 
-    console.log(filters)
-
     const params = {
         category: toArray(filters.categories),
         author: toArray(filters.authors),

@@ -12,13 +12,12 @@ import { client } from '../redux/api'
 
 export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) => {
     let defaultValues = {}
-    console.log(errors)
+
     if (quote) {
         defaultValues = omit(quote, ['author', 'category', 'tags', 'created', 'id', 'modified', 'user_id'])
     }
 
     const [inputs, setInputs] = useState(defaultValues)
-
     const action = quote ? updateQuote({ id: quote.id, ...inputs }) : createQuote(inputs)
 
     const promiseOptions = inputValue =>

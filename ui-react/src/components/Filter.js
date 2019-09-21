@@ -25,12 +25,14 @@ const reducersMapping = {
     tags: getTags()
 }
 
+
 class Filter extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             collapsed: false
         }
+        this.panelBodyMaxHeight = (window.innerHeight / 3) - (25 * 3)
     }
 
     componentDidMount() {
@@ -58,7 +60,7 @@ class Filter extends React.Component {
                     className="body-wrapper collapse"
                     id="categories-filter-body"
                 >
-                    <div className="panel-body">
+                    <div className="panel-body" style={{maxHeight: this.panelBodyMaxHeight}}>
                         {
                             this.props[this.props.type].map((item) => (
                                     <FilterItem

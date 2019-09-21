@@ -1,7 +1,7 @@
 import { takeEvery, call, select, put } from 'redux-saga/effects'
-import { history, push } from './routing'
 import { setHeaders } from './api'
 import { getQuotes } from './quotes'
+import { push } from "../App";
 
 
 const initialState = {
@@ -29,7 +29,7 @@ export function reducer(state = initialState, action = {}) {
 function* handleLoginSuccess(payload) {
     console.log(payload)
     yield call(setHeaders, {Authorization: payload.payload.data.token})
-    yield call(history.push, 'quotes')
+    yield call(push, 'quotes')
 }
 
 function* handleExistingToken() {
