@@ -17,23 +17,32 @@ const Login = ({history, dispatch}) => (
                         <p>If you don't have an account, please <Link to="/signup">sign up</Link>.</p>
                         <form className="login">
                             <div className="form-group">
-                                <input type="email" name="login" placeholder="E-mail" autoFocus="autofocus"
-                                       className="form-control" required="" id="id_login"/>
+                                <input
+                                    type="email"
+                                    name="login"
+                                    placeholder="E-mail"
+                                    autoFocus="autofocus"
+                                    className="form-control"
+                                    required=""
+                                    id="id_login"
+                                />
                             </div>
                             <div className="form-group">
-                                <input type="password" name="password" placeholder="Password"
-                                       className="form-control" required="" id="id_password"/>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    placeholder="Password"
+                                    className="form-control"
+                                    required=""
+                                    id="id_password"
+                                />
                             </div>
-                            <div className="checkbox">
-                                <label> <input type="checkbox" name="remember" id="id_remember"/>Remember Me</label>
-                            </div>
-
                             <button
+                                className="btn btn-lg btn-success btn-block"
                                 onClick={(e) => {
                                     e.preventDefault()
                                     dispatch(login())
                                 }}
-                                className="btn btn-lg btn-success btn-block"
                             >
                                 Sign In
                             </button>

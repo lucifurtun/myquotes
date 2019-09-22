@@ -38,7 +38,7 @@ export const Quotes = () => (
                     </div>
 
                     <div id="filtered-content" className="col-xs-12 col-sm-12 col-md-8">
-                        <QuotesList quotes={[{}]}/>
+                        <QuotesList />
                     </div>
                 </div>
 

@@ -4,6 +4,7 @@ import { orderBy, toArray } from 'lodash'
 import Quote from './Quote'
 import { getQuotes } from '../redux/quotes'
 import { withRouter } from 'react-router-dom'
+import QuotesOverlay from "./QuotesOverlay";
 
 class QuotesList extends React.Component {
     loadData() {
@@ -28,7 +29,8 @@ class QuotesList extends React.Component {
 
     render() {
         return (
-            <div>
+            <div id="quotes-wrapper">
+                <QuotesOverlay isLoading={this.props.isLoading}/>
                 <div>
                     {
                         this.props.quotes.map((item => (
@@ -64,8 +66,10 @@ function mapStateToProps(state) {
 
     const page = state.quotes.page
     const hasMore = state.quotes.hasMore
+    const isLoading = state.api.isLoading
 
     return {
+        isLoading,
         quotes,
         filters,
         page,

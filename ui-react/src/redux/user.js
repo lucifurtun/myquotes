@@ -27,9 +27,13 @@ export function reducer(state = initialState, action = {}) {
 }
 
 function* handleLoginSuccess(payload) {
-    console.log(payload)
     yield call(setHeaders, {Authorization: payload.payload.data.token})
     yield call(push, 'quotes')
+}
+
+
+export function* handleUserUnauthenticated() {
+    yield call(push, 'login')
 }
 
 function* handleExistingToken() {

@@ -1,42 +1,32 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
-import { Router as ReactRouter } from 'react-router'
-import { Quotes } from './screens/Quotes'
-import Login from './screens/Login'
-import Signup from './screens/Signup'
 import { createBrowserHistory, createMemoryHistory } from 'history'
 
 import { connect } from 'react-redux'
 import Modal from './components/Modal'
 import './App.css'
+import Router from "./components/Router";
+import { initialize } from "./redux/app";
 
 
 export const history = process.env.NODE_ENV === 'test' ? createMemoryHistory() : createBrowserHistory()
 export const {push, replace} = history
 
-export class Router extends React.Component {
+
+class App extends React.Component {
+    componentDidMount() {
+        this.props.dispatch(initialize())
+    }
+
     render() {
+        const {modal} = this.props
+
         return (
-            <ReactRouter history={history}>
-                <Switch>
-                    <Route path="/quotes" component={Quotes}/>
-                    <Route path="/login" component={Login}/>
-                    <Route path="/signup" component={Signup}/>
-                </Switch>
-            </ReactRouter>
+            <div>
+                <Router/>
+                {modal && <Modal {...modal} />}
+            </div>
         )
     }
-}
-
-Router = connect()(Router)
-
-function App({modal}) {
-    return (
-        <div>
-            <Router/>
-            {modal && <Modal {...modal} />}
-        </div>
-    )
 }
 
 function mapStateToProps(state) {
@@ -46,4 +36,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(App)
-

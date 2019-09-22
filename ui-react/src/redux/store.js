@@ -15,13 +15,14 @@ import { reducer as authorsReducer } from './authors'
 import { reducer as tagsReducer } from './tags'
 import { reducer as uiReducer } from './ui'
 import { reducer as filtersReducer } from './filters'
-
+import { reducer as appReducer } from './app'
 
 import { saga as userSaga } from './user'
 import { saga as quotesSaga } from './quotes'
 import { saga as apiSaga } from './api'
 import { saga as uiSaga } from './ui'
 import { saga as filtersSaga } from './filters'
+import { saga as appSaga } from './app'
 import thunk from 'redux-thunk'
 
 
@@ -31,7 +32,8 @@ function* rootSaga() {
         quotesSaga(),
         apiSaga(),
         uiSaga(),
-        filtersSaga()
+        filtersSaga(),
+        appSaga(),
     ])
 }
 
@@ -50,6 +52,7 @@ const rootReducer = combineReducers({
     categories: categoriesReducer,
     tags: tagsReducer,
     filters: filtersReducer,
+    app: appReducer
 })
 
 const persistedRootReducer = persistReducer(persistConfig, rootReducer)
@@ -69,10 +72,8 @@ export function createRootStore(initialState = {}) {
 
     sagaMiddleware.run(rootSaga)
 
-    const name = 'root'
-
     store.subscribe(() => {
-        console.log(name, store.getState())
+        console.log(store.getState())
     })
 
     return store
