@@ -8,8 +8,8 @@ RUN mkdir /app
 
 ADD . /app/
 WORKDIR /app
-
-RUN pip install -r requirements.txt
+RUN pip install pipenv==2018.11.26
+RUN pipenv install
 RUN pip install gunicorn==19.7.1
 
 CMD python manage.py runserver 0.0.0.0:8888
