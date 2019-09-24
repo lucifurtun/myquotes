@@ -180,7 +180,7 @@ class FiltersOptionsView(views.APIView):
             'Tag': serializers.TagSerializer
         }
 
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return []
 
         serializer = mapping.get(model.__name__)

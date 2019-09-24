@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "443f3bd1889020dbaae37be6b05f41ccc638891fb2e33e1765b58e1af1cb8911"
+            "sha256": "3be1ec7a2a20c419dc57a745136e564e0a457a4c4c06d9eb4cb6454f25980419"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -53,18 +53,18 @@
         },
         "django": {
             "hashes": [
-                "sha256:3c5b070482df4f9e5750539dc1824d353729ee423fd410c579b8cd3dea5b0617",
-                "sha256:cbd3944599086518cdcf3235e90230c8b8a9c5476b20447ee57b313dba14f67a"
+                "sha256:7f246078d5a546f63c28fc03ce71f4d7a23677ce42109219c24c9ffb28416137",
+                "sha256:ea50d85709708621d956187c6b61d9f9ce155007b496dd914fdb35db8d790aec"
             ],
             "index": "pypi",
-            "version": "==1.11.2"
+            "version": "==2.1"
         },
         "django-allauth": {
             "hashes": [
-                "sha256:8b69e4365eb8248fd9b3e605bdf6fc64925bf2cd650c0452a6d8d6c428a4aeb1"
+                "sha256:02175aa1c2ddfd935a54011d1196d70c976647fc46f603f8b8758fc395b9d277"
             ],
             "index": "pypi",
-            "version": "==0.29.0"
+            "version": "==0.37.1"
         },
         "django-ckeditor": {
             "hashes": [
@@ -104,6 +104,13 @@
             ],
             "version": "==0.2.2"
         },
+        "django-rest-auth": {
+            "hashes": [
+                "sha256:ad155a0ed1061b32e3e46c9b25686e397644fd6acfd35d5c03bc6b9d2fc6c82a"
+            ],
+            "index": "pypi",
+            "version": "==0.9.3"
+        },
         "django-rest-swagger": {
             "hashes": [
                 "sha256:70f681bcccc75f5095104973e7ab47af3a979110202593c28c937f6dd6a04100",
@@ -122,11 +129,11 @@
         },
         "djangorestframework": {
             "hashes": [
-                "sha256:7c04e2a45e6d30df7042749b9a029882c449eb2fee038f3cc14dfbc93581bfbf",
-                "sha256:f446041a944723e14502a0a5880d0bc74a499ac1075781177f2fa6d7fe7b415d"
+                "sha256:1d22971a5fc98becdbbad9710ca2a9148dd339f6cbea4c3ddbed2cb84bab94e1",
+                "sha256:2884763160b997073ff1e937bd820a69d23978902a3ccd0ba53a217e196239f0"
             ],
             "index": "pypi",
-            "version": "==3.5.3"
+            "version": "==3.9.3"
         },
         "djangorestframework-jwt": {
             "hashes": [

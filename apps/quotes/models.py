@@ -14,7 +14,7 @@ class NameAsStrMixin(object):
 class UserTimeStampedModel(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         if not self.id:

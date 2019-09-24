@@ -4,6 +4,7 @@ from rest_framework_jwt import views as jwt_views
 
 from apps.search.bible import views as bible_views
 from . import views
+from . import views_auth
 
 router = DefaultRouter()
 router.register(r'quotes', views.QuoteViewSet)
@@ -19,6 +20,10 @@ urlpatterns = [
     url(r'^token/verify/$', jwt_views.VerifyJSONWebToken.as_view()),
     url(r'^filters/$', views.FiltersOptionsView.as_view()),
     url(r'^templates/(?P<page>[-\w]+.html)/$', views.AngularTemplateView.as_view()),
+
+    url(r'^auth/login/$', views_auth.EmailLoginView.as_view(), name='email-login'),
+
+    url(r'^auth/signup/$', views_auth.EmailSignupView.as_view(), name='email-signup'),
 
     url(r'^verses/(?P<version>[\w]+)/$', bible_views.VerseView.as_view({'get': 'list'})),
     url(r'^books/(?P<version>[\w]+)/$', bible_views.BookView.as_view()),

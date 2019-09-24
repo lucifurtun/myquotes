@@ -42,7 +42,7 @@ class HomePageView(generic.TemplateView):
     template_name = 'quotes/homepage.html'
 
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             return http.HttpResponseRedirect(reverse('quotes:profile', args=[request.user.username]))
 
         return super().dispatch(request, *args, **kwargs)

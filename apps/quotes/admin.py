@@ -1,5 +1,8 @@
 from django.contrib import admin
-from django.apps import apps
 
-for model in apps.get_app_config('quotes').models.values():
-    admin.site.register(model)
+from apps.quotes import models
+
+admin.site.register(models.Author)
+admin.site.register(models.Category)
+admin.site.register(models.Tag)
+admin.site.register(models.Quote)

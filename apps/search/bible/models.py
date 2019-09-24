@@ -22,7 +22,7 @@ class Book(models.Model):
 class Chapter(models.Model):
     number = models.IntegerField()
 
-    book = models.ForeignKey(Book)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ('number',)
@@ -32,7 +32,7 @@ class Verse(models.Model):
     number = models.IntegerField()
     text = models.TextField()
 
-    chapter = models.ForeignKey(Chapter)
+    chapter = models.ForeignKey(Chapter, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ('number',)
