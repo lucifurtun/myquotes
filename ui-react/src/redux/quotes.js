@@ -58,7 +58,7 @@ export function reducer(state = initialState, action = {}) {
         case 'DELETE_QUOTE_FAIL':
             return {
                 ...state,
-                errors: action.payload.error.response.data
+                errors: action.payload
             }
         default:
             return state

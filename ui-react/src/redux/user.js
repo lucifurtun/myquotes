@@ -7,7 +7,8 @@ import { push } from "../App";
 const initialState = {
     token: null,
     email: null,
-    id: null
+    id: null,
+    errors: {}
 }
 
 
@@ -16,7 +17,13 @@ export function reducer(state = initialState, action = {}) {
         case 'LOGIN_SUCCESS':
             return {
                 ...state,
-                ...action.payload.data
+                ...action.payload.data,
+                errors: {}
+            }
+        case 'LOGIN_FAIL':
+            return {
+                ...state,
+                errors: action.payload
             }
         case 'LOGOUT':
             return initialState
@@ -63,7 +70,7 @@ export function* saga() {
 }
 
 
-export const login = () => {
+export const login = (data) => {
     const url = '/token/new/'
 
     return (
@@ -73,10 +80,24 @@ export const login = () => {
                 request: {
                     url: url,
                     method: 'POST',
-                    data: {
-                        'email': 'lucianfurtun@gmail.com',
-                        'password': 'apollo'
-                    }
+                    data: data
+                }
+            }
+        }
+    )
+}
+
+export const signup = (data) => {
+    const url = '/token/new/'
+
+    return (
+        {
+            type: 'SIGNUP',
+            payload: {
+                request: {
+                    url: url,
+                    method: 'POST',
+                    data: data
                 }
             }
         }

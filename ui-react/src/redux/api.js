@@ -112,7 +112,7 @@ function* handleRequest(action) {
         const response = yield call(client, url, {params, method, data, headers})
         yield put({type: type + SUCCESS_SUFFIX, payload: response})
     } catch (errorResponse) {
-        yield put({type: type + ERROR_SUFFIX, payload: {error: errorResponse}})
+        yield put({type: type + ERROR_SUFFIX, payload: errorResponse.response.data})
 
         if (errorResponse.response.status === 401) {
             yield handleUserUnauthenticated()
@@ -139,7 +139,8 @@ const API_ACTIONS = [
     'GET_TAG',
     'CREATE_TAG',
     'DELETE_TAG',
-    'LOGIN'
+    'LOGIN',
+    'SIGNUP'
 ]
 
 export function* saga() {
