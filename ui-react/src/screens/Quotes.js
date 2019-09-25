@@ -15,7 +15,7 @@ const getNewQuoteModal = (quote) => {
     }
 }
 
-export const Quotes = () => (
+const Quotes = () => (
     <div className="App">
         <nav className="navbar navbar-default navbar-static-top" role="navigation" style={{marginBottom: 0}}>
             <TopBar/>
@@ -38,7 +38,7 @@ export const Quotes = () => (
                     </div>
 
                     <div id="filtered-content" className="col-xs-12 col-sm-12 col-md-8">
-                        <QuotesList />
+                        <QuotesList/>
                     </div>
                 </div>
 

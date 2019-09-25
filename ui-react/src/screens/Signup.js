@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { has } from "lodash";
+import { has, join } from "lodash";
 import { connect } from "react-redux";
-import { signup } from "../redux/user";
+import { signup } from "../redux/auth";
 
 const defaultValues = {
     email: '',
@@ -43,6 +43,12 @@ const Signup = ({errors, dispatch}) => {
                                         required="" id="id_email"
                                         onChange={(event) => setInputs({...inputs, email: event.target.value})}
                                     />
+                                    {
+                                        has(errors, 'email') &&
+                                        <div id="errors" className="text-danger small">
+                                            {join(errors.email, ' ')}
+                                        </div>
+                                    }
                                 </div>
                                 <div className="form-group">
                                     <input
@@ -54,6 +60,12 @@ const Signup = ({errors, dispatch}) => {
                                         id="id_password1"
                                         onChange={(event) => setInputs({...inputs, password1: event.target.value})}
                                     />
+                                    {
+                                        has(errors, 'password1') &&
+                                        <div id="errors" className="text-danger small">
+                                            {join(errors.password1, ' ')}
+                                        </div>
+                                    }
                                 </div>
                                 <div className="form-group">
                                     <input
@@ -65,6 +77,12 @@ const Signup = ({errors, dispatch}) => {
                                         id="id_password2"
                                         onChange={(event) => setInputs({...inputs, password2: event.target.value})}
                                     />
+                                    {
+                                        has(errors, 'password2') &&
+                                        <div id="errors" className="text-danger small">
+                                            {join(errors.password2, ' ')}
+                                        </div>
+                                    }
                                 </div>
 
                                 <button
@@ -88,7 +106,7 @@ const Signup = ({errors, dispatch}) => {
 
 function mapStateToProps(state) {
     return {
-        errors: state.user.errors
+        errors: state.auth.errors
     }
 }
 

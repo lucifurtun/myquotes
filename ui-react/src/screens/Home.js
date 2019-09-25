@@ -3,6 +3,7 @@ import { Redirect } from "react-router";
 import { connect } from "react-redux";
 
 const Home = ({token}) => {
+    console.log(token)
     if (token) {
         return <Redirect to="/quotes"/>
     }

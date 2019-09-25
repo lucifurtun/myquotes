@@ -2,7 +2,7 @@ import React from 'react'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
 import { FaUser } from 'react-icons/fa'
 import { connect } from 'react-redux'
-import { logout } from '../redux/user'
+import { logout } from '../redux/auth'
 import { withRouter } from 'react-router-dom'
 
 
@@ -34,7 +34,7 @@ const CurrentUser = ({currentUser, history, dispatch}) => {
 
 function mapStateToProps(state) {
     return {
-        currentUser: state.user
+        currentUser: state.user.user
     }
 }
 

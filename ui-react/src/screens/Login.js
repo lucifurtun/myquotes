@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { login } from '../redux/user'
-import { has } from "lodash";
+import { login } from '../redux/auth'
+import { has, join } from "lodash";
 
 
 const defaultValues = {
@@ -45,6 +45,12 @@ const Login = ({errors, history, dispatch}) => {
                                         id="id_login"
                                         onChange={(event) => setInputs({...inputs, email: event.target.value})}
                                     />
+                                    {
+                                        has(errors, 'email') &&
+                                        <div id="errors" className="text-danger small">
+                                            {join(errors.email, ' ')}
+                                        </div>
+                                    }
                                 </div>
                                 <div className="form-group">
                                     <input
@@ -77,7 +83,7 @@ const Login = ({errors, history, dispatch}) => {
 
 function mapStateToProps(state) {
     return {
-        errors: state.user.errors
+        errors: state.auth.errors
     }
 }
 

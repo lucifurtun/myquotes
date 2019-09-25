@@ -8,6 +8,7 @@ import { persistReducer } from 'redux-persist'
 
 import { reducer as apiReducer } from './api'
 import { reducer as userReducer } from './user'
+import { reducer as authReducer } from './auth'
 
 import { reducer as quotesReducer } from './quotes'
 import { reducer as categoriesReducer } from './categories'
@@ -17,7 +18,7 @@ import { reducer as uiReducer } from './ui'
 import { reducer as filtersReducer } from './filters'
 import { reducer as appReducer } from './app'
 
-import { saga as userSaga } from './user'
+import { saga as authSaga } from './auth'
 import { saga as quotesSaga } from './quotes'
 import { saga as apiSaga } from './api'
 import { saga as uiSaga } from './ui'
@@ -28,7 +29,7 @@ import thunk from 'redux-thunk'
 
 function* rootSaga() {
     yield all([
-        userSaga(),
+        authSaga(),
         quotesSaga(),
         apiSaga(),
         uiSaga(),
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
     api: apiReducer,
     ui: uiReducer,
     user: userReducer,
+    auth: authReducer,
     quotes: quotesReducer,
     authors: authorsReducer,
     categories: categoriesReducer,

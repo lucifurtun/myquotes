@@ -3,7 +3,7 @@ import { call, takeEvery, put, select } from 'redux-saga/effects'
 import { forEach } from 'lodash'
 import axios from 'axios'
 import * as qs from 'qs'
-import { handleUserUnauthenticated } from "./user";
+import { handleUserUnauthenticated } from "./auth";
 import { store } from "../index";
 
 const initialState = {
