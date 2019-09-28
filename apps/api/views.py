@@ -3,6 +3,7 @@ import os
 from django.db.models import Q, Count, FieldDoesNotExist
 from django.http import HttpResponseBadRequest
 from django.views import generic
+from django_filters import rest_framework as filters
 from rest_framework import permissions, mixins, status
 from rest_framework import schemas, viewsets
 from rest_framework import views
@@ -12,6 +13,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
+from apps.api.filters import QuotesFilterSet
 from .paginators import QuotesResultsSetPagination
 from . import serializers
 from apps.quotes import models
@@ -61,6 +63,8 @@ class QuoteViewSet(CurrentUserFilterMixin, ReadNestedWriteFlatMixin, viewsets.Mo
     queryset = models.Quote.objects.all()
     pagination_class = QuotesResultsSetPagination
     black_list_fields = (CURRENT_USER_FIELD,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = QuotesFilterSet
 
     def get_queryset(self):
         filters = Q()
