@@ -1,4 +1,3 @@
-
 import Home from "./screens/Home";
 import Quotes from "./screens/Quotes";
 import Login from "./screens/Login";
@@ -6,17 +5,18 @@ import Signup from "./screens/Signup";
 import InactiveAccount from "./screens/InactiveAccount";
 
 class Route {
-    constructor(path, component) {
+    constructor(path, component, isPublic = false) {
         this.path = path
         this.component = component
+        this.isPublic = isPublic
     }
 }
 
 
 export const ROUTES = [
-    new Route('/', Home),
-    new Route('/quotes', Quotes),
-    {path: '/login', component: Login},
-    new Route('/signup', Signup),
-    new Route('/inactive', InactiveAccount),
+    new Route('/', Home, true),
+    new Route('/quotes', Quotes, false),
+    new Route('/login', Login, true),
+    new Route('/signup', Signup, true),
+    new Route('/inactive', InactiveAccount, true),
 ]
