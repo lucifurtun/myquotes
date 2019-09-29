@@ -36,7 +36,7 @@ export function reducer(state = initialState, action = {}) {
 }
 
 
-export const getTags = () => {
+export const getTags = (params = {}) => {
     const url = '/tags/'
 
     return (
@@ -44,7 +44,8 @@ export const getTags = () => {
             type: 'GET_TAGS',
             payload: {
                 request: {
-                    url: url,
+                    url,
+                    params,
                     method: 'GET'
                 }
             }

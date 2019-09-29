@@ -1,18 +1,30 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { orderBy, toArray } from 'lodash'
+import { has, orderBy, toArray } from 'lodash'
 import Quote from './Quote'
 import { getQuotes } from '../redux/quotes'
 import { withRouter } from 'react-router-dom'
 import QuotesOverlay from "./QuotesOverlay";
+import { RoutingParamsContext } from "../redux/routing";
 
 class QuotesList extends React.Component {
+    static contextType = RoutingParamsContext;
+
+    constructor(props, context) {
+        super(props)
+
+        this.state = {
+            username: has(context.params, 'username') ? context.params.username : null
+        }
+    }
+
     loadData() {
         const {dispatch, filters, page, hasMore} = this.props
 
         if (hasMore) {
             this.setState({isLoading: true})
             const params = {
+                user__username: this.state.username,
                 author: toArray(filters.authors),
                 category: toArray(filters.categories),
                 tags: toArray(filters.tags),
@@ -24,7 +36,7 @@ class QuotesList extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(getQuotes())
+        this.props.dispatch(getQuotes({user__username: this.state.username}))
     }
 
     render() {

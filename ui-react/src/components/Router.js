@@ -18,7 +18,11 @@ class Router extends React.Component {
                                     exact
                                     key={idx}
                                     path={route.path}
-                                    render={(props) => <RouterManager route={route}/>}
+                                    render={(props) => {
+                                        return (
+                                            <RouterManager route={route}/>
+                                        )
+                                    }}
                                 />
                             )
                         })

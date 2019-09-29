@@ -36,7 +36,7 @@ export function reducer(state = initialState, action = {}) {
 }
 
 
-export const getAuthors = () => {
+export const getAuthors = (params = {}) => {
     const url = '/authors/'
 
     return (
@@ -44,7 +44,8 @@ export const getAuthors = () => {
             type: 'GET_AUTHORS',
             payload: {
                 request: {
-                    url: url,
+                    url,
+                    params,
                     method: 'GET'
                 }
             }

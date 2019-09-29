@@ -19,4 +19,5 @@ export const ROUTES = [
     new Route('/login', Login, true),
     new Route('/signup', Signup, true),
     new Route('/inactive', InactiveAccount, true),
+    new Route('/:username', Quotes, false),
 ]

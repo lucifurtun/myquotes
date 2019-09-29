@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 import { showModal } from '../redux/ui'
 import QuoteForm from '../components/QuoteForm'
 import { store } from '..'
+import { RoutingParamsContext } from "../redux/routing";
 
 const getNewQuoteModal = (quote) => {
     return {
@@ -15,7 +16,7 @@ const getNewQuoteModal = (quote) => {
     }
 }
 
-const Quotes = () => (
+const Quotes = ({match}) => (
     <div className="App">
         <nav className="navbar navbar-default navbar-static-top" role="navigation" style={{marginBottom: 0}}>
             <TopBar/>
@@ -27,22 +28,24 @@ const Quotes = () => (
                     <h3 className="page-header">My Quotes</h3>
                 </div>
             </div>
-
             <div className="row">
-                <div id="quotes-list" className="row">
-                    <span className="add-quote-icon" onClick={(event) => store.dispatch(showModal(getNewQuoteModal()))}>
-                        <FaPlus color='#337ab7' size='2em'/>
-                    </span>
-                    <div id="filters" className="col-xs-12 col-md-3">
-                        <QuotesSidebar/>
+                <RoutingParamsContext.Provider value={match}>
+                    <div id="quotes-list" className="row">
+                        <span
+                            className="add-quote-icon"
+                            onClick={(event) => store.dispatch(showModal(getNewQuoteModal()))}
+                        >
+                            <FaPlus color='#337ab7' size='2em'/>
+                        </span>
+                        <div id="filters" className="col-xs-12 col-md-3">
+                            <QuotesSidebar/>
+                        </div>
+
+                        <div id="filtered-content" className="col-xs-12 col-sm-12 col-md-8">
+                            <QuotesList/>
+                        </div>
                     </div>
-
-                    <div id="filtered-content" className="col-xs-12 col-sm-12 col-md-8">
-                        <QuotesList/>
-                    </div>
-                </div>
-
-
+                </RoutingParamsContext.Provider>
             </div>
         </div>
     </div>

@@ -1,9 +1,14 @@
-import { Redirect } from "react-router";
-import React from "react";
+import { Redirect, withRouter } from "react-router";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { isNull } from "lodash";
+import { updateRoute } from "../redux/routing";
 
-const RouterManager = ({route, isAuthenticated}) => {
+const RouterManager = ({route, isAuthenticated, match, dispatch, location}) => {
+    useEffect(() => {
+        dispatch(updateRoute({match, location}))
+    });
+
     if (!route.isPublic && !isAuthenticated) {
         return <Redirect to='/login'/>
     }
@@ -17,4 +22,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(RouterManager)
+export default connect(mapStateToProps)(withRouter(RouterManager))

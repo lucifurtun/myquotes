@@ -60,7 +60,7 @@ const Quote = ({quote, user, dispatch}) => (
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user.user
     }
 }
 

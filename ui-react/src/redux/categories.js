@@ -36,7 +36,7 @@ export function reducer(state = initialState, action = {}) {
 }
 
 
-export const getCategories = () => {
+export const getCategories = (params = {}) => {
     const url = '/categories/'
 
     return (
@@ -44,7 +44,8 @@ export const getCategories = () => {
             type: 'GET_CATEGORIES',
             payload: {
                 request: {
-                    url: url,
+                    url,
+                    params,
                     method: 'GET'
                 }
             }

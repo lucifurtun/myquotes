@@ -69,7 +69,7 @@ export const client = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     responseType: 'json',
     paramsSerializer: function (params) {
-        return qs.stringify(params, {arrayFormat: 'repeat'})
+        return qs.stringify(params, {arrayFormat: 'repeat', skipNulls: true})
     },
 })
 

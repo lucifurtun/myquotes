@@ -9,6 +9,7 @@ import { persistReducer } from 'redux-persist'
 import { reducer as apiReducer } from './api'
 import { reducer as userReducer } from './user'
 import { reducer as authReducer } from './auth'
+import { reducer as routingReducer } from './routing'
 
 import { reducer as quotesReducer } from './quotes'
 import { reducer as categoriesReducer } from './categories'
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
     ui: uiReducer,
     user: userReducer,
     auth: authReducer,
+    routing: routingReducer,
     quotes: quotesReducer,
     authors: authorsReducer,
     categories: categoriesReducer,

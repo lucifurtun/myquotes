@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaPlus } from 'react-icons/fa'
 import { Collapse } from 'react-bootstrap'
-import { upperFirst, values } from 'lodash'
+import { has, upperFirst, values } from 'lodash'
 import { getAuthors } from '../redux/authors'
 import { getCategories } from '../redux/categories'
 import { getTags } from '../redux/tags'
@@ -10,6 +10,7 @@ import { changeFilter } from '../redux/filters'
 import FilterItem from "./FilterItem";
 import { showModal } from "../redux/ui";
 import FilterForm from "./FilterForm";
+import { RoutingParamsContext } from "../redux/routing";
 
 
 const getAddFilterModal = (type) => {
@@ -20,23 +21,27 @@ const getAddFilterModal = (type) => {
 }
 
 const reducersMapping = {
-    authors: getAuthors(),
-    categories: getCategories(),
-    tags: getTags()
+    authors: getAuthors,
+    categories: getCategories,
+    tags: getTags
 }
 
 
 class Filter extends React.Component {
-    constructor(props) {
+    static contextType = RoutingParamsContext;
+
+    constructor(props, context) {
         super(props)
         this.state = {
-            collapsed: false
+            collapsed: false,
+            username: has(context.params, 'username') ? context.params.username : null
         }
         this.panelBodyMaxHeight = (window.innerHeight / 3) - (25 * 3)
     }
 
     componentDidMount() {
-        this.props.dispatch(reducersMapping[this.props.type])
+        let action = reducersMapping[this.props.type];
+        this.props.dispatch(action({username: this.state.username}))
     }
 
     render() {
@@ -83,6 +88,7 @@ class Filter extends React.Component {
         )
     }
 }
+
 
 Filter.defaultProps = {
     authors: [],
