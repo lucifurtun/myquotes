@@ -3,6 +3,8 @@ from rest_auth.serializers import LoginSerializer as RestLoginSerializer
 from rest_auth.registration.serializers import RegisterSerializer as RestRegisterSerializer
 from rest_framework import serializers
 
+from apps.authentication.models import User
+
 
 class EmailLoginSerializer(RestLoginSerializer):
     email = serializers.EmailField(required=True, allow_blank=False)
@@ -26,3 +28,15 @@ class EmailSignupSerializer(RestRegisterSerializer):
             ['lucianfurtun@gmail.com'],
             fail_silently=True,
         )
+
+
+class UserDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'first_name', 'last_name')
+        read_only_fields = ('email',)
+
+
+class JWTSerializer(serializers.Serializer):
+    token = serializers.CharField()
+    user = UserDetailsSerializer()
