@@ -41,7 +41,7 @@ class Filter extends React.Component {
 
     componentDidMount() {
         let action = reducersMapping[this.props.type];
-        this.props.dispatch(action({username: this.state.username}))
+        this.props.dispatch(action({user__username: this.state.username}))
     }
 
     render() {

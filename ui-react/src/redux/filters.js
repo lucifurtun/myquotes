@@ -1,6 +1,6 @@
 import { put, select, takeEvery } from 'redux-saga/effects'
 import { getQuotes } from './quotes'
-import { toArray } from 'lodash'
+import { has, toArray } from 'lodash'
 import { createAuthor, removeAuthor } from "./authors";
 import { createCategory, removeCategory } from "./categories";
 import { createTag, removeTag } from "./tags";
@@ -66,15 +66,17 @@ export function reducer(state = initialState, action = {}) {
 
 function* handleFilterChange({payload}) {
     const filters = yield select((state) => state.filters)
+    const routing = yield select((state) => state.routing)
 
     const params = {
         category: toArray(filters.categories),
         author: toArray(filters.authors),
         tag: toArray(filters.tags),
         search: filters.search,
+        user__username: has(routing.match.params, 'username') ? routing.match.params.username : null
     }
 
-    yield  put(getQuotes(params))
+    yield put(getQuotes(params))
 }
 
 export function* saga() {
