@@ -45,7 +45,6 @@ CONTRIB_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'ckeditor',
     'rest_framework',
     'rest_framework_swagger',
     'widget_tweaks',
