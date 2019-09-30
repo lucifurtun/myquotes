@@ -4,6 +4,7 @@ import { FaUser } from 'react-icons/fa'
 import { connect } from 'react-redux'
 import { logout } from '../redux/auth'
 import { withRouter } from 'react-router-dom'
+import { push } from "../App";
 
 
 const CurrentUser = ({currentUser, history, dispatch}) => {
@@ -14,7 +15,7 @@ const CurrentUser = ({currentUser, history, dispatch}) => {
             </li>
             <li className="dropdown">
                 <DropdownButton title={<FaUser/>} id='add-version-dropdown'>
-                    <MenuItem onClick={() => console.log('clicked')} eventKey="2">
+                    <MenuItem onClick={() => push('settings')} eventKey="2">
                         Settings
                     </MenuItem>
                     <MenuItem
