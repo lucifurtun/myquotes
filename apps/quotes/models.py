@@ -55,7 +55,7 @@ class Quote(UserTimeStampedModel):
     source = models.CharField(max_length=200, blank=True, null=True)
     reference = models.CharField(max_length=100, blank=True, null=True)
     tags = models.ManyToManyField('Tag', blank=True)
-    text = RichTextField()
+    text = models.TextField()
     private = models.BooleanField(default="False")
 
     class Meta:

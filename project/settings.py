@@ -191,13 +191,6 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'apps.api.utils.jwt_response_payload_handler'
 }
 
-CKEDITOR_CONFIGS = {
-    "default": {
-        "removePlugins": "flash, smiley, specialchar",
-        "height": 100,
-        "enterMode": 3
-    }
-}
 
 AUTH_USER_MODEL = 'authentication.User'
 

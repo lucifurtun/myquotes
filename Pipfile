@@ -7,7 +7,6 @@ verify_ssl = true
 
 [packages]
 django-allauth = "==0.37.1"
-django-ckeditor = "==5.2.2"
 djangorestframework = "==3.9.3"
 djangorestframework-jwt = "==1.9.0"
 django-rest-auth = "==0.9.3"
@@ -23,8 +22,8 @@ django-elasticsearch-dsl-drf = "==0.16.3"
 django-cors-headers = "==2.4.0"
 xmltodict = "==0.11.0"
 requests = "==2.21.0"
-Django = "==2.1.0"
-django-filter = "==2.2.0"
+Django = "==2.2.5"
+django-filter = "*"
 
 [requires]
 python_version = "3.6"
