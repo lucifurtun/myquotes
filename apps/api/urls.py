@@ -21,8 +21,9 @@ urlpatterns = [
     url(r'^filters/$', views.FiltersOptionsView.as_view()),
     url(r'^templates/(?P<page>[-\w]+.html)/$', views.AngularTemplateView.as_view()),
 
-    url(r'^auth/login/$', views_auth.EmailLoginView.as_view(), name='email-login'),
+    url(r'^users/me/$', views_auth.CurrentUserView.as_view()),
 
+    url(r'^auth/login/$', views_auth.EmailLoginView.as_view(), name='email-login'),
     url(r'^auth/signup/$', views_auth.EmailSignupView.as_view(), name='email-signup'),
 
     url(r'^verses/(?P<version>[\w]+)/$', bible_views.VerseView.as_view({'get': 'list'})),
