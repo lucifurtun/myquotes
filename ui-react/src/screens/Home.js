@@ -2,8 +2,8 @@ import React from 'react'
 import { Redirect } from "react-router";
 import { connect } from "react-redux";
 
-const Home = ({token}) => {
-    if (token) {
+const Home = ({token, user}) => {
+    if (token && user) {
         return <Redirect to="/quotes"/>
     }
 
@@ -12,9 +12,11 @@ const Home = ({token}) => {
 
 function mapStateToProps(state) {
     const token = state.user.token
+    const user = state.user.user
 
     return {
-        token
+        token,
+        user
     }
 }
 

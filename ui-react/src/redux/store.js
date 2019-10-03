@@ -22,7 +22,6 @@ import { reducer as appReducer } from './app'
 import { saga as authSaga } from './auth'
 import { saga as quotesSaga } from './quotes'
 import { saga as apiSaga } from './api'
-import { saga as uiSaga } from './ui'
 import { saga as filtersSaga } from './filters'
 import { saga as appSaga } from './app'
 import thunk from 'redux-thunk'
@@ -33,7 +32,6 @@ function* rootSaga() {
         authSaga(),
         quotesSaga(),
         apiSaga(),
-        uiSaga(),
         filtersSaga(),
         appSaga(),
     ])

@@ -2,6 +2,7 @@ import TopBar from '../components/TopBar'
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from "react-redux";
+import { updateUser } from "../redux/user";
 
 
 const Settings = ({match, errors, dispatch, user}) => {
@@ -94,7 +95,12 @@ const Settings = ({match, errors, dispatch, user}) => {
                                 </div>
 
                                 <div className="form-group">
-                                    <input type="submit" className="btn btn-success" value="Save"/>
+                                    <span
+                                        className="btn btn-success"
+                                        onClick={() => dispatch(updateUser(inputs))}
+                                    >
+                                        Save
+                                    </span>
                                 </div>
                             </form>
                         </div>
@@ -106,6 +112,7 @@ const Settings = ({match, errors, dispatch, user}) => {
 }
 
 function mapStateToProps(state) {
+    console.log(state.user)
     return {
         user: state.user.user
     }

@@ -139,6 +139,7 @@ const API_ACTIONS = [
     'GET_TAG',
     'CREATE_TAG',
     'DELETE_TAG',
+    'UPDATE_USER',
     'LOGIN',
     'SIGNUP'
 ]

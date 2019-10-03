@@ -1,4 +1,3 @@
-import Home from "./screens/Home";
 import Quotes from "./screens/Quotes";
 import Login from "./screens/Login";
 import Signup from "./screens/Signup";
@@ -15,8 +14,8 @@ class Route {
 
 
 export const ROUTES = [
-    new Route('/', Home, true),
-    new Route('/quotes', Quotes, false),
+    new Route('/', Quotes, false),
+    // new Route('/quotes', Quotes, false),
     new Route('/login', Login, true),
     new Route('/signup', Signup, true),
     new Route('/inactive', InactiveAccount, true),

@@ -1,3 +1,7 @@
+const UPDATE_USER = 'UPDATE_USER'
+const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS'
+
+
 const initialState = {
     token: null,
     user: {
@@ -10,6 +14,14 @@ const initialState = {
 
 export function reducer(state = initialState, action = {}) {
     switch (action.type) {
+        case UPDATE_USER_SUCCESS:
+            console.log(action)
+
+            return {
+                ...state,
+                user: action.payload.data,
+            }
+
         case 'LOGIN_SUCCESS':
             return {
                 ...state,
@@ -28,5 +40,20 @@ export function reducer(state = initialState, action = {}) {
 
         default:
             return state
+    }
+}
+
+export const updateUser = (user) => {
+    const url = '/users/me/'
+
+    return {
+        type: UPDATE_USER,
+        payload: {
+            request: {
+                url: url,
+                method: 'PATCH',
+                data: user
+            }
+        }
     }
 }

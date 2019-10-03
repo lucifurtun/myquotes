@@ -32,7 +32,7 @@ export function reducer(state = initialState, action = {}) {
 
 function* handleLoginSuccess(payload) {
     yield call(setHeaders, {Authorization: payload.payload.data.token})
-    yield call(push, 'quotes')
+    yield call(push, '/')
 }
 
 

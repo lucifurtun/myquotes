@@ -71,7 +71,7 @@ function* handleFilterChange({payload}) {
     const params = {
         category: toArray(filters.categories),
         author: toArray(filters.authors),
-        tag: toArray(filters.tags),
+        tags: toArray(filters.tags),
         search: filters.search,
         user__username: has(routing.match.params, 'username') ? routing.match.params.username : null
     }

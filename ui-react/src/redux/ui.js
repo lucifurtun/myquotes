@@ -34,7 +34,3 @@ export function hideModal() {
         type: 'HIDE_MODAL'
     }
 }
-
-export function* saga() {
-    yield takeEvery('SET_HIGHLIGHTED_ELEMENT', () => console.log('Do something.'))
-}
