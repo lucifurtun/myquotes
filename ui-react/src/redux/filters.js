@@ -53,18 +53,12 @@ export function reducer(state = initialState, action = {}) {
                 ...state,
                 ...action.payload
             }
-        case 'SEARCH_FILTERS_SNAPSHOT':
-            return {
-                ...state,
-                snapshot: action.payload
-            }
-
         default:
             return state
     }
 }
 
-function* handleFilterChange({payload}) {
+export function* handleFilterChange() {
     const filters = yield select((state) => state.filters)
     const routing = yield select((state) => state.routing)
 
@@ -120,4 +114,3 @@ export const removeFilter = (type, data) => {
             return null
     }
 }
-

@@ -6,6 +6,7 @@ import { getQuotes } from '../redux/quotes'
 import { withRouter } from 'react-router-dom'
 import QuotesOverlay from "./QuotesOverlay";
 import { RoutingParamsContext } from "../redux/routing";
+import Offline from "./Offline";
 
 class QuotesList extends React.Component {
     static contextType = RoutingParamsContext;
@@ -49,11 +50,12 @@ class QuotesList extends React.Component {
                             <Quote quote={item} key={item.id}/>
                         )))
                     }
-
                     {
-                        this.props.quotes.length === 0 && <span>There are no quotes!</span>
+                        this.props.quotes.length === 0 && this.props.isOnline && <span>There are no quotes!</span>
                     }
-
+                    {
+                        !this.props.isOnline && <Offline/>
+                    }
                 </div>
                 <div className="pagination-wrapper" style={{textAlign: 'center', marginBottom: '30px', float: 'none'}}>
                     {
@@ -78,10 +80,13 @@ function mapStateToProps(state) {
 
     const page = state.quotes.page
     const hasMore = state.quotes.hasMore
+
     const isLoading = state.api.isLoading
+    const isOnline = state.api.isOnline
 
     return {
         isLoading,
+        isOnline,
         quotes,
         filters,
         page,

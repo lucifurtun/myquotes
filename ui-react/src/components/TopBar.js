@@ -16,7 +16,7 @@ const TopBar = () => (
             <Link className="navbar-brand" to="/">MyQuotes</Link>
             <Search/>
         </div>
-        
+
         <ul className="nav navbar-top-links navbar-right" style={{padding: '9px'}}>
             <CurrentUser/>
         </ul>

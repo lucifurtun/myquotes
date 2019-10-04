@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 import { showModal } from '../redux/ui'
 import QuoteForm from '../components/QuoteForm'
 import { store } from '..'
-import { RoutingParamsContext } from "../redux/routing";
+import { RoutingParamsContext } from "../redux/routing"
 
 const getNewQuoteModal = (quote) => {
     return {

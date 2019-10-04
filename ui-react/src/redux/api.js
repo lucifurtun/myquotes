@@ -1,18 +1,25 @@
-import { has } from 'lodash'
+import { has, toArray } from 'lodash'
 import { call, takeEvery, put, select } from 'redux-saga/effects'
 import { forEach } from 'lodash'
 import axios from 'axios'
 import * as qs from 'qs'
 import { handleUserUnauthenticated } from "./auth";
 import { store } from "../index";
+import { handleFilterChange } from "./filters";
+import { getAuthors } from "./authors";
+import { getCategories } from "./categories";
+import { getTags } from "./tags";
 
 const initialState = {
     pendingRequests: 0,
-    isLoading: false
+    isLoading: false,
+    isOnline: true
 }
 
 const REQUEST_STARTED = 'REQUEST_STARTED'
 const REQUEST_FINISHED = 'REQUEST_FINISHED'
+const API_IS_OFFLINE = 'API_IS_OFFLINE'
+const RELOAD = 'RELOAD'
 
 export function reducer(state = initialState, action = {}) {
     let currentPendingRequests
@@ -31,7 +38,13 @@ export function reducer(state = initialState, action = {}) {
             return {
                 ...state,
                 pendingRequests: currentPendingRequests,
-                isLoading: currentPendingRequests > 0
+                isLoading: currentPendingRequests > 0,
+                isOnline: true
+            }
+        case API_IS_OFFLINE:
+            return {
+                ...state,
+                isOnline: false
             }
 
         default:
@@ -46,7 +59,8 @@ export function oldReducer(state = initialState, action = {}) {
             return {
                 isLoading: false
             }
-        } else {
+        }
+        else {
             return {
                 isLoading: true
             }
@@ -94,6 +108,20 @@ export function setHeaders(headers) {
     })
 }
 
+function* handleReload() {
+    const routing = yield select((state) => state.routing)
+
+    const params = {
+        user__username: has(routing.match.params, 'username') ? routing.match.params.username : null
+    }
+
+    yield handleFilterChange()
+
+    yield put(getAuthors(params))
+    yield put(getCategories(params))
+    yield put(getTags(params))
+}
+
 function* handleRequest(action) {
     const {type, payload: {request}} = action
     const url = request.url
@@ -111,11 +139,18 @@ function* handleRequest(action) {
     try {
         const response = yield call(client, url, {params, method, data, headers})
         yield put({type: type + SUCCESS_SUFFIX, payload: response})
-    } catch (errorResponse) {
-        yield put({type: type + ERROR_SUFFIX, payload: errorResponse.response.data})
+    }
+    catch (errorResponse) {
+        if (!errorResponse.response) {
+            console.log('It should be a network error.')
+            yield put({type: API_IS_OFFLINE})
+        }
+        else {
+            yield put({type: type + ERROR_SUFFIX, payload: errorResponse.response.data})
 
-        if (errorResponse.response.status === 401) {
-            yield handleUserUnauthenticated()
+            if (errorResponse.response.status === 401) {
+                yield handleUserUnauthenticated()
+            }
         }
     }
 }
@@ -146,4 +181,10 @@ const API_ACTIONS = [
 
 export function* saga() {
     yield takeEvery(API_ACTIONS, handleRequest)
+    yield takeEvery(RELOAD, handleReload)
 }
+
+
+export const reload = () => ({
+    type: RELOAD
+})
