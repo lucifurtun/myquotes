@@ -1,7 +1,11 @@
-import { keyBy, omit } from 'lodash'
-import { takeEvery, put } from 'redux-saga/effects'
+import { has, keyBy, omit } from 'lodash'
+import { takeEvery, put, select } from 'redux-saga/effects'
 import { hideModal } from './ui'
 import { client } from './api'
+import { handleFilterChange } from "./filters";
+import { getAuthors } from "./authors";
+import { getCategories } from "./categories";
+import { getTags } from "./tags";
 
 const initialState = {
     data: {},
@@ -67,6 +71,16 @@ export function reducer(state = initialState, action = {}) {
 
 function* handleQuoteSaveSuccess(payload) {
     yield put(hideModal())
+
+    const routing = yield select((state) => state.routing)
+
+    const params = {
+        user__username: has(routing.match.params, 'username') ? routing.match.params.username : null
+    }
+
+    yield put(getAuthors(params))
+    yield put(getCategories(params))
+    yield put(getTags(params))
 }
 
 export function* saga() {

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import FilterDelete from "./FilterDelete";
 import { showModal } from "../redux/ui";
 import { FaTrashAlt } from "react-icons/fa";
+import { updateFilter } from "../redux/filters";
 
 
 const getDeleteFilterModal = (type, filter) => {
@@ -23,8 +24,13 @@ export class FilterItem extends React.Component {
         }
     }
 
+    onEditFinished = () => {
+        this.props.dispatch(updateFilter(this.props.type, this.props.item))
+        this.setState({editMode: false})
+    }
+
     render() {
-        const {type, item} = this.props
+        const {type, item, dispatch} = this.props
 
         return (
             <span className="list-group-item">
@@ -38,17 +44,17 @@ export class FilterItem extends React.Component {
                         value={this.state.value}
                         onChange={(event) => this.setState({value: event.target.value})}
                         ref={input => input && input.focus()}
-                        onBlur={(event) => this.setState({editMode: false})}
+                        onBlur={this.onEditFinished}
                         onKeyPress={(event) => {
                             if (event.key === 'Enter') {
-                                this.setState({editMode: false})
+                                this.onEditFinished()
                             }
                         }}
                     />
                 }
                 <span
                     className='remove-filter-button visible-on-hover'
-                    onClick={(event) => this.props.dispatch(showModal(getDeleteFilterModal(type, item)))}
+                    onClick={(event) => dispatch(showModal(getDeleteFilterModal(type, item)))}
                     style={{verticalAlign: 'middle', marginLeft: '5px'}}
                 >
                     <FaTrashAlt color='red'/>

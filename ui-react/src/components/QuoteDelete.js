@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 
 const QuoteDelete = ({quote, dispatch}) => {
     return (
-        <React.Fragment>
+        <>
             <BootstrapModal.Body>
                 The quote "<b>{quote.title}</b>" will be deleted.
             </BootstrapModal.Body>
@@ -19,7 +19,7 @@ const QuoteDelete = ({quote, dispatch}) => {
                 </Button>
                 <Button onClick={() => dispatch(hideModal())}>Close</Button>
             </BootstrapModal.Footer>
-        </React.Fragment>
+        </>
     )
 }
 

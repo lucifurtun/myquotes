@@ -86,6 +86,23 @@ export const createCategory = (category) => {
     )
 }
 
+export const updateCategory = (category) => {
+    const url = `/categories/${category.id}/`
+
+    return (
+        {
+            type: 'UPDATE_CATEGORY',
+            payload: {
+                request: {
+                    url: url,
+                    method: 'PATCH',
+                    data: category
+                }
+            }
+        }
+    )
+}
+
 export const removeCategory = (author) => {
     return function (dispatch, getState) {
         const state = getState()

@@ -70,6 +70,23 @@ export const createAuthor = (author) => {
     )
 }
 
+export const updateAuthor = (author) => {
+    const url = `/authors/${author.id}/`
+
+    return (
+        {
+            type: 'UPDATE_AUTHOR',
+            payload: {
+                request: {
+                    url: url,
+                    method: 'PATCH',
+                    data: author
+                }
+            }
+        }
+    )
+}
+
 export const removeAuthor = (author) => {
     return function (dispatch, getState) {
         const state = getState()

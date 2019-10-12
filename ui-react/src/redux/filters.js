@@ -1,9 +1,9 @@
 import { put, select, takeEvery } from 'redux-saga/effects'
 import { getQuotes } from './quotes'
 import { has, toArray } from 'lodash'
-import { createAuthor, removeAuthor } from "./authors";
-import { createCategory, removeCategory } from "./categories";
-import { createTag, removeTag } from "./tags";
+import { createAuthor, removeAuthor, updateAuthor } from "./authors";
+import { createCategory, removeCategory, updateCategory } from "./categories";
+import { createTag, removeTag, updateTag } from "./tags";
 
 const FILTER_CHANGED = 'FILTER_CHANGED'
 const SEARCH_CHANGED = 'SEARCH_CHANGED'
@@ -97,6 +97,19 @@ export const createFilter = (type, data) => {
             return createCategory(data)
         case 'tags':
             return createTag(data)
+        default:
+            return null
+    }
+}
+
+export const updateFilter = (type, data) => {
+    switch (type) {
+        case 'authors':
+            return updateAuthor(data)
+        case 'categories':
+            return updateCategory(data)
+        case 'tags':
+            return updateTag(data)
         default:
             return null
     }

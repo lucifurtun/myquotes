@@ -62,6 +62,7 @@ class Filter extends React.Component {
                 </div>
                 <Collapse
                     in={this.state.collapsed}
+                    timeout={0}
                     className="body-wrapper collapse"
                     id="categories-filter-body"
                 >

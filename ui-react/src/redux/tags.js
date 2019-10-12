@@ -70,6 +70,23 @@ export const createTag = (tag) => {
     )
 }
 
+export const updateTag = (tag) => {
+    const url = `/tags/${tag.id}/`
+
+    return (
+        {
+            type: 'UPDATE_TAG',
+            payload: {
+                request: {
+                    url: url,
+                    method: 'PATCH',
+                    data: tag
+                }
+            }
+        }
+    )
+}
+
 export const removeTag = (tag) => {
     return function (dispatch, getState) {
         const state = getState()

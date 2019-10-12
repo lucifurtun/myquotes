@@ -6,7 +6,7 @@ import { removeFilter } from "../redux/filters";
 
 const FilterDelete = ({type, filter, dispatch}) => {
     return (
-        <React.Fragment>
+        <>
             <BootstrapModal.Body>
                 "<b>{filter.name}</b>" will be deleted.
             </BootstrapModal.Body>
@@ -16,7 +16,7 @@ const FilterDelete = ({type, filter, dispatch}) => {
                 </Button>
                 <Button onClick={() => dispatch(hideModal())}>Close</Button>
             </BootstrapModal.Footer>
-        </React.Fragment>
+        </>
     )
 }
 

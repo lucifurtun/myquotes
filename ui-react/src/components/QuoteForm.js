@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Modal as BootstrapModal } from 'react-bootstrap'
 import { map, values, omit, has, join } from 'lodash'
 import { createQuote, updateQuote } from '../redux/quotes'
@@ -28,7 +28,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
         })
 
     return (
-        <Fragment>
+        <>
             <BootstrapModal.Body>
                 <form onSubmit={ (event => {
                     event.preventDefault()
@@ -52,7 +52,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                                 <input
                                     id="id_private"
                                     type="checkbox"
-                                    checked={ inputs.private }
+                                    checked={ inputs.private || false }
                                     onChange={ (event) => setInputs({
                                         ...inputs,
                                         private: event.target.checked
@@ -230,7 +230,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                 <Button onClick={ () => dispatch(hideModal()) }>Close</Button>
             </BootstrapModal.Footer>
 
-        </Fragment>
+        </>
     )
 }
 
