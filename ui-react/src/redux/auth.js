@@ -40,16 +40,16 @@ export function* handleUserUnauthenticated() {
     yield call(push, 'login')
 }
 
-function* handleExistingToken() {
-    const existingToken = yield select((state) => {
-        console.log(state.user.token)
-        return state.user.token
-    })
-    if (existingToken) {
-        yield call(setHeaders, {Authorization: existingToken})
-        yield put(getQuotes())
-    }
-}
+// function* handleExistingToken() {
+//     const existingToken = yield select((state) => {
+//         console.log(state.user.token)
+//         return state.user.token
+//     })
+//     if (existingToken) {
+//         yield call(setHeaders, {Authorization: existingToken})
+//         yield put(getQuotes())
+//     }
+// }
 
 
 function* redirectToLogin() {

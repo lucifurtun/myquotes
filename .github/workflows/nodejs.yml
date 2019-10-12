@@ -23,4 +23,4 @@ jobs:
           yarn install
           yarn build
         env:
-          CI: true
+          CI: false

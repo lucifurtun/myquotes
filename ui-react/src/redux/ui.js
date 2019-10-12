@@ -1,5 +1,3 @@
-import { takeEvery } from 'redux-saga/effects'
-
 const initialState = {
     modal: null
 }

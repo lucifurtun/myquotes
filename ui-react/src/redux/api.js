@@ -1,4 +1,4 @@
-import { has, toArray } from 'lodash'
+import { has } from 'lodash'
 import { call, takeEvery, put, select } from 'redux-saga/effects'
 import { forEach } from 'lodash'
 import axios from 'axios'

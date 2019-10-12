@@ -2,6 +2,7 @@
   "name": "ui-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://myquotes.io/",
   "dependencies": {
     "axios": "^0.18.0",
     "ckeditor4-react": "^1.0.0-beta",

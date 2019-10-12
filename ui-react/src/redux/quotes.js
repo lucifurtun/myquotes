@@ -2,7 +2,6 @@ import { has, keyBy, omit } from 'lodash'
 import { takeEvery, put, select } from 'redux-saga/effects'
 import { hideModal } from './ui'
 import { client } from './api'
-import { handleFilterChange } from "./filters";
 import { getAuthors } from "./authors";
 import { getCategories } from "./categories";
 import { getTags } from "./tags";
