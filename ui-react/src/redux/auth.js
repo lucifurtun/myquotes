@@ -1,6 +1,5 @@
-import { takeEvery, call, select, put } from 'redux-saga/effects'
+import { takeEvery, call } from 'redux-saga/effects'
 import { setHeaders } from './api'
-import { getQuotes } from './quotes'
 import { push } from "../App";
 
 
@@ -39,18 +38,6 @@ function* handleLoginSuccess(payload) {
 export function* handleUserUnauthenticated() {
     yield call(push, 'login')
 }
-
-// function* handleExistingToken() {
-//     const existingToken = yield select((state) => {
-//         console.log(state.user.token)
-//         return state.user.token
-//     })
-//     if (existingToken) {
-//         yield call(setHeaders, {Authorization: existingToken})
-//         yield put(getQuotes())
-//     }
-// }
-
 
 function* redirectToLogin() {
     yield call(push, 'login')
