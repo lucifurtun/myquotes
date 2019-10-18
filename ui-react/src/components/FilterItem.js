@@ -25,7 +25,7 @@ export class FilterItem extends React.Component {
     }
 
     onEditFinished = () => {
-        this.props.dispatch(updateFilter(this.props.type, this.props.item))
+        this.props.dispatch(updateFilter(this.props.type, {...this.props.item, name: this.state.value}))
         this.setState({editMode: false})
     }
 
