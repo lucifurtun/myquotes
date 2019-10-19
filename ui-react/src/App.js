@@ -3,6 +3,8 @@ import { createBrowserHistory, createMemoryHistory } from 'history'
 
 import { connect } from 'react-redux'
 import Modal from './components/Modal'
+import './css/global.css'
+import './css/quote.css'
 import './App.css'
 import Router from "./components/Router";
 import { initialize } from "./redux/app";

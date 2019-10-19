@@ -3,9 +3,9 @@ import Filter from './Filter'
 
 const Sidebar = () => (
     <div>
-        <Filter type='categories'/>
-        <Filter type='authors'/>
-        <Filter type='tags'/>
+        <Filter type='categories' panelClass='panel-info'/>
+        <Filter type='authors' panelClass='panel-danger'/>
+        <Filter type='tags' panelClass='panel-success'/>
     </div>
 )
 

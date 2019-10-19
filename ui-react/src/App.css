@@ -31,6 +31,10 @@
     margin-right: 5px;
 }
 
+#settings-form .form-group label {
+    margin-right: 5px;
+}
+
 #quote-form #field-private {
     display: inline-block;
     width: 30%;
@@ -45,6 +49,10 @@
 #quote-form #field-title input {
     width: 80%;
     min-width: 80%;
+}
+
+#user-edit {
+    margin-top: 110px
 }
 
 @media all and (max-width: 992px) {
@@ -64,6 +72,10 @@
 
     #quote-form #field-private {
         float: left;
+    }
+
+    #user-edit {
+        margin-top: 0
     }
 }
 

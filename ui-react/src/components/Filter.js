@@ -46,7 +46,7 @@ class Filter extends React.Component {
 
     render() {
         return (
-            <div className="panel panel-info">
+            <div className={'panel ' + this.props.panelClass}>
                 <div className="panel-heading">
                     <h3 className="panel-title"
                         onClick={() => this.setState({collapsed: !this.state.collapsed})}>
@@ -94,7 +94,9 @@ class Filter extends React.Component {
 Filter.defaultProps = {
     authors: [],
     categories: [],
-    tags: []
+    tags: [],
+
+    panelClass: 'panel-info'
 }
 
 function mapStateToProps(state) {

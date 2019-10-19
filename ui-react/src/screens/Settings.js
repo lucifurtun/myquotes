@@ -13,7 +13,7 @@ const Settings = ({match, errors, dispatch, user}) => {
             <nav className="navbar navbar-default navbar-static-top" role="navigation" style={{marginBottom: 0}}>
                 <TopBar/>
             </nav>
-            <div id="page-wrapper" style={{minHeight: '353px'}}>
+            <div id="page-wrapper" style={{minHeight: '353px'}} className={'col-md-4 col-md-offset-4'}>
                 <div className="row page-header-row">
                     <div className="col-lg-12">
                         <h3 className="page-header">Settings</h3>
@@ -21,13 +21,13 @@ const Settings = ({match, errors, dispatch, user}) => {
                 </div>
                 <div className="row">
 
-                    <div id="user-edit" style={{marginTop: '110px'}}>
+                    <div id="user-edit">
                         <div className="col-xs-12 col-sm-12 col-md-8">
-                            <form method="post" action="/settings/" id="quote-form" className="ng-pristine ng-valid">
+                            <form method="post" action="/settings/" id="settings-form">
                                 <div className="form-group">
                                     <div
                                         className="form-inline">
-                                        <label htmlFor="id_username">Username (URL):</label>
+                                        <label htmlFor="id_username">Username (URL)</label>
                                         <input
                                             type="text"
                                             name="username"
@@ -45,7 +45,7 @@ const Settings = ({match, errors, dispatch, user}) => {
 
                                 <div className="form-group">
                                     <div className="form-inline">
-                                        <label htmlFor="id_email">Email address:</label>
+                                        <label htmlFor="id_email">Email address</label>
                                         <input type="email"
                                                name="email"
                                                maxLength="254"
@@ -62,7 +62,7 @@ const Settings = ({match, errors, dispatch, user}) => {
 
                                 <div className="form-group">
                                     <div className="form-inline">
-                                        <label htmlFor="id_first_name">First name:</label>
+                                        <label htmlFor="id_first_name">First Name</label>
                                         <input type="text"
                                                name="first_name"
                                                maxLength="30"
@@ -79,7 +79,7 @@ const Settings = ({match, errors, dispatch, user}) => {
 
                                 <div className="form-group">
                                     <div className="form-inline">
-                                        <label htmlFor="id_last_name">Last name:</label>
+                                        <label htmlFor="id_last_name">Last Name</label>
                                         <input name="last_name"
                                                maxLength="150"
                                                className="form-control"
