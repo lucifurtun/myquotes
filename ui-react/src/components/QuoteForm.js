@@ -30,15 +30,14 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
     return (
         <>
             <BootstrapModal.Body>
-                <form onSubmit={ (event => {
+                <form id='quote-form' onSubmit={ (event => {
                     event.preventDefault()
 
                 }) }>
-                    <div id="title" className="form-group">
+                    <div id="field-title" className="form-group">
                         <div className="form-inline">
-                            <label htmlFor="id_title">Title</label>
+                            <label htmlFor="id_title">Title </label>
                             <input name="title"
-                                   style={ { width: '50%' } }
                                    maxLength="400"
                                    className="form-control"
                                    id="id_title"
@@ -48,19 +47,6 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                                        [event.target.name]: event.target.value
                                    }) }
                             />
-                            <div className="material-switch pull-right">
-                                <input
-                                    id="id_private"
-                                    type="checkbox"
-                                    checked={ inputs.private || false }
-                                    onChange={ (event) => setInputs({
-                                        ...inputs,
-                                        private: event.target.checked
-                                    }) }
-                                />
-                                <label htmlFor="id_private" className="label-success switch-label"></label>
-                                <label htmlFor="id_private" style={ { marginLeft: '5px' } }>Private</label>
-                            </div>
 
                         </div>
                         {
@@ -71,9 +57,23 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                         }
                     </div>
 
+                    <div id='field-private' className="material-switch">
+                        <input
+                            id="id_private"
+                            type="checkbox"
+                            checked={inputs.private || false}
+                            onChange={(event) => setInputs({
+                                ...inputs,
+                                private: event.target.checked
+                            })}
+                        />
+                        <label htmlFor="id_private" className="label-success switch-label"></label>
+                        <label htmlFor="id_private" style={{marginLeft: '5px'}}>Private</label>
+                    </div>
+
                     <div>
                         <div id="author" className="form-group"
-                             style={ { display: 'inline-block', width: '50%', paddingRight: '10px' } }
+                             style={ { display: 'inline-block', paddingRight: '10px' } }
                         >
                             <div className="form-inline">
                                 <label htmlFor="id_author">Author</label>
@@ -99,7 +99,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                             }
                         </div>
                         <div id="category" className="form-group"
-                             style={ { display: 'inline-block', width: '50%', paddingLeft: '10px' } }
+                             style={ { display: 'inline-block', paddingLeft: '10px' } }
                         >
                             <div className="form-inline">
                                 <label htmlFor="id_category">Category</label>
@@ -125,7 +125,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                     </div>
                     <div>
                         <div id="source" className="form-group"
-                             style={ { display: 'inline-block', width: '50%', paddingRight: '10px' } }
+                             style={ { display: 'inline-block', paddingRight: '10px' } }
                         >
                             <div className="form-inline">
                                 <label htmlFor="id_source">Source</label>
@@ -149,7 +149,7 @@ export let QuoteForm = ({ dispatch, quote, authors, categories, tags, errors }) 
                             }
                         </div>
                         <div id="reference" className="form-group"
-                             style={ { display: 'inline-block', width: '50%', paddingLeft: '10px' } }
+                             style={ { display: 'inline-block', paddingLeft: '10px' } }
                         >
                             <div className="form-inline">
                                 <label htmlFor="id_reference">Reference</label>

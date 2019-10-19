@@ -12,7 +12,7 @@ const FilterForm = ({dispatch, errors, type}) => {
     return (
         <>
             <BootstrapModal.Body>
-                <form onSubmit={(event => {
+                <form id='filter-form' onSubmit={(event => {
                     event.preventDefault()
                 })}>
                     <div>
