@@ -8,6 +8,7 @@ const initialState = {
         id: null,
         email: null
     },
+    isAuthenticated: false,
     errors: {}
 }
 
@@ -15,8 +16,6 @@ const initialState = {
 export function reducer(state = initialState, action = {}) {
     switch (action.type) {
         case UPDATE_USER_SUCCESS:
-            console.log(action)
-
             return {
                 ...state,
                 user: action.payload.data,
@@ -27,12 +26,14 @@ export function reducer(state = initialState, action = {}) {
                 ...state,
                 token: action.payload.data.token,
                 user: action.payload.data.user,
+                isAuthenticated: true,
                 errors: {}
             }
         case 'LOGIN_FAIL':
         case 'SIGNUP_FAIL':
             return {
                 ...state,
+                isAuthenticated: true,
                 errors: action.payload
             }
         case 'LOGOUT':

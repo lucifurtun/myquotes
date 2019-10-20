@@ -1,7 +1,6 @@
 import { Redirect, withRouter } from "react-router";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { isNull } from "lodash";
 import { updateRoute } from "../redux/routing";
 
 const RouterManager = ({route, isAuthenticated, match, dispatch, location}) => {
@@ -18,7 +17,7 @@ const RouterManager = ({route, isAuthenticated, match, dispatch, location}) => {
 
 function mapStateToProps(state) {
     return {
-        isAuthenticated: !isNull(state.user.token)
+        isAuthenticated: state.user.isAuthenticated
     }
 }
 

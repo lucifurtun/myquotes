@@ -1,5 +1,4 @@
 import React from 'react'
-import { FaPlus } from 'react-icons/fa'
 import { Collapse } from 'react-bootstrap'
 import { has, upperFirst, values } from 'lodash'
 import { getAuthors } from '../redux/authors'
@@ -8,17 +7,9 @@ import { getTags } from '../redux/tags'
 import { connect } from 'react-redux'
 import { changeFilter } from '../redux/filters'
 import FilterItem from "./FilterItem";
-import { showModal } from "../redux/ui";
-import FilterForm from "./FilterForm";
 import { RoutingParamsContext } from "../redux/routing";
+import NewFilterButton from "./NewFilterButton";
 
-
-const getAddFilterModal = (type) => {
-    return {
-        title: upperFirst(type),
-        content: <FilterForm type={type}/>
-    }
-}
 
 const reducersMapping = {
     authors: getAuthors,
@@ -52,13 +43,7 @@ class Filter extends React.Component {
                         onClick={() => this.setState({collapsed: !this.state.collapsed})}>
                         {upperFirst(this.props.type)}
                     </h3>
-                    <span
-                        style={{cursor: 'pointer'}}
-                        className='pull-right'
-                        onClick={(event) => this.props.dispatch(showModal(getAddFilterModal(this.props.type)))}
-                    >
-                        <FaPlus/>
-                    </span>
+                    <NewFilterButton type={this.props.type} />
                 </div>
                 <Collapse
                     in={this.state.collapsed}

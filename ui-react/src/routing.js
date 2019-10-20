@@ -20,5 +20,5 @@ export const ROUTES = [
     new Route('/signup', Signup, true),
     new Route('/inactive', InactiveAccount, true),
     new Route('/settings', Settings, false),
-    new Route('/:username', Quotes, false),
+    new Route('/:username', Quotes, true),
 ]

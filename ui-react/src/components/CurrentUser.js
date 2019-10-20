@@ -7,9 +7,13 @@ import { withRouter } from 'react-router-dom'
 import { push } from "../App";
 
 
-const CurrentUser = ({currentUser, history, dispatch}) => {
+const CurrentUser = ({currentUser, isAuthenticated, history, dispatch}) => {
+    if (!isAuthenticated) {
+        return null
+    }
+
     return (
-        <span>
+        <ul className="nav navbar-top-links navbar-right" style={{padding: '9px'}}>
             <li style={{marginRight: '10px'}}>
                 {currentUser.email}
             </li>
@@ -28,13 +32,14 @@ const CurrentUser = ({currentUser, history, dispatch}) => {
                     </MenuItem>
                 </DropdownButton>
             </li>
-        </span>
+        </ul>
     )
 }
 
 
 function mapStateToProps(state) {
     return {
+        isAuthenticated: state.user.isAuthenticated,
         currentUser: state.user.user
     }
 }

@@ -1,20 +1,12 @@
 import TopBar from '../components/TopBar'
-import { FaPlus } from 'react-icons/fa'
 import QuotesSidebar from '../components/QuotesSidebar'
 import QuotesList from '../components/QuotesList'
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import { showModal } from '../redux/ui'
-import QuoteForm from '../components/QuoteForm'
-import { store } from '..'
 import { RoutingParamsContext } from "../redux/routing"
+import NewQuoteButton from "../components/NewQuoteButton";
 
-const getNewQuoteModal = (quote) => {
-    return {
-        title: 'New Quote',
-        content: <QuoteForm/>
-    }
-}
+
 
 const Quotes = ({match}) => (
     <div className="App">
@@ -31,12 +23,7 @@ const Quotes = ({match}) => (
             <div className="row">
                 <RoutingParamsContext.Provider value={match}>
                     <div id="quotes-list" className="row">
-                        <span
-                            className="add-quote-icon"
-                            onClick={(event) => store.dispatch(showModal(getNewQuoteModal()))}
-                        >
-                            <FaPlus color='#337ab7' size='2em'/>
-                        </span>
+                        <NewQuoteButton/>
                         <div id="filters" className="col-xs-12 col-md-3">
                             <QuotesSidebar/>
                         </div>

@@ -26,9 +26,7 @@ const TopBar = () => {
             </div>
             <MobileMenu toggled={mobileMenuToggled}/>
 
-            <ul className="nav navbar-top-links navbar-right" style={{padding: '9px'}}>
-                <CurrentUser/>
-            </ul>
+            <CurrentUser/>
         </div>
     )
 }
