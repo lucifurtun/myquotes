@@ -3,6 +3,7 @@ import { createBrowserHistory, createMemoryHistory } from 'history'
 
 import { connect } from 'react-redux'
 import Modal from './components/Modal'
+import './css/sb-admin-2.css'
 import './css/global.css'
 import './css/quote.css'
 import './App.css'
