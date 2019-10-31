@@ -24,7 +24,7 @@ class Filter extends React.Component {
     constructor(props, context) {
         super(props)
         this.state = {
-            collapsed: false,
+            collapsed: true,
             username: has(context.params, 'username') ? context.params.username : null
         }
         this.panelBodyMaxHeight = (window.innerHeight / 3) - (25 * 3)
