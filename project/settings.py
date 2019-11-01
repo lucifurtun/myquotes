@@ -57,7 +57,6 @@ CONTRIB_APPS = [
 
 CUSTOM_APPS = [
     'apps.authentication',
-    'apps.api',
     'apps.quotes',
     'apps.search.bible',
 ]
@@ -160,7 +159,7 @@ AUTHENTICATION_BACKENDS = (
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'apps.api.permissions.IsOwnerOrReadOnly',
+        'apps.authentication.permissions.IsOwnerOrReadOnly',
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -170,6 +169,7 @@ REST_FRAMEWORK = {
     )
 }
 
+ACCOUNT_ADAPTER = 'apps.authentication.adapters.AccountAdapter'
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_LOGIN_REDIRECT_URLNAME = '/'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
@@ -187,7 +187,8 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(weeks=10),
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(weeks=20),
     'JWT_ALLOW_REFRESH': True,
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'apps.api.utils.jwt_response_payload_handler'
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'apps.authentication.utils.jwt_response_payload_handler',
+    'JWT_AUTH_COOKIE': False
 }
 
 

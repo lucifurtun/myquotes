@@ -1,8 +1,5 @@
-import os
-
 from django.db.models import Q, Count, FieldDoesNotExist
 from django.http import HttpResponseBadRequest
-from django.views import generic
 from rest_framework import permissions, mixins, status
 from rest_framework import schemas, viewsets
 from rest_framework import views
@@ -12,10 +9,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
-# from apps.api.filters import QuotesFilterSet
-from .paginators import QuotesResultsSetPagination
-from . import serializers
-from apps.quotes import models
+from apps.common.paginators import QuotesResultsSetPagination
+from apps.quotes import models, serializers
 
 CURRENT_USER_FIELD = 'user_id'
 
@@ -29,7 +24,7 @@ def schema_view(request):
 
 class ReadNestedWriteFlatMixin(object):
     def get_serializer_class(self, *args, **kwargs):
-        serializer_class = super(ReadNestedWriteFlatMixin, self).get_serializer_class(*args, **kwargs)
+        serializer_class = super().get_serializer_class(*args, **kwargs)
         if self.request.method in ['PATCH', 'POST', 'PUT']:
             serializer_class.Meta.depth = 0
         else:
@@ -205,13 +200,3 @@ class FiltersOptionsView(views.APIView):
         data = serializer(model.objects.filter(filters), many=True)
 
         return data.data
-
-
-class AngularTemplateView(generic.TemplateView):
-    template_name = ''
-
-    def get(self, request, *args, **kwargs):
-        html_file_name = kwargs.get('page')
-        self.template_name = os.path.join('angular', html_file_name)
-
-        return super().get(request, *args, **kwargs)

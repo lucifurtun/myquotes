@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from . import fields
+from apps.common import fields
 from apps.quotes import models
 
 
