@@ -33,7 +33,7 @@ export function reducer(state = initialState, action = {}) {
         case 'SIGNUP_FAIL':
             return {
                 ...state,
-                isAuthenticated: true,
+                isAuthenticated: false,
                 errors: action.payload
             }
         case 'LOGOUT':
