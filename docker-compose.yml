@@ -19,6 +19,7 @@ services:
     container_name: elasticsearch
     environment:
       - cluster.name=docker-cluster
+      - cluster.routing.allocation.disk.watermark.low=90%
       - indices.query.bool.max_clause_count=2048
       - bootstrap.memory_lock=true
       - discovery.type=single-node
@@ -29,8 +30,6 @@ services:
         hard: -1
     volumes:
       - ~/docker-elastic/myquotes:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
 
   web:
     build: .
