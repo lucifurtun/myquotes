@@ -40,11 +40,17 @@ def main():
         'parents': ('1h-5yWWISEOBbc9l-kNZrTiGCwxP0oj-Y',)
     }
     media = MediaFileUpload('db.dump', mimetype='application/octet-stream')
-    file = service.files().create(
-        body=file_metadata,
-        media_body=media,
-        fields='id'
+    # file = service.files().create(
+    #     body=file_metadata,
+    #     media_body=media
+    # ).execute()
+
+    file = service.files().update(
+        fileId='1NS6UAJzKM4QuHfVDLdbD7yJI41YGWZTa',
+        media_body=media
     ).execute()
+
+    print('File ID: ', file['id'])
 
 
 if __name__ == '__main__':
