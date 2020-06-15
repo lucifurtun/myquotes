@@ -27,6 +27,9 @@ class Chapter(models.Model):
     class Meta:
         ordering = ('number',)
 
+    def __str__(self):
+        return '{} {}'.format(self.book.title, self.number)
+
 
 class Verse(models.Model):
     number = models.IntegerField()
@@ -51,3 +54,28 @@ class Verse(models.Model):
     @property
     def chapter_number(self):
         return self.chapter.number
+
+
+class ReferenceVerse(models.Model):
+    verse_number = models.PositiveIntegerField()
+    chapter_number = models.PositiveIntegerField()
+    book_number = models.PositiveIntegerField()
+
+    class Meta:
+        unique_together = ('verse_number', 'chapter_number', 'book_number')
+
+    def __str__(self):
+        return f'{self.book_number} - {self.chapter_number} - {self.verse_number}'
+
+
+class Reference(models.Model):
+    verse = models.ForeignKey(ReferenceVerse, on_delete=models.CASCADE, related_name='references')
+
+    reference_from = models.ForeignKey(ReferenceVerse, on_delete=models.CASCADE, related_name='references_from')
+    reference_to = models.ForeignKey(ReferenceVerse, on_delete=models.CASCADE, related_name='references_to')
+
+    def __str__(self):
+        return f'{self.verse} ->> {self.reference_from} - {self.reference_to}'
+
+    class Meta:
+        unique_together = ('verse', 'reference_from', 'reference_to')

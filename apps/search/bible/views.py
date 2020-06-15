@@ -7,6 +7,7 @@ from django_elasticsearch_dsl_drf.filter_backends import FilteringFilterBackend,
     HighlightBackend
 from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from elasticsearch import TransportError
+from django_filters import rest_framework as filters
 from rest_framework import status
 from rest_framework.exceptions import APIException
 from rest_framework.generics import ListAPIView
@@ -14,11 +15,12 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from apps.common.paginators import CustomPageNumberPagination
-from apps.search.bible.backends import SearchFilterBackend, SpanSearchFilterBackend
+from apps.search.bible.backends import SpanSearchFilterBackend
 from apps.search.bible.choices import Versions
 from . import indexes
-from .models import Book, Chapter
-from .serializers import VerseSerializer, BookSerializer, ChapterSerializer
+from .filters import ReferenceFilter
+from .models import Book, Chapter, Reference
+from .serializers import VerseSerializer, BookSerializer, ChapterSerializer, ReferenceSerializer
 
 
 class BookView(ListAPIView):
@@ -158,3 +160,11 @@ class VerseView(DocumentViewSet):
 
         # view = super().as_view(actions, **initkwargs)
         return view
+
+
+class ReferencesView(ListAPIView):
+    pagination_class = CustomPageNumberPagination
+    serializer_class = ReferenceSerializer
+    queryset = Reference.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = ReferenceFilter

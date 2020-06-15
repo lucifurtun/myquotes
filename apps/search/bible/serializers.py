@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
 from .indexes import Verse
-from .models import Book, Chapter
+from .models import Book, Chapter, Reference, ReferenceVerse
 
 
 class VerseSerializer(DocumentSerializer):
@@ -34,3 +34,20 @@ class BookSerializer(ModelSerializer):
     class Meta:
         model = Book
         fields = ('id', 'number', 'title')
+
+
+class ReferenceVerseSerializer(ModelSerializer):
+    class Meta:
+        model = ReferenceVerse
+        fields = ('id', 'book_number', 'chapter_number', 'verse_number')
+
+
+class ReferenceSerializer(ModelSerializer):
+    verse = ReferenceVerseSerializer()
+
+    reference_from = ReferenceVerseSerializer()
+    reference_to = ReferenceVerseSerializer()
+
+    class Meta:
+        model = Reference
+        fields = ('id', 'verse', 'reference_from', 'reference_to')
