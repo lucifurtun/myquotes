@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://myquotes.online/",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "ckeditor4-react": "^1.0.0-beta",
     "lodash": "^4.17.11",
     "qs": "^6.8.0",
