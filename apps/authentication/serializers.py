@@ -24,7 +24,7 @@ class EmailSignupSerializer(RestRegisterSerializer):
         send_mail(
             'New user on MyQuotes',
             'There is one new user asking for access. ID: {id}, Email: {email}'.format(id=user.id, email=user.email),
-            'MyQuotes<contact@myquotes.io>',
+            'MyQuotes<contact@myquotes.online>',
             ['lucianfurtun@gmail.com'],
             fail_silently=True,
         )
