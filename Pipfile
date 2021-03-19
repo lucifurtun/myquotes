@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 django-allauth = "==0.40"
-djangorestframework = "==3.9.3"
+djangorestframework = "==3.11.2"
 djangorestframework-jwt = "==1.11.0"
 django-rest-auth = "==0.9.5"
 django-rest-swagger = "==2.1.0"
