@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "react": "^16.6.1",
     "react-beautiful-dnd": "^10.0.4",
     "react-bootstrap": "^0.32.4",
