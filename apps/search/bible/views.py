@@ -161,6 +161,9 @@ class VerseView(DocumentViewSet):
         # view = super().as_view(actions, **initkwargs)
         return view
 
+    def detail(self, response):
+        raise Http404
+
 
 class ReferencesView(ListAPIView):
     pagination_class = CustomPageNumberPagination
