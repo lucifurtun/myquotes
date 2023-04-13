@@ -1,7 +1,7 @@
 version: '3'
 services:
   db:
-    image: postgres:9.6
+    image: postgres:13.2
     restart: always
     ports:
       - "5555:5432"
@@ -15,8 +15,10 @@ services:
       - POSTGRES_PASSWORD=some-password
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.7.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.2
     container_name: elasticsearch
+    ports:
+      - "9200:9200"
     environment:
       - cluster.name=docker-cluster
       - cluster.routing.allocation.disk.watermark.low=90%
