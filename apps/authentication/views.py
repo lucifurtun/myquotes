@@ -1,5 +1,5 @@
-from rest_auth import views as rest_auth_views
-from rest_auth.registration import views as rest_auth_registration_views
+from dj_rest_auth import views as rest_auth_views
+from dj_rest_auth.registration import views as rest_auth_registration_views
 from rest_framework.generics import RetrieveUpdateAPIView
 
 from apps.authentication import serializers

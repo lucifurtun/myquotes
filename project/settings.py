@@ -12,8 +12,15 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+import sentry_sdk
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import datetime
+from pathlib import Path
+
+from dotenv import load_dotenv
+from marshmallow import Schema, fields
+from sentry_sdk.integrations.django import DjangoIntegration
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -21,90 +28,100 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0amdjo@hx-0u6txq6=1b@d)i#1x4o8phk0xe*m11f%4&acosqx'
+SECRET_KEY = "0amdjo@hx-0u6txq6=1b@d)i#1x4o8phk0xe*m11f%4&acosqx"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '91.216.75.118', 'myquotes.online', '0.0.0.0']
+ALLOWED_HOSTS = ["127.0.0.1", "91.216.75.118", "myquotes.online", "0.0.0.0"]
+
+env_path = Path("./project") / ".env"
+load_dotenv(env_path, override=False)
+
+
+class EnvVarsValidator(Schema):
+    DB_NAME = fields.String(missing="myquotes")
+    DB_USER = fields.String(missing="myquotes")
+    DB_PASSWORD = fields.String(missing="some-password")
+    DB_HOST = fields.String(missing="db")
+    DB_PORT = fields.String(missing="5432")
+    ES_HOST = fields.String(missing="elasticsearch")
+    ES_PORT = fields.String(missing="9200")
+    SENTRY_DSN = fields.String(missing=None)
+
+    class Meta:
+        unknown = 'exclude'
+
+
+ENV_VARS = EnvVarsValidator().load(os.environ)
 
 # Application definition
 
 CORE_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django.contrib.postgres'
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "django.contrib.postgres",
 ]
 
 CONTRIB_APPS = [
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'rest_framework',
-    'rest_framework_swagger',
-    'widget_tweaks',
-
-    'corsheaders',
-
-    'django_elasticsearch_dsl',
-    'django_elasticsearch_dsl_drf'
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "rest_framework",
+    "rest_framework_swagger",
+    "widget_tweaks",
+    "corsheaders",
+    "django_elasticsearch_dsl",
+    "django_elasticsearch_dsl_drf",
 ]
 
 CUSTOM_APPS = [
-    'apps.authentication',
-    'apps.quotes',
-    'apps.search.bible',
+    "apps.authentication",
+    "apps.quotes",
+    "apps.search.bible",
 ]
 
 INSTALLED_APPS = CORE_APPS + CONTRIB_APPS + CUSTOM_APPS
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'project.urls'
+ROOT_URLCONF = "project.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.request',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'project.wsgi.application'
+WSGI_APPLICATION = "project.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -127,9 +144,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'Europe/Bucharest'
+TIME_ZONE = "Europe/Bucharest"
 
 USE_I18N = True
 USE_L10N = True
@@ -138,10 +155,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-MEDIA_URL = '/media/'
+MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 STATICFILES_DIRS = [
@@ -150,58 +167,149 @@ STATICFILES_DIRS = [
 
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
+    "django.contrib.auth.backends.ModelBackend",
     # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'apps.authentication.permissions.IsOwnerOrReadOnly',
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    "DEFAULT_PERMISSION_CLASSES": [
+        "apps.authentication.permissions.IsOwnerOrReadOnly",
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
-    )
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
 }
 
-ACCOUNT_ADAPTER = 'apps.authentication.adapters.AccountAdapter'
+ACCOUNT_ADAPTER = "apps.authentication.adapters.AccountAdapter"
 ACCOUNT_LOGOUT_ON_GET = True
-ACCOUNT_LOGIN_REDIRECT_URLNAME = '/'
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_SIGNUP_FORM_CLASS = 'apps.authentication.forms.SignupForm'
+ACCOUNT_LOGIN_REDIRECT_URLNAME = "/"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_SIGNUP_FORM_CLASS = "apps.authentication.forms.SignupForm"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 OLD_PASSWORD_FIELD_ENABLED = True
 
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/"
 
 REST_USE_JWT = True
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(weeks=10),
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(weeks=20),
-    'JWT_ALLOW_REFRESH': True,
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'apps.authentication.utils.jwt_response_payload_handler',
-    'JWT_AUTH_COOKIE': False
+    "JWT_EXPIRATION_DELTA": datetime.timedelta(weeks=10),
+    "JWT_REFRESH_EXPIRATION_DELTA": datetime.timedelta(weeks=20),
+    "JWT_ALLOW_REFRESH": True,
+    "JWT_RESPONSE_PAYLOAD_HANDLER": "apps.authentication.utils.jwt_response_payload_handler",
+    "JWT_AUTH_COOKIE": False,
 }
 
 
-AUTH_USER_MODEL = 'authentication.User'
+AUTH_USER_MODEL = "authentication.User"
 
-ELASTICSEARCH_DSL = {
+CORS_ORIGIN_ALLOW_ALL = True
+REST_AUTH = {
+    "LOGIN_SERIALIZER": "dj_rest_auth.serializers.LoginSerializer",
+    "TOKEN_SERIALIZER": "dj_rest_auth.serializers.TokenSerializer",
+    "JWT_SERIALIZER": "dj_rest_auth.serializers.JWTSerializer",
+    "JWT_SERIALIZER_WITH_EXPIRATION": "dj_rest_auth.serializers.JWTSerializerWithExpiration",
+    "JWT_TOKEN_CLAIMS_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "REGISTER_SERIALIZER": "dj_rest_auth.registration.serializers.RegisterSerializer",
+    "REGISTER_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
+    "TOKEN_MODEL": None,
+    "USE_JWT": True,
+}
+
+
+SPARKPOST_API_KEY = '3166f89eb3f37ea3ab4735aaa4c999b83064a29e'
+EMAIL_BACKEND = 'sparkpost.django.email_backend.SparkPostEmailBackend'
+
+
+DATABASES = {
     'default': {
-        'hosts': '127.0.0.1:9200'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': ENV_VARS['DB_NAME'],
+        'USER': ENV_VARS['DB_USER'],
+        'PASSWORD': ENV_VARS['DB_PASSWORD'],
+        'HOST': ENV_VARS['DB_HOST'],
+        'PORT': ENV_VARS['DB_PORT'],
+    }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'formatters': {
+        'django.server': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[{server_time}] {message}',
+            'style': '{',
+        },
+        'console': {
+            'format': '[{asctime}] - {levelname} - {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+        'django.server': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'django.server',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'mail_admins'],
+            'level': 'INFO',
+        },
+        'django.server': {
+            'handlers': ['django.server'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'apps': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
     },
 }
 
-CORS_ORIGIN_ALLOW_ALL = True
+SENTRY_DSN = ENV_VARS['SENTRY_DSN']
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration()],
+        send_default_pii=True,
+    )
 
-try:
-    from project.local import *
-except ImportError:
-    pass
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': f'{ENV_VARS["ES_HOST"]}:{ENV_VARS["ES_PORT"]}'
+    },
+}

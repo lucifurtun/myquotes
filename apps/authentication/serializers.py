@@ -1,6 +1,6 @@
 from django.core.mail import send_mail
-from rest_auth.serializers import LoginSerializer as RestLoginSerializer
-from rest_auth.registration.serializers import RegisterSerializer as RestRegisterSerializer
+from dj_rest_auth.serializers import LoginSerializer as RestLoginSerializer
+from dj_rest_auth.registration.serializers import RegisterSerializer as RestRegisterSerializer
 from rest_framework import serializers
 
 from apps.authentication.models import User

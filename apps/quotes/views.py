@@ -1,4 +1,5 @@
-from django.db.models import Q, Count, FieldDoesNotExist
+from django.core.exceptions import FieldDoesNotExist
+from django.db.models import Q, Count
 from django.http import HttpResponseBadRequest
 from rest_framework import permissions, mixins, status
 from rest_framework import schemas, viewsets
