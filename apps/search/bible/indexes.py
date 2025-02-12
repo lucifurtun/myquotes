@@ -23,7 +23,7 @@ html_strip = analyzer(
 )
 
 
-@registry.register_document
+# @registry.register_document
 class Verse(Document):
     is_nt = fields.BooleanField("chapter.book.is_nt")
     book_title = fields.TextField(
@@ -34,7 +34,7 @@ class Verse(Document):
     )
     book_number = fields.IntegerField()
     chapter_number = fields.IntegerField()
-    # number = fields.LongField()
+    number = fields.LongField()
     text = fields.TextField(
         # term_vector='with_positions_offsets',
         analyzer=diacritics
